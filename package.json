@@ -1,0 +1,40 @@
+{
+  "name": "@sincefyi/root",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/mehmetnyarar/since-fyi#readme",
+  "bugs": {
+    "url": "https://github.com/mehmetnyarar/since-fyi/issues",
+    "email": "mehmetnyarar@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Mehmet N. Yarar <mehmetnyarar@gmaila.com> https://niyo.dev",
+  "contributors": [],
+  "repository": "github:mehmetnyarar/since-fyi",
+  "scripts": {
+    "reset": "yarn clean && yarn install",
+    "clean": "lerna run clean --stream && rm -rf node_modules yarn*",
+    "format": "npm-run-all format:root format:packages",
+    "format:root": "prettier --write \"./*.{json,md,yml}\" --ignore-path .gitignore",
+    "format:packages": "lerna run format --stream --concurrency 1",
+    "commit": "git add . && git-cz"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "commitizen": "^4.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.0",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.5.0",
+    "prettier": "^2.1.2"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
