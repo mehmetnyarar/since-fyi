@@ -15,8 +15,9 @@
   "scripts": {
     "reset": "yarn clean && yarn install",
     "clean": "lerna run clean --stream && rm -rf node_modules yarn*",
-    "format": "npm-run-all format:root format:packages",
+    "format": "npm-run-all format:root format:design format:packages",
     "format:root": "prettier --write \"./*.{json,md,yml}\" --ignore-path .gitignore",
+    "format:design": "prettier --write \"./design/*.{json,scss}\" --ignore-path .gitignore",
     "format:packages": "lerna run format --stream --concurrency 1",
     "commit": "git add . && git-cz"
   },
