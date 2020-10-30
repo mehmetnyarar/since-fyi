@@ -1,4 +1,4 @@
 hooks:
-  pre-commit: lint-staged
+  pre-commit: yarn precommit
   commit-msg: commitlint -E HUSKY_GIT_PARAMS
   post-commit: git update-index --again

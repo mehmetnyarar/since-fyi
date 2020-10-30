@@ -9,17 +9,25 @@
     "email": "mehmetnyarar@gmail.com"
   },
   "license": "MIT",
-  "author": "Mehmet N. Yarar <mehmetnyarar@gmaila.com> https://niyo.dev",
+  "author": "Mehmet N. Yarar <mehmetnyarar@gmail.com> https://niyo.dev",
   "contributors": [],
   "repository": "github:mehmetnyarar/since-fyi",
   "scripts": {
     "reset": "yarn clean && yarn install",
     "clean": "lerna run clean --stream && rm -rf node_modules yarn*",
-    "format": "npm-run-all format:root format:design format:packages",
-    "format:root": "prettier --write \"./*.{json,md,yml}\" --ignore-path .gitignore",
-    "format:design": "prettier --write \"./design/*.{json,scss}\" --ignore-path .gitignore",
-    "format:packages": "lerna run format --stream --concurrency 1",
-    "commit": "git add . && git-cz"
+    "validate": "npm-run-all typings format lint test",
+    "typings": "lerna run typings --stream --concurrency 1",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,yml,md,html,css,scss}\"",
+    "lint": "eslint --fix \"**/*.{js,jsx,ts,tsx}\"",
+    "test": "lerna run test --stream --concurrency 1",
+    "test:cov": "lerna run test:cov --stream --concurrency 1",
+    "precommit:root": "lint-staged",
+    "precommit:packages": "lerna run precommit --stream --concurrency 1",
+    "precommit": "npm-run-all precommit:root precommit:packages",
+    "commit": "git add . && git-cz",
+    "app:cov": "yarn --cwd packages/app test:coverage",
+    "app:test": "yarn --cwd packages/app test",
+    "app:start": "yarn --cwd packages/app start"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
@@ -27,12 +35,28 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-standard": "^16.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.2",
     "husky": "^4.3.0",
+    "jest": "^26.6.1",
+    "jest-runner-eslint": "^0.10.0",
     "lerna": "^3.22.1",
     "lint-staged": "^10.5.0",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.4.3",
+    "typescript": "^4.0.5"
   },
   "private": true,
   "workspaces": [
