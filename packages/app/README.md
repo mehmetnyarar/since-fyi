@@ -6,5 +6,8 @@ This package provides multi-platform front-end applications.
 
 Currently available platforms are:
 
-- Android
-- iOS
+| Platform | Expo | Official Store |
+| -------- | ---- | -------------- |
+| Android  | Yes  | No             |
+| iOS      | Yes  | No             |
+| Web      | Yes  | No             |
