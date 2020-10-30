@@ -1,0 +1,57 @@
+{
+  "name": "@sincefyi/app",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Mehmet N. Yarar <mehmetnyarar@gmail.com> https://niyo.dev",
+  "contributors": [],
+  "main": "__generated__/AppEntry.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mehmetnyarar/since-fyi.git",
+    "directory": "packages/app"
+  },
+  "scripts": {
+    "clean": "rm -rf .jest coverage node_modules yarn*",
+    "postinstall": "expo-yarn-workspaces postinstall",
+    "validate": "npm-run-all typings format lint test:cov",
+    "typings": "tsc --project tsconfig.json --noEmit",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,yml,md,html,css,scss}\"",
+    "lint": "eslint --fix \"**/*.{js,jsx,ts,tsx}\"",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "precommit": "lint-staged",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "expo": "~39.0.2",
+    "expo-status-bar": "~1.0.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-web": "~0.13.12"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@testing-library/jest-native": "^3.4.3",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/react-native": "^7.1.0",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint-config-standard-jsx": "^10.0.0",
+    "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "expo-yarn-workspaces": "1.2.1",
+    "jest-expo": "^39.0.0",
+    "react-test-renderer": "16.13.1"
+  }
+}

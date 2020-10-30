@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Since",
+    "description": "Reminder app that tells you how much time passed since you have accomplished something.",
+    "slug": "sincefyi",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": ["android", "ios", "web"],
+    "githubUrl": "https://github.com/mehmetnyarar/since-fyi",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "primaryColor": "#26A1D8",
+    "icon": "./assets/images/icon.png",
+    "scheme": "sincefyi",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#26A1D8"
+      }
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#26A1D8"
+    },
+    "assetBundlePatterns": ["**/*"]
+  }
+}
