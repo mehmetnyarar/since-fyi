@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 import { Text } from 'react-native'
-import { ErrorBoundary } from '~/error-boundary'
+import { ErrorBoundary } from '~/components/error-boundary'
 
 // #region Setup
 

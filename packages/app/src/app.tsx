@@ -1,24 +1,36 @@
-import { StatusBar } from 'expo-status-bar'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { ErrorBoundary } from './error-boundary'
+import * as SplashScreen from 'expo-splash-screen'
+import React, { useEffect } from 'react'
+import { ErrorBoundary } from './components/error-boundary'
+import { useBoot } from './hooks'
+import { Navigator } from './navigation'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
-
+/**
+ * Application.
+ */
 export const App = () => {
+  const { isReady } = useBoot()
+
+  useEffect(() => {
+    try {
+      SplashScreen.preventAutoHideAsync()
+    } catch (error) {
+      console.error('App/SplashScreen/preventAutoHideAsync', { error })
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      SplashScreen.hideAsync()
+    } catch (error) {
+      console.error('App/SplashScreen/hideAsync', { error })
+    }
+  }, [isReady])
+
+  if (!isReady) return null
+
   return (
     <ErrorBoundary>
-      <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style='auto' />
-      </View>
+      <Navigator />
     </ErrorBoundary>
   )
 }
