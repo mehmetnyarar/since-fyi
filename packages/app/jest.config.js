@@ -4,10 +4,10 @@ module.exports = {
   projects: [
     {
       ...tsjPreset,
-      displayName: 'mobile:test',
+      displayName: 'app:test',
       preset: 'jest-expo',
       testEnvironment: 'node',
-      testMatch: ['**/__tests__/mobile/**/+(*.)+(spec|test).+(js|ts)?(x)'],
+      testMatch: ['**/__tests__/**/+(*.)+(spec|test).+(js|ts)?(x)'],
       transformIgnorePatterns: [
         'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)'
       ],
@@ -24,7 +24,7 @@ module.exports = {
       cacheDirectory: '.jest/cache'
     },
     {
-      displayName: 'mobile:lint',
+      displayName: 'app:lint',
       runner: 'jest-runner-eslint',
       testMatch: ['<rootDir>/**/*.{js,jsx,ts,tsx}'],
       testPathIgnorePatterns: [
@@ -35,7 +35,12 @@ module.exports = {
       ]
     }
   ],
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,tsx}'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{ts,tsx}',
+    '!<rootDir>/src/**/index.ts',
+    '!<rootDir>/src/app.tsx',
+    '!<rootDir>/src/navigation/**/*.{ts,tsx}'
+  ],
   coverageThreshold: {
     global: {
       statements: 75,
