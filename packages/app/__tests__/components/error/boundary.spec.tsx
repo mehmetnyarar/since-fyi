@@ -1,18 +1,14 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 import { Text } from 'react-native'
-import { ErrorBoundary } from '~/error-boundary'
-
-// #region Setup
+import { ErrorBoundary } from '~/components/error'
 
 const Child = () => <Text>You should see me!</Text>
 const ChildWithError = () => {
   throw new Error('There is an error!')
 }
 
-// #endregion
-
-describe('ErrorBoundary', () => {
+describe('components/error/boundary', () => {
   it('should render the children', () => {
     const { queryByText } = render(
       <ErrorBoundary>

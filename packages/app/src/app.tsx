@@ -1,24 +1,22 @@
+import { AppLoading } from 'expo'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { ErrorBoundary } from './error-boundary'
+import { Navigator } from '~/navigation'
+import { ErrorBoundary } from './components/error'
+import { useBoot } from './hooks/boot'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
-
+/**
+ * Application.
+ */
 export const App = () => {
+  const { isReady } = useBoot()
+
+  if (!isReady) return <AppLoading autoHideSplash />
+
   return (
     <ErrorBoundary>
-      <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style='auto' />
-      </View>
+      <Navigator />
+      <StatusBar style='auto' />
     </ErrorBoundary>
   )
 }
