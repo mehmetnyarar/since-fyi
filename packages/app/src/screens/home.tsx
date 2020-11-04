@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native'
+import { RouteProp, useTheme } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { Text } from 'react-native'
@@ -19,9 +19,11 @@ interface Props {
  * @returns <HomeScreen />
  */
 export const HomeScreen: React.FC<Props> = () => {
+  const { colors } = useTheme()
+
   return (
     <Layout>
-      <Text>This is HomeScreen.</Text>
+      <Text style={{ color: colors.text }}>This is HomeScreen.</Text>
     </Layout>
   )
 }

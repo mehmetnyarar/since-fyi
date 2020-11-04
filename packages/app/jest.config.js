@@ -39,6 +39,7 @@ module.exports = {
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/app.tsx',
+    '!<rootDir>/src/theme.ts',
     '!<rootDir>/src/navigation/*.{ts,tsx}'
   ],
   coverageThreshold: {
