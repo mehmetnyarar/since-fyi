@@ -1,25 +1,21 @@
 import { NavigationContainer } from '@react-navigation/native'
-import React, { useMemo } from 'react'
-import { ColorSchemeName } from 'react-native-appearance'
-import { DarkTheme, LightTheme } from '~/theme'
+import React from 'react'
+import { Theme } from '~/theme'
 import { RootNavigator } from './root'
 
 /**
  * <Navigator /> props.
  */
 interface Props {
-  scheme: ColorSchemeName
+  theme: Theme
 }
 
 /**
  * Application navigator.
+ * @param props Props.
  * @returns <Navigator />.
  */
-export const Navigator: React.FC<Props> = ({ scheme }) => {
-  const theme = useMemo(() => (scheme === 'dark' ? DarkTheme : LightTheme), [
-    scheme
-  ])
-
+export const Navigator: React.FC<Props> = ({ theme }) => {
   return (
     <NavigationContainer theme={theme}>
       <RootNavigator />

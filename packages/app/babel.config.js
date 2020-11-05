@@ -12,7 +12,9 @@ module.exports = function (api) {
           },
           extensions: ['.ts', '.tsx']
         }
-      ]
+      ],
+      // See https://styled-components.com/docs/tooling#babel-plugin
+      ['babel-plugin-styled-components', {}]
     ]
   }
 }

@@ -1,9 +1,9 @@
-import { RouteProp, useTheme } from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
-import { Text } from 'react-native'
 import { Layout } from '~/components/screen'
 import { RootStackParams } from '~/navigation'
+import { H1, Pressable } from '~/ui'
 
 /**
  * <HomeScreen /> props.
@@ -18,12 +18,18 @@ interface Props {
  * @param props Props.
  * @returns <HomeScreen />
  */
-export const HomeScreen: React.FC<Props> = () => {
-  const { colors } = useTheme()
-
+export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
-    <Layout>
-      <Text style={{ color: colors.text }}>This is HomeScreen.</Text>
+    <Layout flex={1} justifyContent='center' alignItems='center'>
+      <H1>This is HomeScreen.</H1>
+      <Pressable
+        variant='basic'
+        text='Go to event'
+        onPress={() => navigation.push('Event', { id: 'ab12cd34ef56' })}
+        marginTop={32}
+        disabled={false}
+        accessibilityLabel='Go to event'
+      />
     </Layout>
   )
 }
