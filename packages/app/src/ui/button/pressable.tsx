@@ -21,8 +21,6 @@ export interface PressableProps extends ViewProps, RNPressableProps {
 export const Styled = styled(RNPressable)<PressableProps>`
   height: 48px;
   border-radius: 4px;
-  border-width: 1px;
-  padding: 0 16px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -36,7 +34,7 @@ export const Styled = styled(RNPressable)<PressableProps>`
  * @returns <PressableButton />.
  */
 export const Pressable: React.FC<PressableProps> = props => {
-  const { text, ...pressableProps } = props
+  const { text, children, ...pressableProps } = props
 
   const [state, setState] = useState<ElementState>('default')
   const handlePressIn = useCallback(() => setState('active'), [])
@@ -46,6 +44,7 @@ export const Pressable: React.FC<PressableProps> = props => {
     <Styled
       {...pressableProps}
       state={state}
+      borderWidth={1}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       accessible
@@ -56,6 +55,7 @@ export const Pressable: React.FC<PressableProps> = props => {
           {text}
         </Typography>
       )}
+      {children}
     </Styled>
   )
 }

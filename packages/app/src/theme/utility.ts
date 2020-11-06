@@ -109,16 +109,16 @@ export const box = (
   const brtl = borderRadius || borderTopLeftRadius
 
   // border
-  const bc = String(borderColor || (style && state && style[state].borderColor))
+  const bcVariantState = style && state && style[state].borderColor
+  const bc = String(borderColor || bcVariantState)
   const bt = bc && (borderWidth || borderTopWidth)
   const br = bc && (borderWidth || borderRightWidth)
   const bb = bc && (borderWidth || borderBottomWidth)
   const bl = bc && (borderWidth || borderLeftWidth)
 
   // background
-  const bg = String(
-    backgroundColor || (style && state && style[state].backgroundColor)
-  )
+  const bgVariantState = style && state && style[state].backgroundColor
+  const bg = String(backgroundColor || bgVariantState)
 
   return css`
     ${flex && `flex: ${flex};`}
@@ -147,10 +147,10 @@ export const box = (
     ${pr && `padding-right: ${cssValue(pr, unit)};`}
     ${pb && `padding-bottom: ${cssValue(pb, unit)};`}
     ${pl && `padding-left: ${cssValue(pl, unit)};`}
-    ${brtr && `border-radius-top-right: ${cssValue(brtr, unit)};`}
-    ${brbr && `border-radius-bottom-right: ${cssValue(brbr, unit)};`}
-    ${brbl && `border-radius-bottom-left: ${cssValue(brbl, unit)};`}
-    ${brtl && `border-radius-top-left: ${cssValue(brtl, unit)};`}
+    ${brtr && `border-top-right-radius: ${cssValue(brtr, unit)};`}
+    ${brbr && `border-bottom-right-radius: ${cssValue(brbr, unit)};`}
+    ${brbl && `border-bottom-left-radius: ${cssValue(brbl, unit)};`}
+    ${brtl && `border-top-left-radius: ${cssValue(brtl, unit)};`}
     ${bt && `border-top-width: ${cssValue(bt, unit)};`}
     ${bt && `border-top-color: ${bc};`}
     ${br && `border-right-width: ${cssValue(br, unit)};`}

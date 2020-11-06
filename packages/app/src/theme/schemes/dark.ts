@@ -16,7 +16,7 @@ export const dark: Theme = {
     ...DarkTheme.colors,
     primary: palette.primary[500],
     text: palette.basic[800],
-    border: palette.basic[600]
+    border: palette.basic[500]
   },
   palette,
   variant

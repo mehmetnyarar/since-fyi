@@ -22,22 +22,25 @@ module.exports = {
         }
       },
       cacheDirectory: '.jest/cache'
-    },
-    {
-      displayName: 'app:lint',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/**/*.{js,jsx,ts,tsx}'],
-      testPathIgnorePatterns: [
-        '<rootDir>/__generated__',
-        '<rootDir>/.expo',
-        '<rootDir>/coverage',
-        '<rootDir>/App.tsx'
-      ]
     }
+    // {
+    //   displayName: 'app:lint',
+    //   runner: 'jest-runner-eslint',
+    //   testMatch: ['<rootDir>/**/*.{js,jsx,ts,tsx}'],
+    //   testPathIgnorePatterns: [
+    //     '<rootDir>/__generated__',
+    //     '<rootDir>/.expo',
+    //     '<rootDir>/coverage',
+    //     '<rootDir>/App.tsx'
+    //   ]
+    // }
   ],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/**/index.ts',
+    '!<rootDir>/src/**/const.ts',
+    '!<rootDir>/src/**/context.ts',
+    '!<rootDir>/src/**/provider.tsx',
     '!<rootDir>/src/app.tsx',
     '!<rootDir>/src/navigation/*.{ts,tsx}',
     '!<rootDir>/src/theme/**/*.ts',

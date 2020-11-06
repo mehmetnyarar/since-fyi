@@ -10,10 +10,13 @@ describe('components/screen/header', () => {
   })
 
   it('should render', () => {
-    const { debug, toJSON } = render(<Header />)
-    debug()
+    const { getByA11yLabel, getByTestId, toJSON } = render(<Header />)
 
     const json = toJSON()
     expect(json?.children).toHaveLength(2)
+
+    expect(getByA11yLabel(/header/i)).toBeTruthy()
+    expect(getByA11yLabel(/since/i)).toBeTruthy()
+    expect(getByTestId(/logo/i)).toBeTruthy()
   })
 })

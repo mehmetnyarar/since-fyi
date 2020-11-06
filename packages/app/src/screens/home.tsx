@@ -1,9 +1,9 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useCallback } from 'react'
+import { EventCreate } from '~/components/event'
 import { Layout } from '~/components/screen'
 import { RootStackParams } from '~/navigation'
-import { H1, Pressable } from '~/ui'
 
 /**
  * <HomeScreen /> props.
@@ -19,17 +19,17 @@ interface Props {
  * @returns <HomeScreen />
  */
 export const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  const handleCreate = useCallback(
+    (id: string) => {
+      console.debug('handleCreated', { id })
+      navigation.push('Event', { id })
+    },
+    [navigation]
+  )
+
   return (
-    <Layout flex={1} justifyContent='center' alignItems='center'>
-      <H1>This is HomeScreen.</H1>
-      <Pressable
-        variant='basic'
-        text='Go to event'
-        onPress={() => navigation.push('Event', { id: 'ab12cd34ef56' })}
-        marginTop={32}
-        disabled={false}
-        accessibilityLabel='Go to event'
-      />
+    <Layout>
+      <EventCreate onCreate={handleCreate} />
     </Layout>
   )
 }

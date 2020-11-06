@@ -1,3 +1,4 @@
+import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock'
 import '@testing-library/jest-native/extend-expect'
 import 'react-native-gesture-handler/jestSetup'
 
@@ -22,3 +23,14 @@ jest.mock('react-native-reanimated', () => {
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
 jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper')
+
+// Mock AsyncStorage
+jest.mock('@react-native-community/async-storage', () => mockAsyncStorage)
+
+// Mock nanoid
+jest.mock('nanoid/async/index.native', () => ({
+  nanoid: () => '123456'
+}))
+
+// Mock debug messages
+jest.spyOn(console, 'debug').mockImplementation(() => jest.fn())

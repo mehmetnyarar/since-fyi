@@ -12,9 +12,9 @@ export const light: Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: defaultPalette.primary[500],
-    text: defaultPalette.basic[800],
-    border: defaultPalette.basic[600]
+    primary: palette.primary[500],
+    text: palette.basic[800],
+    border: palette.basic[500]
   },
   palette,
   variant

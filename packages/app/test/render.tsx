@@ -4,18 +4,22 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { render as rtlRender } from '@testing-library/react-native'
 import React from 'react'
+import { EventManagerProvider } from '~/hooks/event-manager'
 import { light, Theme, ThemeProvider } from '~/theme'
-
-interface Screen {
-  name: string
-  component: React.FC<any>
-}
 
 /**
  * Render options.
  */
 interface RenderOptions {
   theme?: Theme
+}
+
+/**
+ * Screen.
+ */
+interface Screen {
+  name: string
+  component: React.FC<any>
 }
 
 /**
@@ -33,18 +37,23 @@ interface ScreenRenderOptions extends RenderOptions {
  */
 export const renderScreen = (options: ScreenRenderOptions) => {
   const { theme = light, main, next } = options
+  const Wrapper: React.FC = ({ children }) => (
+    <EventManagerProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </EventManagerProvider>
+  )
+
   const Stack = createStackNavigator()
 
   return {
     ...rtlRender(
-      <ThemeProvider theme={theme}>
-        <NavigationContainer theme={theme}>
-          <Stack.Navigator>
-            <Stack.Screen {...main} />
-            {next && <Stack.Screen {...next} />}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
+      <NavigationContainer theme={theme}>
+        <Stack.Navigator>
+          <Stack.Screen {...main} />
+          {next && <Stack.Screen {...next} />}
+        </Stack.Navigator>
+      </NavigationContainer>,
+      { wrapper: Wrapper }
     )
   }
 }
@@ -53,15 +62,16 @@ export const renderScreen = (options: ScreenRenderOptions) => {
  * Renderer non-screen components.
  */
 export const render = (ui: React.ReactElement, options: RenderOptions = {}) => {
-  const { theme = light, ...renderOptions } = options
+  const { theme = light } = options
   const Wrapper: React.FC = ({ children }) => (
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <EventManagerProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </EventManagerProvider>
   )
 
   return {
     ...rtlRender(ui, {
-      wrapper: Wrapper,
-      ...renderOptions
+      wrapper: Wrapper
     })
   }
 }

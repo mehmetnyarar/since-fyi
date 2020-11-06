@@ -25,10 +25,12 @@ export const EventScreen: React.FC<Props> = ({ route, navigation }) => {
       <Hint>{`Event ID: ${route.params.id}`}</Hint>
       <Pressable
         variant='basic'
+        paddingHorizontal={16}
         text='Go back'
         onPress={() => navigation.goBack()}
         marginTop={32}
         disabled={false}
+        accessibilityLabel='Go back'
       />
     </Layout>
   )

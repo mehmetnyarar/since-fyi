@@ -52,7 +52,7 @@ export const getVariant = (palette: ThemePalette): ThemeVariant => {
       color: palette.basic[100]
     },
     active: {
-      borderColor: palette.primary[500],
+      borderColor: palette.primary[600],
       backgroundColor: palette.primary[600],
       color: palette.basic[100]
     },

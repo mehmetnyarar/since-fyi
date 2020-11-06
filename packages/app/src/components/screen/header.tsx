@@ -59,7 +59,7 @@ export const Header: React.FC<Props> = () => {
       >
         Since
       </H1>
-      <Logo size={32} fill={textColor} />
+      <Logo size={32} fill={textColor} testID='logo' />
     </Gradient>
   )
 }

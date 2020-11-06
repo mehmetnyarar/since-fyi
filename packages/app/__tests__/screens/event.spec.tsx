@@ -5,20 +5,23 @@ import { HomeScreen } from '~/screens/home'
 
 describe('screens/event', () => {
   it('should render', async () => {
-    const { findByText } = renderScreen({
+    const { getByA11yLabel, findByA11yLabel } = renderScreen({
       main: { name: 'Home', component: HomeScreen },
       next: { name: 'Event', component: EventScreen }
     })
 
-    let button = await findByText(/Go to/)
-    expect(button).toBeTruthy()
-    fireEvent(button, 'onPress')
+    let input = getByA11yLabel(/Enter an event title/)
+    expect(input).toBeTruthy()
+    fireEvent.changeText(input, 'New event')
 
-    button = await findByText(/Go back/)
-    expect(button).toBeTruthy()
-    fireEvent(button, 'onPress')
+    const action = getByA11yLabel(/Add event/)
 
-    button = await findByText(/Go to/)
-    expect(button).toBeTruthy()
+    fireEvent.press(action)
+    const goBack = await findByA11yLabel(/Go back/)
+    expect(goBack).toBeTruthy()
+
+    fireEvent.press(goBack)
+    input = getByA11yLabel(/Enter an event title/)
+    expect(input).toBeTruthy()
   })
 })
