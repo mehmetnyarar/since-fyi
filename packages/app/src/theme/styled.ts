@@ -4,10 +4,11 @@ import { Theme } from './types'
 const {
   default: styled,
   css,
-  ThemeProvider
+  ThemeProvider,
+  useTheme
 } = (styledComponents as unknown) as styledComponents.ReactNativeThemedStyledComponentsModule<
   Theme
 >
 
-export { styled, css, ThemeProvider }
+export { styled, css, ThemeProvider, useTheme }
 export default styled

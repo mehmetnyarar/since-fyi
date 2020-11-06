@@ -16,6 +16,12 @@ interface Screen {
  */
 interface RenderOptions {
   theme?: Theme
+}
+
+/**
+ * Render options.
+ */
+interface ScreenRenderOptions extends RenderOptions {
   main: Screen
   next?: Screen
 }
@@ -25,7 +31,7 @@ interface RenderOptions {
  * @param ui Screen.
  * @param options Options.
  */
-export const renderScreen = (options: RenderOptions) => {
+export const renderScreen = (options: ScreenRenderOptions) => {
   const { theme = light, main, next } = options
   const Stack = createStackNavigator()
 
@@ -46,4 +52,16 @@ export const renderScreen = (options: RenderOptions) => {
 /**
  * Renderer non-screen components.
  */
-export { rtlRender as render }
+export const render = (ui: React.ReactElement, options: RenderOptions = {}) => {
+  const { theme = light, ...renderOptions } = options
+  const Wrapper: React.FC = ({ children }) => (
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  )
+
+  return {
+    ...rtlRender(ui, {
+      wrapper: Wrapper,
+      ...renderOptions
+    })
+  }
+}
