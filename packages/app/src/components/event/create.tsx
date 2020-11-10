@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid/async/index.native'
 import React, { useCallback, useContext, useState } from 'react'
 import { EventManagerContext, getEvent } from '~/hooks/event-manager'
-import { Title } from '../title'
+import { Title } from './title'
 
 /**
  * <EventCreate /> props.

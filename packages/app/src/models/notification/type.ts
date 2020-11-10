@@ -10,6 +10,11 @@ export interface Notification {
    */
   id?: string
   /**
+   * Notification preset.
+   * Format: {frequency}_{every}.
+   */
+  preset: string
+  /**
    * Notification frequency.
    */
   frequency: Frequency

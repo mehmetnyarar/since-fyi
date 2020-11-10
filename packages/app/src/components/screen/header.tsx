@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Platform } from 'react-native'
 import { styled, useTheme } from '~/theme'
-import { H1 } from '~/ui'
+import { Heading } from '~/ui'
 import { Logo } from './logo'
 
 /**
@@ -23,7 +23,7 @@ export const getHeight = (os: typeof Platform.OS) => {
 /**
  * Styled <LinearGradient />.
  */
-const Gradient = styled(LinearGradient)`
+const Container = styled(LinearGradient)`
   height: ${getHeight(Platform.OS)}px;
   display: flex;
   flex-direction: row;
@@ -41,25 +41,25 @@ interface Props extends Partial<StackHeaderProps> {}
  * @returns <Header />.
  */
 export const Header: React.FC<Props> = () => {
-  const { palette } = useTheme()
-  const textColor = palette.basic[100]
+  const { colors } = useTheme()
 
   return (
-    <Gradient
-      colors={[palette.primary[400], palette.primary[500]]}
+    <Container
+      colors={colors.header.back}
       accessible
       accessibilityRole='header'
       accessibilityLabel='Header'
     >
-      <H1
-        color={textColor}
+      <Heading
+        level={1}
+        color={colors.header.text}
         accessible
         accessibilityRole='text'
         accessibilityLabel='Since'
       >
         Since
-      </H1>
-      <Logo size={32} fill={textColor} testID='logo' />
-    </Gradient>
+      </Heading>
+      <Logo size={32} fill={colors.header.text} testID='logo' />
+    </Container>
   )
 }

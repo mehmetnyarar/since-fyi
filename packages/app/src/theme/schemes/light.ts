@@ -1,21 +1,30 @@
 import { DefaultTheme } from '@react-navigation/native'
-import { defaultPalette, getVariant } from '../colors'
+import { defaultPalette } from '../palette'
 import { Theme, ThemePalette } from '../types'
 
 const palette: ThemePalette = {
   ...defaultPalette
 }
 
-const variant = getVariant(palette)
-
 export const light: Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
     primary: palette.primary[500],
-    text: palette.basic[800],
-    border: palette.basic[500]
+    background: palette.basic[200],
+    card: palette.basic[100],
+    text: palette.basic[900],
+    hint: palette.basic[500],
+    border: palette.basic[300],
+    backdrop: 'rgba(50, 50, 50, 0.75)',
+    header: {
+      back: [palette.primary[400], palette.primary[500]],
+      text: palette.basic[100]
+    },
+    toolbar: {
+      back: [palette.primary[500], palette.primary[600]],
+      text: palette.basic[100]
+    }
   },
-  palette,
-  variant
+  palette
 }

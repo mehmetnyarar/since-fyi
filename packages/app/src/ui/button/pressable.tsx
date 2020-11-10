@@ -19,8 +19,6 @@ export interface PressableProps extends ViewProps, RNPressableProps {
  * @returns <Pressable />.
  */
 export const Styled = styled(RNPressable)<PressableProps>`
-  height: 48px;
-  border-radius: 4px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -42,19 +40,16 @@ export const Pressable: React.FC<PressableProps> = props => {
 
   return (
     <Styled
-      {...pressableProps}
       state={state}
-      borderWidth={1}
+      height={48}
+      borderRadius={4}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       accessible
       accessibilityRole='button'
+      {...pressableProps}
     >
-      {text && (
-        <Typography variant='inverted' state={state}>
-          {text}
-        </Typography>
-      )}
+      {text && <Typography state={state}>{text}</Typography>}
       {children}
     </Styled>
   )

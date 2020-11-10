@@ -1,6 +1,6 @@
-import { Theme as NavigationTheme } from '@react-navigation/native'
+import { Theme as RNTheme } from '@react-navigation/native'
 import { TextStyle, ViewStyle } from 'react-native'
-import { DefaultTheme } from 'styled-components'
+import { DefaultTheme as SCTheme } from 'styled-components'
 
 /**
  * Color palette.
@@ -29,7 +29,6 @@ export type ThemePalette = {
  */
 export type ColorVariant =
   | 'basic'
-  | 'inverted'
   | 'primary'
   | 'success'
   | 'info'
@@ -37,60 +36,85 @@ export type ColorVariant =
   | 'danger'
 
 /**
- * Element state.
+ * Element type.
  */
-export type ElementState = 'default' | 'active' | 'disabled'
+export type ElementType = 'box' | 'text'
 
 /**
- * Element style.
+ * Element state.
  */
-export interface ElementStyle {
+export type ElementState = 'default' | 'active'
+
+/**
+ * Element appearance.
+ */
+export type ElementAppearance = 'filled' | 'outlined' | 'transparent'
+
+/**
+ * Element styles.
+ */
+export interface ElementStyles {
   borderColor?: string
   backgroundColor?: string
   color?: string
 }
 
 /**
- * Variant style.
+ * Base theme.
  */
-export type VariantStyle = {
-  [K in ElementState]: ElementStyle
-}
-
-/**
- * Theme variant.
- */
-export type ThemeVariant = {
-  [K in ColorVariant]: VariantStyle
+export interface ThemeBase extends RNTheme, SCTheme {
+  colors: {
+    primary: string
+    background: string
+    card: string
+    text: string
+    hint: string
+    border: string
+    notification: string
+    backdrop: string
+    header: {
+      back: string[]
+      text: string
+    }
+    toolbar: {
+      back: string[]
+      text: string
+    }
+  }
 }
 
 /**
  * Theme.
  */
-export interface Theme extends DefaultTheme, NavigationTheme {
+export interface Theme extends ThemeBase {
   palette: ThemePalette
-  variant: ThemeVariant
 }
 
 /**
  * Theming props for any UI element.
  */
 export interface ThemeProps {
-  variant?: ColorVariant
   state?: ElementState
+  variant?: ColorVariant
+  appearance?: ElementAppearance
+  inverted?: boolean
 }
 
 /**
  * Box props.
  */
-export interface ViewProps extends ThemeProps, ViewStyle {}
+export interface ViewProps extends ThemeProps, ViewStyle {
+  hidden?: boolean
+}
 
 /**
  * Typography props.
  */
-export interface TextProps extends ThemeProps, TextStyle {}
+export interface TextProps extends ThemeProps, TextStyle {
+  hidden?: boolean
+}
 
 /**
  * CSS unit.
  */
-export type CssUnit = 'px' | 'em' | 'rem'
+export type CssUnit = '' | 'px' | 'em' | 'rem'

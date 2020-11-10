@@ -1,13 +1,24 @@
 import { ThemedStyledProps } from 'styled-components'
 import { css } from './styled'
-import { ColorPalette, CssUnit, TextProps, Theme, ViewProps } from './types'
+import {
+  ColorPalette,
+  ColorVariant,
+  CssUnit,
+  ElementAppearance,
+  ElementStyles,
+  ElementType,
+  TextProps,
+  Theme,
+  ThemePalette,
+  ViewProps
+} from './types'
 
 /**
  * Reverses the order of colors.
  * @param palette Palette.
  * @returns Palette.
  */
-export const reverse = (palette: ColorPalette): ColorPalette => {
+export const invertColors = (palette: ColorPalette): ColorPalette => {
   return {
     100: palette[900],
     200: palette[800],
@@ -21,16 +32,86 @@ export const reverse = (palette: ColorPalette): ColorPalette => {
   }
 }
 
+export const invertTheme = (theme: ThemePalette): ThemePalette => {
+  const keys = Object.keys(theme) as ColorVariant[]
+  const inverted = keys.reduce((result, variant) => {
+    result[variant] = invertColors(theme[variant])
+    return result
+  }, {} as Partial<ThemePalette>)
+
+  return inverted as ThemePalette
+}
+
+export const invert = (theme: ThemePalette): ThemePalette => {
+  return {
+    ...theme,
+    basic: invertColors(theme.basic)
+  }
+}
+
 /**
  * Calculates the CSS value.
  * @param value Value.
- * @param [unit="px"] Unit.
+ * @param [unit] Unit.
  * @returns CSS value.
  */
-const cssValue = (value?: number | string, unit: CssUnit = 'px') => {
-  if (!value) return undefined
-  if (typeof value === 'number') return `${value}${unit}`
-  return value
+const CSS = (prop: string, value?: number | string, unit?: CssUnit) => {
+  if (typeof value === 'undefined') return ''
+
+  if (typeof value === 'number' && unit) {
+    return `${prop}: ${value}${unit};`
+  }
+
+  return `${prop}: ${value};`
+}
+
+const isTransparent = (appearance?: ElementAppearance) => {
+  return appearance ? appearance === 'transparent' : false
+}
+
+const getElementStyles = (
+  type: ElementType,
+  props: ThemedStyledProps<ViewProps, Theme>
+): ElementStyles => {
+  const { theme, inverted, state, appearance, variant } = props
+
+  if (!variant) {
+    return {}
+  }
+
+  const basic = theme.palette.basic
+  const palette = theme.palette[variant]
+
+  switch (type) {
+    case 'box':
+      return {
+        borderColor: !isTransparent(appearance)
+          ? state === 'active'
+              ? palette[400]
+              : palette[500]
+          : undefined,
+        backgroundColor:
+          state === 'active'
+            ? palette[400]
+            : appearance === 'filled'
+              ? palette[500]
+              : undefined,
+        color:
+          appearance === 'filled'
+            ? state === 'active'
+                ? basic[100]
+                : palette[100]
+            : state === 'active'
+              ? palette[400]
+              : palette[500]
+      }
+    case 'text':
+      return {
+        color: inverted ? palette[100] : palette[900]
+      }
+    default:
+      return {}
+  }
 }
 
 /**
@@ -43,9 +124,20 @@ export const box = (
   props: ThemedStyledProps<ViewProps, Theme>,
   unit: CssUnit = 'px'
 ) => {
-  const { theme, variant, state, ...rest } = props
+  const { hidden } = props
+  if (hidden) {
+    return css`
+      ${'display: none;'}
+    `
+  }
 
   const {
+    appearance,
+    position,
+    top,
+    right,
+    bottom,
+    left,
     flex,
     flexWrap,
     flexBasis,
@@ -53,7 +145,9 @@ export const box = (
     display,
     flexDirection,
     justifyContent,
+    alignContent,
     alignItems,
+    alignSelf,
     width,
     minWidth,
     maxWidth,
@@ -86,80 +180,86 @@ export const box = (
     borderLeftWidth,
     borderColor,
     backgroundColor
-  } = rest
-
-  const style = variant && theme.variant[variant]
+  } = props
+  const styles = getElementStyles('box', props)
 
   // margin
-  const mt = margin || marginVertical || marginTop
-  const mr = margin || marginHorizontal || marginRight
-  const mb = margin || marginVertical || marginBottom
-  const ml = margin || marginHorizontal || marginLeft
+  const mt = marginTop || marginVertical || margin
+  const mr = marginRight || marginHorizontal || margin
+  const mb = marginBottom || marginVertical || margin
+  const ml = marginLeft || marginHorizontal || margin
 
   // padding
-  const pt = padding || paddingVertical || paddingTop
-  const pr = padding || paddingHorizontal || paddingRight
-  const pb = padding || paddingVertical || paddingBottom
-  const pl = padding || paddingHorizontal || paddingLeft
+  const pt = paddingTop || paddingVertical || padding
+  const pr = paddingRight || paddingHorizontal || padding
+  const pb = paddingBottom || paddingVertical || padding
+  const pl = paddingLeft || paddingHorizontal || padding
 
   // border radius
-  const brtr = borderRadius || borderTopRightRadius
-  const brbr = borderRadius || borderBottomRightRadius
-  const brbl = borderRadius || borderBottomLeftRadius
-  const brtl = borderRadius || borderTopLeftRadius
+  const brtr = borderTopRightRadius || borderRadius
+  const brbr = borderBottomRightRadius || borderRadius
+  const brbl = borderBottomLeftRadius || borderRadius
+  const brtl = borderTopLeftRadius || borderRadius
 
   // border
-  const bcVariantState = style && state && style[state].borderColor
-  const bc = String(borderColor || bcVariantState)
-  const bt = bc && (borderWidth || borderTopWidth)
-  const br = bc && (borderWidth || borderRightWidth)
-  const bb = bc && (borderWidth || borderBottomWidth)
-  const bl = bc && (borderWidth || borderLeftWidth)
+  const transparent = isTransparent(appearance)
+  const bw = borderWidth || Number(!transparent)
+  const bc = borderColor || styles.borderColor
+  const bt = bc ? bw || borderTopWidth : undefined
+  const br = bc ? bw || borderRightWidth : undefined
+  const bb = bc ? bw || borderBottomWidth : undefined
+  const bl = bc ? bw || borderLeftWidth : undefined
 
   // background
-  const bgVariantState = style && state && style[state].backgroundColor
-  const bg = String(backgroundColor || bgVariantState)
+  const bg = backgroundColor || styles.backgroundColor
+
+  const cssStyles = [
+    CSS('position', position),
+    CSS('top', top, unit),
+    CSS('right', right, unit),
+    CSS('bottom', bottom, unit),
+    CSS('left', left, unit),
+    CSS('flex', flex),
+    CSS('flex-wrap', flexWrap),
+    CSS('flex-basis', flexBasis, unit),
+    CSS('flex-shrink', flexShrink),
+    CSS('display', display),
+    CSS('flex-direction', flexDirection),
+    CSS('justify-content', justifyContent),
+    CSS('align-content', alignContent),
+    CSS('align-items', alignItems),
+    CSS('align-self', alignSelf),
+    CSS('width', width, unit),
+    CSS('min-width', minWidth, unit),
+    CSS('max-width', maxWidth, unit),
+    CSS('height', height, unit),
+    CSS('min-height', minHeight, unit),
+    CSS('max-height', maxHeight, unit),
+    CSS('margin-top', mt, unit),
+    CSS('margin-right', mr, unit),
+    CSS('margin-bottom', mb, unit),
+    CSS('margin-left', ml, unit),
+    CSS('padding-top', pt, unit),
+    CSS('padding-right', pr, unit),
+    CSS('padding-bottom', pb, unit),
+    CSS('padding-left', pl, unit),
+    CSS('border-top-right-radius', brtr, unit),
+    CSS('border-bottom-right-radius', brbr, unit),
+    CSS('border-bottom-left-radius', brbl, unit),
+    CSS('border-top-left-radius', brtl, unit),
+    CSS('border-top-width', bt, unit),
+    bt ? `border-top-color: ${String(bc)};` : undefined,
+    CSS('border-right-width', br, unit),
+    br ? `border-right-color: ${String(bc)};` : undefined,
+    CSS('border-bottom-width', bb, unit),
+    bb ? `border-bottom-color: ${String(bc)};` : undefined,
+    CSS('border-left-width', bl, unit),
+    bl ? `border-left-color: ${String(bc)};` : undefined,
+    CSS('background-color', bg ? String(bg) : undefined)
+  ].filter(value => Boolean(value))
 
   return css`
-    ${flex && `flex: ${flex};`}
-    ${flexWrap && `flex-wrap: ${flexWrap};`}
-    ${flexBasis && `flex-basis: ${flexBasis};`}
-    ${flexShrink && `flex-shrink: ${flexShrink};`}
-    ${display && `display: ${display};`}
-    ${flexDirection && `flex-direction: ${flexDirection};`}
-    ${justifyContent && `justify-content: ${justifyContent};`}
-    ${alignItems && `align-items: ${alignItems};`}
-    ${width && `width: ${cssValue(width, unit)};`}
-    ${minWidth && `min-width: ${cssValue(minWidth, unit)};`}
-    ${maxWidth && `max-width: ${cssValue(maxWidth, unit)};`}
-    ${height && `height: ${cssValue(height, unit)};`}
-    ${minHeight && `min-height: ${cssValue(minHeight, unit)};`}
-    ${maxHeight && `max-height: ${cssValue(maxHeight, unit)};`}
-    ${pt && `padding-top: ${cssValue(pt, unit)};`}
-    ${pr && `padding-right: ${cssValue(pr, unit)};`}
-    ${pb && `padding-bottom: ${cssValue(pb, unit)};`}
-    ${pl && `padding-left: ${cssValue(pl, unit)};`}
-    ${mt && `margin-top: ${cssValue(mt, unit)};`}
-    ${mr && `margin-right: ${cssValue(mr, unit)};`}
-    ${mb && `margin-bottom: ${cssValue(mb, unit)};`}
-    ${ml && `margin-left: ${cssValue(ml, unit)};`}
-    ${pt && `padding-top: ${cssValue(pt, unit)};`}
-    ${pr && `padding-right: ${cssValue(pr, unit)};`}
-    ${pb && `padding-bottom: ${cssValue(pb, unit)};`}
-    ${pl && `padding-left: ${cssValue(pl, unit)};`}
-    ${brtr && `border-top-right-radius: ${cssValue(brtr, unit)};`}
-    ${brbr && `border-bottom-right-radius: ${cssValue(brbr, unit)};`}
-    ${brbl && `border-bottom-left-radius: ${cssValue(brbl, unit)};`}
-    ${brtl && `border-top-left-radius: ${cssValue(brtl, unit)};`}
-    ${bt && `border-top-width: ${cssValue(bt, unit)};`}
-    ${bt && `border-top-color: ${bc};`}
-    ${br && `border-right-width: ${cssValue(br, unit)};`}
-    ${br && `border-right-color: ${bc};`}
-    ${bb && `border-bottom-width: ${cssValue(bb, unit)};`}
-    ${bb && `border-bottom-color: ${bc};`}
-    ${bl && `border-left-width: ${cssValue(bl, unit)};`}
-    ${bl && `border-left-color: ${bc};`}
-    ${bg && `background-color: ${bg};`}
+    ${cssStyles}
   `
 }
 
@@ -173,16 +273,27 @@ export const txt = (
   props: ThemedStyledProps<TextProps, Theme>,
   unit: CssUnit = 'px'
 ) => {
-  const { theme, variant, state, ...rest } = props
-  const { color, fontSize, fontStyle, fontWeight } = rest
+  const { hidden } = props
+  if (hidden) {
+    return css`
+      ${'display: none;'}
+    `
+  }
 
-  const style = variant && theme.variant[variant]
-  const c = color || (style && state && style[state].color) || theme.colors.text
+  const { theme, color, fontSize, fontStyle, fontWeight, textAlign } = props
+  const styles = getElementStyles('text', props)
+  const c = color || styles.color || theme.colors.text
+
+  const cssStyles = [
+    ...box(props),
+    CSS('color', String(c)),
+    CSS('font-size', fontSize, unit),
+    CSS('font-style', fontStyle),
+    CSS('font-weight', fontWeight),
+    CSS('text-align', textAlign)
+  ].filter(value => Boolean(value))
 
   return css`
-    ${c && `color: ${String(c)};`}
-    ${fontSize && `font-size: ${cssValue(fontSize, unit)};`}
-    ${fontStyle && `font-style: ${fontStyle};`}
-    ${fontWeight && `font-weight: ${fontWeight};`}
+    ${cssStyles}
   `
 }

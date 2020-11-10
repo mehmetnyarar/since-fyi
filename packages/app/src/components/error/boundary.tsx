@@ -52,7 +52,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const { message = 'Something went wrong!' } = this.props
 
       return (
-        <Layout>
+        <Layout flex={1} justifyContent='center' alignItems='center'>
           <Text style={styles.error}>{message}</Text>
         </Layout>
       )

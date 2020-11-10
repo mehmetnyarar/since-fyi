@@ -17,7 +17,7 @@ describe('screens/event', () => {
     const action = getByA11yLabel(/Add event/)
 
     fireEvent.press(action)
-    const goBack = await findByA11yLabel(/Go back/)
+    const goBack = await findByA11yLabel(/Cancel/)
     expect(goBack).toBeTruthy()
 
     fireEvent.press(goBack)

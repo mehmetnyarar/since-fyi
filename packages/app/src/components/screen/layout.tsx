@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, BoxProps } from '~/ui/box'
+import { Box, BoxProps } from '~/ui'
 
 /**
  * <Layout /> props.
@@ -12,5 +12,11 @@ interface Props extends BoxProps {}
  * @returns <ScreenLayout />.
  */
 export const Layout: React.FC<Props> = ({ children, ...boxProps }) => {
-  return <Box {...boxProps}>{children}</Box>
+  // const { colors } = useTheme()
+
+  return (
+    <Box {...boxProps} flex={1} position='relative'>
+      {children}
+    </Box>
+  )
 }

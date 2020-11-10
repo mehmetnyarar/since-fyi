@@ -1,9 +1,11 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
+import { EventUpdate } from '~/components/event'
 import { Layout } from '~/components/screen'
+import { EventManagerContext } from '~/hooks/event-manager'
 import { RootStackParams } from '~/navigation'
-import { H1, Hint, Pressable } from '~/ui'
+import { Loading } from '~/ui'
 
 /**
  * <EventScreen /> props.
@@ -19,19 +21,21 @@ interface Props {
  * @returns <EventScreen />
  */
 export const EventScreen: React.FC<Props> = ({ route, navigation }) => {
+  const { id } = route.params
+  const { select, current } = useContext(EventManagerContext)
+
+  const handleFinish = useCallback(() => {
+    select()
+    navigation.goBack()
+  }, [select, navigation])
+
+  useEffect(() => {
+    select(id)
+  }, [select, id])
+
   return (
-    <Layout flex={1} justifyContent='center' alignItems='center'>
-      <H1>This is EventScreen.</H1>
-      <Hint>{`Event ID: ${route.params.id}`}</Hint>
-      <Pressable
-        variant='basic'
-        paddingHorizontal={16}
-        text='Go back'
-        onPress={() => navigation.goBack()}
-        marginTop={32}
-        disabled={false}
-        accessibilityLabel='Go back'
-      />
+    <Layout>
+      {current ? <EventUpdate onFinish={handleFinish} /> : <Loading />}
     </Layout>
   )
 }

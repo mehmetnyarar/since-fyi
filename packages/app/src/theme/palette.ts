@@ -1,5 +1,4 @@
-import { ColorPalette, ThemePalette } from '../types'
-import { reverse } from '../utility'
+import { ColorPalette, ThemePalette } from './types'
 
 const basic: ColorPalette = {
   100: '#FFFFFF',
@@ -12,8 +11,6 @@ const basic: ColorPalette = {
   800: '#222B45',
   900: '#1A2138'
 }
-
-const inverted = reverse(basic)
 
 const primary: ColorPalette = {
   100: '#d3fbfd',
@@ -80,7 +77,6 @@ const danger: ColorPalette = {
  */
 export const defaultPalette: ThemePalette = {
   basic,
-  inverted,
   primary,
   success,
   info,

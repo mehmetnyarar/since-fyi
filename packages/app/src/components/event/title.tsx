@@ -1,11 +1,21 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
 import React, { useMemo } from 'react'
-import { TextInputProps } from 'react-native'
 import { EventAction } from '~/hooks/event-manager'
-import { useTheme } from '~/theme'
-import { HBox, Hint, Pressable, VBox } from '~/ui'
-import { Container } from './container'
-import { Input } from './input'
+import { styled, useTheme } from '~/theme'
+import { HBox, Hint, Pressable, TextInput, TextInputProps, VBox } from '~/ui'
+
+/**
+ * Styled <LinearGradient />.
+ */
+export const Container = styled(LinearGradient)`
+  height: 64px;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
 
 /**
  * <TextInput /> props except `value` and `onChange`
@@ -42,7 +52,7 @@ export const Title: React.FC<Props> = props => {
     ...inputProps
   } = props
 
-  const { palette } = useTheme()
+  const { colors } = useTheme()
 
   const actionIcon = useMemo(() => {
     return action === 'create' ? 'plus' : 'check'
@@ -56,32 +66,32 @@ export const Title: React.FC<Props> = props => {
 
   return (
     <Container
-      colors={[palette.primary[500], palette.primary[600]]}
+      colors={colors.toolbar.back}
       accessible
       accessibilityRole='header'
       accessibilityLabel='Event title'
     >
-      <Input
+      <TextInput
         {...inputProps}
+        flex={1}
         value={value}
         onChangeText={onChange}
         multiline={false}
         maxLength={maxLength}
         placeholder='Write something to remember'
-        placeholderTextColor={palette.basic[600]}
+        placeholderTextColor={colors.hint}
         accessible
         accessibilityLabel='Enter an event title'
       />
       {Boolean(value) && (
         <>
-          <VBox alignItems='flex-end' position='absolute' top={0} right={16}>
-            <Hint fontSize={8} color={palette.primary[300]}>
-              {`${charsLeft}/${maxLength}`}
-            </Hint>
+          <VBox position='absolute' top={0} right={16} alignItems='flex-end'>
+            <Hint>{`${charsLeft}/${maxLength}`}</Hint>
           </VBox>
           <HBox>
             <Pressable
               variant='primary'
+              appearance='filled'
               width={32}
               height={32}
               marginLeft={8}
@@ -93,11 +103,12 @@ export const Title: React.FC<Props> = props => {
               <MaterialCommunityIcons
                 name={actionIcon}
                 size={24}
-                color={palette.basic[100]}
+                color={colors.toolbar.text}
               />
             </Pressable>
             <Pressable
               variant='primary'
+              appearance='filled'
               width={32}
               height={32}
               marginLeft={8}
@@ -109,7 +120,7 @@ export const Title: React.FC<Props> = props => {
               <MaterialCommunityIcons
                 name='window-close'
                 size={20}
-                color={palette.basic[100]}
+                color={colors.toolbar.text}
               />
             </Pressable>
           </HBox>

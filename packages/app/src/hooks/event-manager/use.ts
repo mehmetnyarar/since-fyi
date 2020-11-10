@@ -146,11 +146,6 @@ export const useEventManager = (): EventManager => {
   useEffect(() => console.debug('EventManager/result', result), [result])
   useEffect(() => console.debug('EventManager/current', current), [current])
 
-  // Clear events on load
-  // useEffect(() => {
-  //   clear()
-  // }, [clear])
-
   return {
     loading,
     result,
