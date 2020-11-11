@@ -1,4 +1,6 @@
-import { styled } from '~/theme'
+import React from 'react'
+import { styled, useTheme } from '~/theme'
+import { Box } from './box'
 
 /**
  * Loading.
@@ -6,3 +8,16 @@ import { styled } from '~/theme'
  * @returns <Loading />.
  */
 export const Loading = styled.ActivityIndicator``
+
+/**
+ * Full-screen loading.
+ */
+export const FullScreenLoading: React.FC = () => {
+  const { colors } = useTheme()
+
+  return (
+    <Box flex={1} justifyContent='center' alignItems='center'>
+      <Loading animating size='large' color={colors.primary} />
+    </Box>
+  )
+}

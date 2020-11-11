@@ -9,15 +9,9 @@ describe('components/event/update', () => {
     Platform.OS = 'ios'
 
     const onFinish = jest.fn()
-    const { getByA11yLabel, getAllByA11yLabel, getByTestId } = render(
+    const { getByA11yLabel, queryByA11yLabel, getByTestId } = render(
       <EventUpdate onFinish={onFinish} />
     )
-
-    const confirms = getAllByA11yLabel(/Confirm/)
-    expect(confirms).toHaveLength(3)
-
-    const cancels = getAllByA11yLabel(/Cancel/)
-    expect(cancels).toHaveLength(3)
 
     const eventSettings = getByTestId('event-settings')
     expect(eventSettings.props.hidden).toBeTruthy()
@@ -34,17 +28,20 @@ describe('components/event/update', () => {
     expect(eventSettings.props.hidden).toBeFalsy()
 
     const startTrigger = getByA11yLabel(/Change the start date/)
-    const startDialog = getByA11yLabel(/Start Date/)
-    const startConfirm = confirms[0]
-    expect(startDialog.props.visible).toBeFalsy()
+
     fireEvent.press(startTrigger)
-    expect(startDialog.props.visible).toBeTruthy()
+    expect(getByA11yLabel(/Start Date/)).toBeTruthy()
+    const startConfirm = getByA11yLabel(/Confirm/)
+
     fireEvent.press(startConfirm)
-    expect(startDialog.props.visible).toBeFalsy()
+    expect(queryByA11yLabel(/Start Date/)).toBeFalsy()
+    expect(queryByA11yLabel(/Confirm/)).toBeFalsy()
 
     const notificationActive = getByA11yLabel(/Enable or disable notifications/)
     fireEvent(notificationActive, 'onValueChange', true)
     expect(notificationActive.props.value).toBeTruthy()
     expect(notificationSettings.props.hidden).toBeFalsy()
   })
+
+  test.todo('Create a test that renders for android')
 })

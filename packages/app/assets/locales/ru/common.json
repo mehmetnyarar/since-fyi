@@ -1,0 +1,9 @@
+{
+  "LANGUAGE.en": "English",
+  "LANGUAGE.ru": "Русский",
+  "LANGUAGE.tr": "Türkçe",
+  "_test": "Добро пожаловать!",
+  "language": "Язык",
+  "language.a11y": "Сменить язык",
+  "language.pick": "Выберите язык"
+}

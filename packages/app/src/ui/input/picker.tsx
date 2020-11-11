@@ -11,8 +11,8 @@ import { Dialog, DialogProps } from '../modal'
  */
 interface Props extends PressableProps {
   options: SelectOption[]
-  value?: number | string
-  onChange: (value?: number | string) => void
+  value?: string | number
+  onChange: (value?: string | number) => void
   dialogProps?: Partial<DialogProps>
   pickerProps?: Partial<PickerProps>
 }
@@ -52,35 +52,37 @@ export const PickerInput: React.FC<Props> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
-        {...pressableProps}
         text={String(value)}
         onPress={toggleVisible}
         accessible
         accessibilityRole='button'
+        {...pressableProps}
       />
-      <Dialog
-        {...dialogProps}
-        visible={visible}
-        onConfirm={handleConfirm}
-        onCancel={toggleVisible}
-      >
-        <Picker
-          {...pickerProps}
-          selectedValue={selected}
-          onValueChange={handleChange}
-          itemStyle={{ color: colors.text }}
-          accessible
-          accessibilityRole='spinbutton'
+      {visible && (
+        <Dialog
+          visible={visible}
+          onConfirm={handleConfirm}
+          onCancel={toggleVisible}
+          {...dialogProps}
         >
-          {options.map((option, index) => (
-            <Picker.Item
-              key={index}
-              label={option.label}
-              value={option.value}
-            />
-          ))}
-        </Picker>
-      </Dialog>
+          <Picker
+            selectedValue={selected}
+            onValueChange={handleChange}
+            itemStyle={{ color: colors.text }}
+            accessible
+            accessibilityRole='spinbutton'
+            {...pickerProps}
+          >
+            {options.map((option, index) => (
+              <Picker.Item
+                key={index}
+                label={option.label}
+                value={option.value}
+              />
+            ))}
+          </Picker>
+        </Dialog>
+      )}
     </>
   )
 }

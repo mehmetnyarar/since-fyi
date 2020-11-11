@@ -2,6 +2,7 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback } from 'react'
 import { EventCreate } from '~/components/event'
+import { LanguageSwitcher } from '~/components/i18n'
 import { Layout } from '~/components/screen'
 import { RootStackParams } from '~/navigation'
 
@@ -30,6 +31,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Layout>
       <EventCreate onCreate={handleCreate} />
+      <LanguageSwitcher debug />
     </Layout>
   )
 }

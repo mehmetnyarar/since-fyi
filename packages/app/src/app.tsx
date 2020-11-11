@@ -1,40 +1,53 @@
 import { AppLoading } from 'expo'
 import { StatusBar } from 'expo-status-bar'
-import React, { useMemo } from 'react'
+import React, { Suspense, useMemo } from 'react'
+import { I18nextProvider } from 'react-i18next'
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Navigator } from '~/navigation'
 import { ErrorBoundary } from './components/error'
 import { useBoot } from './hooks/boot'
 import { EventManagerProvider } from './hooks/event-manager'
-import { dark, light, ThemeProvider } from './theme'
+import { i18n } from './i18n'
+import { dark, light, ThemeProvider, useTheme } from './theme'
+import { FullScreenLoading } from './ui'
 
-const AppContainer: React.FC = ({ children }) => {
-  return (
-    <ErrorBoundary>
-      <AppearanceProvider>
-        <EventManagerProvider>{children}</EventManagerProvider>
-      </AppearanceProvider>
-    </ErrorBoundary>
-  )
-}
-
-const App: React.FC = () => {
-  const { isReady } = useBoot()
+/**
+ * Provides theme, i18n and data to the application.
+ */
+const OtherProviders: React.FC = ({ children }) => {
   const scheme = useColorScheme()
   const theme = useMemo(() => {
     return scheme === 'dark' ? dark : light
   }, [scheme])
 
-  if (!isReady) return <AppLoading autoHideSplash />
-
   return (
+    <ThemeProvider theme={theme}>
+      <I18nextProvider i18n={i18n}>
+        <EventManagerProvider>{children}</EventManagerProvider>
+      </I18nextProvider>
+    </ThemeProvider>
+  )
+}
+
+/**
+ * Application UI.
+ */
+const App: React.FC = () => {
+  const theme = useTheme()
+  const { isReady } = useBoot()
+
+  return isReady ? (
     <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
-        <Navigator theme={theme} />
-      </ThemeProvider>
+      <ErrorBoundary>
+        <Suspense fallback={<FullScreenLoading />}>
+          <Navigator theme={theme} />
+        </Suspense>
+      </ErrorBoundary>
       <StatusBar style='auto' />
     </SafeAreaProvider>
+  ) : (
+    <AppLoading autoHideSplash />
   )
 }
 
@@ -43,8 +56,10 @@ const App: React.FC = () => {
  */
 export default function Application () {
   return (
-    <AppContainer>
-      <App />
-    </AppContainer>
+    <AppearanceProvider>
+      <OtherProviders>
+        <App />
+      </OtherProviders>
+    </AppearanceProvider>
   )
 }

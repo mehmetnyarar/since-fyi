@@ -42,28 +42,30 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
-        {...pressableProps}
         text={formattedValue}
         onPress={toggleVisible}
         accessible
         accessibilityRole='button'
+        {...pressableProps}
       />
-      <Dialog
-        {...dialogProps}
-        visible={visible}
-        onConfirm={handleConfirm}
-        onCancel={toggleVisible}
-      >
-        <Picker
-          {...pickerProps}
-          mode={mode as never}
-          value={date || new Date()}
-          onChange={handleChange}
-          accessible
-          accessibilityRole='spinbutton'
-          accessibilityLabel='Change the date'
-        />
-      </Dialog>
+      {visible && (
+        <Dialog
+          visible={visible}
+          onConfirm={handleConfirm}
+          onCancel={toggleVisible}
+          {...dialogProps}
+        >
+          <Picker
+            mode={mode as never}
+            value={date || new Date()}
+            onChange={handleChange}
+            accessible
+            accessibilityRole='spinbutton'
+            accessibilityLabel='Change the date'
+            {...pickerProps}
+          />
+        </Dialog>
+      )}
     </>
   )
 }

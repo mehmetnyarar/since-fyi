@@ -52,32 +52,32 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
-        {...pressableProps}
         text={formattedValue}
         onPress={toggleVisible}
         accessible
         accessibilityRole='button'
+        {...pressableProps}
       />
       {dateVisible && (
         <Picker
-          {...pickerProps}
           mode='date'
           value={date || new Date()}
           onChange={handleDateChange}
           accessible
           accessibilityRole='spinbutton'
           accessibilityLabel='Change the date'
+          {...pickerProps}
         />
       )}
       {timeVisible && (
         <Picker
-          {...pickerProps}
           mode='time'
           value={date || new Date()}
           onChange={handleTimeChange}
           accessible
           accessibilityRole='spinbutton'
           accessibilityLabel='Change the time'
+          {...pickerProps}
         />
       )}
     </>

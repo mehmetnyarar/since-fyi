@@ -1,6 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React from 'react'
-import { Switch } from 'react-native'
 import { useEventForm } from '~/hooks/event-form'
 import { getSchedule } from '~/hooks/event-manager'
 import { styled, useTheme } from '~/theme'
@@ -11,6 +10,7 @@ import {
   Label,
   PickerInput,
   Pressable,
+  Switch,
   TextInput,
   VBox
 } from '~/ui'

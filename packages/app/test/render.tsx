@@ -4,7 +4,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { render as rtlRender } from '@testing-library/react-native'
 import React from 'react'
+import { I18nextProvider } from 'react-i18next'
 import { EventManagerProvider } from '~/hooks/event-manager'
+import { i18n } from '~/i18n'
 import { light, Theme, ThemeProvider } from '~/theme'
 
 /**
@@ -38,9 +40,11 @@ interface ScreenRenderOptions extends RenderOptions {
 export const renderScreen = (options: ScreenRenderOptions) => {
   const { theme = light, main, next } = options
   const Wrapper: React.FC = ({ children }) => (
-    <EventManagerProvider>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </EventManagerProvider>
+    <ThemeProvider theme={theme}>
+      <I18nextProvider i18n={i18n}>
+        <EventManagerProvider>{children}</EventManagerProvider>
+      </I18nextProvider>
+    </ThemeProvider>
   )
 
   const Stack = createStackNavigator()
@@ -64,9 +68,11 @@ export const renderScreen = (options: ScreenRenderOptions) => {
 export const render = (ui: React.ReactElement, options: RenderOptions = {}) => {
   const { theme = light } = options
   const Wrapper: React.FC = ({ children }) => (
-    <EventManagerProvider>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </EventManagerProvider>
+    <ThemeProvider theme={theme}>
+      <I18nextProvider i18n={i18n}>
+        <EventManagerProvider>{children}</EventManagerProvider>
+      </I18nextProvider>
+    </ThemeProvider>
   )
 
   return {
