@@ -2,7 +2,7 @@ import { fireEvent } from '@testing-library/react-native'
 import React from 'react'
 import { Platform } from 'react-native'
 import { render } from 'test/render'
-import { EventUpdate } from '~/components/event'
+import { EventUpsert } from '~/components/event/upsert'
 
 describe('components/event/update', () => {
   it('should render on ios for the default event', () => {
@@ -10,7 +10,7 @@ describe('components/event/update', () => {
 
     const onFinish = jest.fn()
     const { getByA11yLabel, queryByA11yLabel, getByTestId } = render(
-      <EventUpdate onFinish={onFinish} />
+      <EventUpsert onFinish={onFinish} />
     )
 
     const eventSettings = getByTestId('event-settings')

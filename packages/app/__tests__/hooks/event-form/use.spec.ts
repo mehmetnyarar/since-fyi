@@ -5,17 +5,19 @@ import { DEFAULT_EVENT, DEFAULT_PRESETS, Frequency, Schedule } from '~/models'
 describe('hooks/event-form/use', () => {
   it('should render', async () => {
     const event = DEFAULT_EVENT
-    const onSuccess = jest.fn()
+    const onCreate = jest.fn()
+    const onUpdate = jest.fn()
     jest.spyOn(console, 'warn')
 
     const { result, waitFor, waitForNextUpdate } = renderHook(() =>
       useEventForm({
-        onSuccess
+        event,
+        onCreate,
+        onUpdate
       })
     )
 
     expect(result.current.values).toEqual(event)
-    expect(result.current.loading).toBeFalsy()
     expect(result.current.presetOptions).toHaveLength(DEFAULT_PRESETS.length)
     expect(result.current.frequencyOptions).toHaveLength(
       Object.keys(Frequency).length
@@ -68,7 +70,7 @@ describe('hooks/event-form/use', () => {
     })
 
     waitFor(() => {
-      expect(onSuccess).toHaveBeenCalled()
+      expect(onCreate).toHaveBeenCalled()
     })
   })
 })

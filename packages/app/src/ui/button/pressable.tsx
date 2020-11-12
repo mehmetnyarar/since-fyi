@@ -3,13 +3,13 @@ import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps
 } from 'react-native'
-import { box, ElementState, styled, ViewProps } from '~/theme'
+import { box, ElementState, styled, TextProps, ViewProps } from '~/theme'
 import { Typography } from '../typography'
 
 /**
  * <Pressable /> props.
  */
-export interface PressableProps extends ViewProps, RNPressableProps {
+export interface PressableProps extends ViewProps, TextProps, RNPressableProps {
   text?: string
 }
 
@@ -32,7 +32,16 @@ export const Styled = styled(RNPressable)<PressableProps>`
  * @returns <PressableButton />.
  */
 export const Pressable: React.FC<PressableProps> = props => {
-  const { text, children, ...pressableProps } = props
+  const {
+    text,
+    color,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    textAlign,
+    children,
+    ...pressableProps
+  } = props
 
   const [state, setState] = useState<ElementState>('default')
   const handlePressIn = useCallback(() => setState('active'), [])
@@ -49,8 +58,19 @@ export const Pressable: React.FC<PressableProps> = props => {
       accessibilityRole='button'
       {...pressableProps}
     >
-      {text && <Typography state={state}>{text}</Typography>}
       {children}
+      {text && (
+        <Typography
+          state={state}
+          color={color}
+          fontSize={fontSize}
+          fontStyle={fontStyle}
+          fontWeight={fontWeight}
+          textAlign={textAlign}
+        >
+          {text}
+        </Typography>
+      )}
     </Styled>
   )
 }

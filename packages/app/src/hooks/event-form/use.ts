@@ -1,14 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTypedController } from '@hookform/strictly-typed'
 import merge from 'lodash/merge'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import { DEFAULT_EVENT, Event } from '~/models'
-import {
-  AT_VISIBILITY,
-  EventManagerContext,
-  ON_VISIBILITY
-} from '../event-manager'
+import { AT_VISIBILITY, ON_VISIBILITY } from '../event-manager'
 import { eventSchema } from './const'
 import { getFrequencyOptions, getPresetOptions, ON_OPTIONS } from './options'
 
@@ -16,7 +12,9 @@ import { getFrequencyOptions, getPresetOptions, ON_OPTIONS } from './options'
  * Event form options.
  */
 export interface EventFormOptions {
-  onSuccess?: () => void | Promise<void>
+  event?: Partial<Event>
+  onCreate: (event: Event) => void | Promise<void>
+  onUpdate: (event: Event) => void | Promise<void>
 }
 
 /**
@@ -24,13 +22,12 @@ export interface EventFormOptions {
  * @param options Options.
  * @returns Event form.
  */
-export const useEventForm = (options: EventFormOptions = {}) => {
-  const { onSuccess } = options
-  const { current, update, loading } = useContext(EventManagerContext)
+export const useEventForm = (options: EventFormOptions) => {
+  const { event = {}, onCreate, onUpdate } = options
 
   const form = useForm<Event>({
     resolver: yupResolver(eventSchema),
-    defaultValues: merge({}, DEFAULT_EVENT, current)
+    defaultValues: merge({}, DEFAULT_EVENT, event)
   })
 
   const { control, watch, setValue, handleSubmit } = form
@@ -67,13 +64,12 @@ export const useEventForm = (options: EventFormOptions = {}) => {
   }, [])
   const onValid = useCallback<SubmitHandler<Event>>(
     async values => {
-      const event = merge({}, DEFAULT_EVENT, current, values)
-      console.debug('onValid', { values, event })
-      await update(event)
+      const e = merge({}, DEFAULT_EVENT, event, values)
 
-      onSuccess && onSuccess()
+      if (e.id) await onUpdate(e)
+      else await onCreate(e)
     },
-    [update, current, onSuccess]
+    [event, onCreate, onUpdate]
   )
   const onSubmit = handleSubmit(onValid, onInvalid)
 
@@ -82,7 +78,6 @@ export const useEventForm = (options: EventFormOptions = {}) => {
     values,
     setValue,
     onSubmit,
-    loading,
     presetOptions,
     handlePresetChange,
     frequencyOptions,

@@ -1,9 +1,37 @@
 /**
- * Root stack parameters.
+ * Drawer navigation parameters.
  */
-export type RootStackParams = {
+export type DrawerNavigationParams = {
+  Main: undefined
+  About: undefined
+  Policy: {
+    type: 'privacy'
+  }
+  Settings: undefined
+}
+
+/**
+ * Main navigation parameters.
+ */
+export type MainNavigationParams = {
   Home: undefined
   Event: {
-    id: string
+    id?: string
   }
 }
+
+/**
+ * Application screen.
+ */
+export type AppScreen =
+  | 'Main'
+  | 'Home'
+  | 'Event'
+  | 'About'
+  | 'Policy'
+  | 'Settings'
+
+/**
+ * Initial screen to show.
+ */
+export type InitialScreen = Exclude<AppScreen, 'Home' | 'Event'>

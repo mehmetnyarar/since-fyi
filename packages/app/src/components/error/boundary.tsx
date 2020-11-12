@@ -1,8 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
-import { Layout } from '../screen'
+import { StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   error: {
     color: 'red'
   }
@@ -52,9 +56,9 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const { message = 'Something went wrong!' } = this.props
 
       return (
-        <Layout flex={1} justifyContent='center' alignItems='center'>
+        <View style={styles.container}>
           <Text style={styles.error}>{message}</Text>
-        </Layout>
+        </View>
       )
     }
 

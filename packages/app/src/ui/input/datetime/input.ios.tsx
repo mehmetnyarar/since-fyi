@@ -26,7 +26,7 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
   }, [])
 
   const as = useMemo(() => getDateFormat(mode), [mode])
-  const formattedValue = useMemo(() => formatDate(date, as), [date, as])
+  const formattedValue = useMemo(() => formatDate(value, as), [value, as])
 
   const [visible, setVisible] = useState(false)
   const toggleVisible = useCallback(() => setVisible(value => !value), [])

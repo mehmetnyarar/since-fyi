@@ -15,7 +15,7 @@ export const Heading: React.FC<Props> = props => {
   const fontSize = useMemo(() => 32 - (level - 1) * 4, [level])
 
   return (
-    <Typography {...typographyProps} fontSize={fontSize} fontWeight='bold'>
+    <Typography fontSize={fontSize} fontWeight='bold' {...typographyProps}>
       {children}
     </Typography>
   )

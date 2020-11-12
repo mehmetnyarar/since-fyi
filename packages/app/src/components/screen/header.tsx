@@ -1,9 +1,9 @@
-import { StackHeaderProps } from '@react-navigation/stack'
-import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
+import { useIsDrawerOpen } from '@react-navigation/drawer'
+import { DrawerActions, useNavigation } from '@react-navigation/native'
+import React, { useCallback, useMemo } from 'react'
 import { Platform } from 'react-native'
-import { styled, useTheme } from '~/theme'
-import { Heading } from '~/ui'
+import { useTheme } from '~/theme'
+import { GradientBox, HBox, Heading, Icon, Pressable } from '~/ui'
 import { Logo } from './logo'
 
 /**
@@ -20,21 +20,13 @@ export const getHeight = (os: typeof Platform.OS) => {
   }
 }
 
-/**
- * Styled <LinearGradient />.
- */
-const Container = styled(LinearGradient)`
-  height: ${getHeight(Platform.OS)}px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-end;
-`
+// NOTE Props should extend DrawerHeaderProps
+// but it's not exported from the `@react-navigation/drawer` package.
 
 /**
  * <Header /> props.
  */
-interface Props extends Partial<StackHeaderProps> {}
+interface Props {}
 
 /**
  * Screen header.
@@ -43,23 +35,50 @@ interface Props extends Partial<StackHeaderProps> {}
 export const Header: React.FC<Props> = () => {
   const { colors } = useTheme()
 
+  const { dispatch } = useNavigation()
+  const isDrawerOpen = useIsDrawerOpen()
+  const toggleDrawer = useCallback(() => {
+    dispatch(DrawerActions.toggleDrawer())
+  }, [dispatch])
+
+  const height = useMemo(() => getHeight(Platform.OS), [])
+
   return (
-    <Container
+    <GradientBox
       colors={colors.header.back}
+      position='relative'
+      height={height}
+      flexDirection='row'
+      justifyContent='center'
+      alignItems='flex-end'
       accessible
       accessibilityRole='header'
       accessibilityLabel='Header'
     >
-      <Heading
-        level={1}
-        color={colors.header.text}
-        accessible
-        accessibilityRole='text'
-        accessibilityLabel='Since'
+      <Pressable
+        position='absolute'
+        top={height / 2 + 6}
+        right={16}
+        onPress={toggleDrawer}
       >
-        Since
-      </Heading>
-      <Logo size={32} fill={colors.header.text} testID='logo' />
-    </Container>
+        <Icon
+          name={isDrawerOpen ? 'menu-open' : 'menu'}
+          size={32}
+          color={colors.header.text}
+        />
+      </Pressable>
+      <HBox>
+        <Heading
+          level={1}
+          color={colors.header.text}
+          accessible
+          accessibilityRole='text'
+          accessibilityLabel='Since'
+        >
+          Since
+        </Heading>
+        <Logo size={32} fill={colors.header.text} testID='logo' />
+      </HBox>
+    </GradientBox>
   )
 }

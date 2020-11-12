@@ -15,7 +15,7 @@ export interface EventManager {
   set: (events?: Event[]) => Promise<void>
   load: () => Promise<void>
   clear: () => Promise<void>
-  select: (id?: string) => void
+  select: (event?: string | Event) => void
   current?: Event
   create: (event: Event) => Promise<void>
   update: (event: Event) => Promise<void>

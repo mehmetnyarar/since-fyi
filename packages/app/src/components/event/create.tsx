@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid/async/index.native'
 import React, { useCallback, useContext, useState } from 'react'
 import { EventManagerContext, getEvent } from '~/hooks/event-manager'
 import { Title } from './title'
@@ -7,7 +6,7 @@ import { Title } from './title'
  * <EventCreate /> props.
  */
 interface Props {
-  onCreate: (id: string) => void | Promise<void>
+  onCreate: () => void
 }
 
 /**
@@ -16,19 +15,17 @@ interface Props {
  * @returns <EventCreate />.
  */
 export const EventCreate: React.FC<Props> = ({ onCreate }) => {
-  const { create, loading } = useContext(EventManagerContext)
+  const { select, loading } = useContext(EventManagerContext)
 
   const [title, setTitle] = useState('')
   const handleChange = useCallback((value: string) => setTitle(value), [])
   const handleCancel = useCallback(() => setTitle(''), [])
   const handleAction = useCallback(async () => {
-    const id = await nanoid(6)
-    const event = getEvent({ id, title })
-    console.debug('EventCreate/handleAction', { event })
+    const e = getEvent({ title })
 
-    await create(event)
-    onCreate(id)
-  }, [title, create, onCreate])
+    select(e)
+    onCreate()
+  }, [title, select, onCreate])
 
   return (
     <Title

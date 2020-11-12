@@ -1,8 +1,9 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { useEventForm } from '~/hooks/event-form'
-import { getSchedule } from '~/hooks/event-manager'
-import { styled, useTheme } from '~/theme'
+import { EventManagerContext, getSchedule } from '~/hooks/event-manager'
+import { Event } from '~/models'
+import { useTheme } from '~/theme'
 import {
   DateTimeInput,
   Divider,
@@ -10,6 +11,7 @@ import {
   Label,
   PickerInput,
   Pressable,
+  ScrollBox,
   Switch,
   TextInput,
   VBox
@@ -17,28 +19,41 @@ import {
 import { ArrayUtils, getTime, setTime } from '~/utility'
 import { Title } from './title'
 
-export const Container = styled.ScrollView``
-
 /**
- * <EventUpdate /> props.
+ * <EventUpsert /> props.
  */
 interface Props {
   onFinish: () => void | Promise<void>
 }
 
 /**
- * Allows user to update an existing event.
+ * Allows user to create a new event or update an existing event.
  * @param props Props.
- * @returns <EventUpdate />.
+ * @returns <EventUpsert />.
  */
-export const EventUpdate: React.FC<Props> = ({ onFinish }) => {
+export const EventUpsert: React.FC<Props> = ({ onFinish }) => {
   const { colors } = useTheme()
+  const { current, create, update, loading } = useContext(EventManagerContext)
+
+  const handleCreate = useCallback(
+    async (event: Event) => {
+      await create(event)
+      onFinish()
+    },
+    [create, onFinish]
+  )
+
+  const handleUpdate = useCallback(
+    async (event: Event) => {
+      await update(event)
+    },
+    [update]
+  )
 
   const {
     TypedController,
     values,
     onSubmit,
-    loading,
     presetOptions,
     handlePresetChange,
     frequencyOptions,
@@ -46,13 +61,15 @@ export const EventUpdate: React.FC<Props> = ({ onFinish }) => {
     isOnVisible,
     onOptions
   } = useEventForm({
-    onSuccess: onFinish
+    event: current,
+    onCreate: handleCreate,
+    onUpdate: handleUpdate
   })
 
   const { active, notification } = values
 
   return (
-    <Container>
+    <ScrollBox>
       <TypedController
         name='title'
         render={({ value, onChange }) => {
@@ -91,7 +108,6 @@ export const EventUpdate: React.FC<Props> = ({ onFinish }) => {
       <VBox hidden={!active} testID='event-settings'>
         <TypedController
           name='start'
-          defaultValue={new Date()}
           render={({ value, onChange }) => (
             <HBox
               padding={16}
@@ -222,24 +238,23 @@ export const EventUpdate: React.FC<Props> = ({ onFinish }) => {
                     {schedules.map((schedule, index) => {
                       return (
                         <HBox key={index} justifyContent='space-between'>
-                          {isOnVisible && (
-                            <PickerInput
-                              width={96}
-                              options={onOptions}
-                              value={schedule.on}
-                              onChange={value =>
-                                onChange(
-                                  ArrayUtils.replace(
-                                    schedules,
-                                    index,
-                                    Object.assign({}, schedule, {
-                                      on: value
-                                    })
-                                  )
-                                )}
-                              accessibilityLabel='Schedule on'
-                            />
-                          )}
+                          <PickerInput
+                            hidden={!isOnVisible}
+                            width={96}
+                            options={onOptions}
+                            value={schedule.on}
+                            onChange={value =>
+                              onChange(
+                                ArrayUtils.replace(
+                                  schedules,
+                                  index,
+                                  Object.assign({}, schedule, {
+                                    on: value
+                                  })
+                                )
+                              )}
+                            accessibilityLabel='Schedule on'
+                          />
                           <DateTimeInput
                             alignSelf='flex-end'
                             mode='time'
@@ -268,6 +283,6 @@ export const EventUpdate: React.FC<Props> = ({ onFinish }) => {
           </VBox>
         </VBox>
       </VBox>
-    </Container>
+    </ScrollBox>
   )
 }

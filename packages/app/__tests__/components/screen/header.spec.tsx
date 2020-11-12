@@ -1,6 +1,5 @@
-import React from 'react'
-import { render } from 'test/render'
-import { getHeight, Header } from '~/components/screen'
+import { renderScreen } from 'test/render'
+import { getHeight } from '~/components/screen'
 
 describe('components/screen/header', () => {
   it('should determine the height', () => {
@@ -10,10 +9,7 @@ describe('components/screen/header', () => {
   })
 
   it('should render', () => {
-    const { getByA11yLabel, getByTestId, toJSON } = render(<Header />)
-
-    const json = toJSON()
-    expect(json?.children).toHaveLength(2)
+    const { getByA11yLabel, getByTestId } = renderScreen()
 
     expect(getByA11yLabel(/header/i)).toBeTruthy()
     expect(getByA11yLabel(/since/i)).toBeTruthy()

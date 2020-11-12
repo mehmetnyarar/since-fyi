@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { render } from 'test/render'
 import { Title } from '~/components/event/title'
 import { EventAction } from '~/hooks/event-manager'
+import { EVENT_TITLE_MAX_LENGTH } from '~/models'
 
 // #region Setup
 
@@ -11,10 +12,9 @@ const onCancel = jest.fn()
 
 interface Props {
   action: EventAction
-  maxLength?: number
 }
 
-const Component: React.FC<Props> = ({ action, maxLength }) => {
+const Component: React.FC<Props> = ({ action }) => {
   const [value, setValue] = useState('')
 
   return (
@@ -25,7 +25,6 @@ const Component: React.FC<Props> = ({ action, maxLength }) => {
       loading={false}
       value={value}
       onChange={setValue}
-      maxLength={maxLength}
     />
   )
 }
@@ -43,9 +42,13 @@ describe('components/event/title', () => {
     const input = getByA11yLabel(/Enter an event title/)
     expect(input).toBeTruthy()
 
-    fireEvent.changeText(input, 'New event')
-    expect(input.props.value).toBe('New event')
-    expect(getByText('26/35')).toBeTruthy()
+    const value = 'New event'
+    const charsLeft = EVENT_TITLE_MAX_LENGTH - value.length
+    const charsLeftText = `${charsLeft}/${EVENT_TITLE_MAX_LENGTH}`
+
+    fireEvent.changeText(input, value)
+    expect(input.props.value).toBe(value)
+    expect(getByText(charsLeftText)).toBeTruthy()
 
     const action = getByA11yLabel(/Add event/)
     expect(action).toBeTruthy()
@@ -61,16 +64,18 @@ describe('components/event/title', () => {
   })
 
   it('should render (update)', () => {
-    const { getByText, getByA11yLabel } = render(
-      <Component action='update' maxLength={50} />
-    )
+    const { getByText, getByA11yLabel } = render(<Component action='update' />)
 
     const input = getByA11yLabel(/Enter an event title/)
     expect(input).toBeTruthy()
 
-    fireEvent.changeText(input, 'Existing event')
-    expect(input.props.value).toBe('Existing event')
-    expect(getByText('36/50')).toBeTruthy()
+    const value = 'Existing event'
+    const charsLeft = EVENT_TITLE_MAX_LENGTH - value.length
+    const charsLeftText = `${charsLeft}/${EVENT_TITLE_MAX_LENGTH}`
+
+    fireEvent.changeText(input, value)
+    expect(input.props.value).toBe(value)
+    expect(getByText(charsLeftText)).toBeTruthy()
 
     const action = getByA11yLabel(/Update event/)
     expect(action).toBeTruthy()

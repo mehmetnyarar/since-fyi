@@ -44,7 +44,7 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
   )
 
   const as = useMemo(() => getDateFormat(mode), [mode])
-  const formattedValue = useMemo(() => formatDate(date, as), [date, as])
+  const formattedValue = useMemo(() => formatDate(value, as), [value, as])
 
   return (
     <>

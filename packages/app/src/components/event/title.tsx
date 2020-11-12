@@ -1,32 +1,15 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
 import React, { useMemo } from 'react'
 import { EventAction } from '~/hooks/event-manager'
-import { styled, useTheme } from '~/theme'
-import { HBox, Hint, Pressable, TextInput, TextInputProps, VBox } from '~/ui'
-
-/**
- * Styled <LinearGradient />.
- */
-export const Container = styled(LinearGradient)`
-  height: 64px;
-  padding: 0 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`
-
-/**
- * <TextInput /> props except `value` and `onChange`
- * which are handled in the component.
- */
-type InputProps = Omit<TextInputProps, 'value' | 'onChange'>
+import { EVENT_TITLE_MAX_LENGTH as MAX_LENGTH } from '~/models'
+import { useTheme } from '~/theme'
+import { HBox, Hint, Pressable, TextInput, VBox } from '~/ui'
+import { Toolbar } from '../screen'
 
 /**
  * <Title /> props.
  */
-interface Props extends InputProps {
+interface Props {
   action: EventAction
   onAction: () => void | Promise<void>
   onCancel: () => void | Promise<void>
@@ -41,43 +24,24 @@ interface Props extends InputProps {
  * @returns <Title />.
  */
 export const Title: React.FC<Props> = props => {
-  const {
-    action,
-    onAction,
-    onCancel,
-    loading,
-    value = '',
-    onChange,
-    maxLength = 35,
-    ...inputProps
-  } = props
+  const { action, onAction, onCancel, loading, value = '', onChange } = props
 
   const { colors } = useTheme()
-
-  const actionIcon = useMemo(() => {
-    return action === 'create' ? 'plus' : 'check'
-  }, [action])
-  const actionLabel = useMemo(() => {
-    return action === 'create' ? 'Add event' : 'Update event'
-  }, [action])
-  const charsLeft = useMemo(() => {
-    return maxLength - value.length
-  }, [value, maxLength])
+  const charsLeft = useMemo(() => MAX_LENGTH - value.length, [value])
 
   return (
-    <Container
+    <Toolbar
       colors={colors.toolbar.back}
       accessible
       accessibilityRole='header'
       accessibilityLabel='Event title'
     >
       <TextInput
-        {...inputProps}
         flex={1}
         value={value}
         onChangeText={onChange}
         multiline={false}
-        maxLength={maxLength}
+        maxLength={MAX_LENGTH}
         placeholder='Write something to remember'
         placeholderTextColor={colors.hint}
         accessible
@@ -86,7 +50,13 @@ export const Title: React.FC<Props> = props => {
       {Boolean(value) && (
         <>
           <VBox position='absolute' top={0} right={16} alignItems='flex-end'>
-            <Hint>{`${charsLeft}/${maxLength}`}</Hint>
+            <Hint
+              accessible
+              accessibilityRole='summary'
+              accessibilityLabel='Characters'
+            >
+              {`${charsLeft}/${MAX_LENGTH}`}
+            </Hint>
           </VBox>
           <HBox>
             <Pressable
@@ -98,10 +68,12 @@ export const Title: React.FC<Props> = props => {
               borderRadius={16}
               onPress={onAction}
               disabled={loading}
-              accessibilityLabel={actionLabel}
+              accessibilityLabel={
+                action === 'create' ? 'Add event' : 'Update event'
+              }
             >
               <MaterialCommunityIcons
-                name={actionIcon}
+                name={action === 'create' ? 'plus' : 'check'}
                 size={24}
                 color={colors.toolbar.text}
               />
@@ -126,6 +98,6 @@ export const Title: React.FC<Props> = props => {
           </HBox>
         </>
       )}
-    </Container>
+    </Toolbar>
   )
 }

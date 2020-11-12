@@ -58,9 +58,14 @@ export const useEventManager = (): EventManager => {
    * Sets the current event.
    */
   const select = useCallback(
-    (id?: string) => {
-      const e = id ? result?.find(e => e.id === id) : undefined
-      setCurrent(e)
+    (event?: string | Event) => {
+      setCurrent(
+        typeof event === 'string'
+          ? result
+              ? result.find(item => item.id === event)
+              : undefined
+          : event
+      )
     },
     [result]
   )

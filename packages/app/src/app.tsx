@@ -9,7 +9,7 @@ import { ErrorBoundary } from './components/error'
 import { useBoot } from './hooks/boot'
 import { EventManagerProvider } from './hooks/event-manager'
 import { i18n } from './i18n'
-import { dark, light, ThemeProvider, useTheme } from './theme'
+import { dark, light, ThemeProvider } from './theme'
 import { FullScreenLoading } from './ui'
 
 /**
@@ -34,14 +34,13 @@ const OtherProviders: React.FC = ({ children }) => {
  * Application UI.
  */
 const App: React.FC = () => {
-  const theme = useTheme()
   const { isReady } = useBoot()
 
   return isReady ? (
     <SafeAreaProvider>
       <ErrorBoundary>
         <Suspense fallback={<FullScreenLoading />}>
-          <Navigator theme={theme} />
+          <Navigator />
         </Suspense>
       </ErrorBoundary>
       <StatusBar style='auto' />

@@ -12,3 +12,8 @@ export const DEFAULT_EVENT: Event = {
   active: false,
   notification: DEFAULT_NOTIFICATION
 }
+
+/**
+ * Maximum number of characters that the user is allowed to enter.
+ */
+export const EVENT_TITLE_MAX_LENGTH = 35

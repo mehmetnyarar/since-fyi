@@ -1,18 +1,17 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { EventUpdate } from '~/components/event'
+import { EventUpsert } from '~/components/event'
 import { Layout } from '~/components/screen'
 import { EventManagerContext } from '~/hooks/event-manager'
-import { RootStackParams } from '~/navigation'
-import { Loading } from '~/ui'
+import { MainNavigationParams } from '~/navigation'
 
 /**
  * <EventScreen /> props.
  */
 interface Props {
-  route: RouteProp<RootStackParams, 'Event'>
-  navigation: StackNavigationProp<RootStackParams, 'Event'>
+  route: RouteProp<MainNavigationParams, 'Event'>
+  navigation: StackNavigationProp<MainNavigationParams, 'Event'>
 }
 
 /**
@@ -22,7 +21,7 @@ interface Props {
  */
 export const EventScreen: React.FC<Props> = ({ route, navigation }) => {
   const { id } = route.params
-  const { select, current } = useContext(EventManagerContext)
+  const { select } = useContext(EventManagerContext)
 
   const handleFinish = useCallback(() => {
     select()
@@ -35,7 +34,7 @@ export const EventScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <Layout>
-      {current ? <EventUpdate onFinish={handleFinish} /> : <Loading />}
+      <EventUpsert onFinish={handleFinish} />
     </Layout>
   )
 }
