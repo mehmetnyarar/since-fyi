@@ -55,11 +55,27 @@ jest.mock('react-i18next', () => {
       i18n: {
         language: 'en',
         changeLanguage: async (language: string) => {
-          console.debug(language)
+          console.log(language)
         }
       }
     })
   }
+})
+
+jest.mock('@react-native-community/datetimepicker', () => {
+  const React = require('React')
+  const RealComponent = jest.requireActual(
+    '@react-native-community/datetimepicker'
+  )
+
+  class Picker extends React.Component {
+    render () {
+      return React.createElement('Picker', this.props, this.props.children)
+    }
+  }
+
+  Picker.propTypes = RealComponent.propTypes
+  return Picker
 })
 
 jest.mock('@react-native-community/picker', () => {

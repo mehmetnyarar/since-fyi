@@ -1,15 +1,17 @@
 import { ScrollViewProps } from 'react-native'
-import { box, styled } from '~/theme'
+import { getViewStyles, styled } from '~/theme'
 import { BoxProps } from '../box'
 
 /**
- * <ScrollBox /> props.
+ * &lt;ScrollBox /> props.
  */
 export interface ScrollBoxProps extends BoxProps, ScrollViewProps {}
 
 /**
  * ScrollBox.
+ * @param props Props.
+ * @returns &lt;ScrollBox />.
  */
 export const ScrollBox = styled.ScrollView<ScrollBoxProps>`
-  ${props => box(props)}
+  ${props => getViewStyles(props)}
 `

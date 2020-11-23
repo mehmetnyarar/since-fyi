@@ -1,9 +1,8 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { EventUpsert } from '~/components/event'
 import { Layout } from '~/components/screen'
-import { EventManagerContext } from '~/hooks/event-manager'
 import { MainNavigationParams } from '~/navigation'
 
 /**
@@ -17,24 +16,16 @@ interface Props {
 /**
  * Event screen.
  * @param props Props.
- * @returns <EventScreen />
+ * @returns &lt;EventScreen />
  */
-export const EventScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { id } = route.params
-  const { select } = useContext(EventManagerContext)
-
-  const handleFinish = useCallback(() => {
-    select()
+export const EventScreen: React.FC<Props> = ({ navigation }) => {
+  const handleGoBack = useCallback(() => {
     navigation.goBack()
-  }, [select, navigation])
-
-  useEffect(() => {
-    select(id)
-  }, [select, id])
+  }, [navigation])
 
   return (
     <Layout>
-      <EventUpsert onFinish={handleFinish} />
+      <EventUpsert onSuccess={handleGoBack} onCancel={handleGoBack} />
     </Layout>
   )
 }

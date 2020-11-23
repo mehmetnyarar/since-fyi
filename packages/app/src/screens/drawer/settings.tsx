@@ -3,10 +3,9 @@ import { RouteProp } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from '~/components/i18n'
+import { Row } from '~/components/row'
 import { Layout } from '~/components/screen'
 import { DrawerNavigationParams } from '~/navigation'
-import { useTheme } from '~/theme'
-import { Divider, HBox, Label } from '~/ui'
 
 /**
  * <SettingsScreen /> props.
@@ -19,23 +18,16 @@ interface Props {
 /**
  * Application settings.
  * @param props Props.
- * @returns <SettingsScreen />.
+ * @returns &lt;SettingsScreen />.
  */
 export const SettingsScreen: React.FC<Props> = () => {
-  const { colors } = useTheme()
   const { t } = useTranslation()
 
   return (
     <Layout title={t('settings')}>
-      <HBox
-        padding={16}
-        backgroundColor={colors.card}
-        justifyContent='space-between'
-      >
-        <Label>{t('language')}</Label>
+      <Row label={t('language')}>
         <LanguageSwitcher />
-      </HBox>
-      <Divider />
+      </Row>
     </Layout>
   )
 }

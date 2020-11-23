@@ -8,6 +8,7 @@ describe('hooks/boot', () => {
     const Wrapper: React.FC = ({ children }) => (
       <EventManagerProvider>{children}</EventManagerProvider>
     )
+
     const { result, waitForNextUpdate } = renderHook(() => useBoot(), {
       wrapper: Wrapper
     })

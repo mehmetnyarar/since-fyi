@@ -3,7 +3,7 @@ import { Event } from '~/models'
 /**
  * Event action.
  */
-export type EventAction = 'create' | 'update'
+export type EventAction = 'create' | 'update' | 'upsert'
 
 /**
  * EventManager.

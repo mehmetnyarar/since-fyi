@@ -1,5 +1,11 @@
 import * as yup from 'yup'
-import { Event, Frequency, Notification, Schedule } from '~/models'
+import {
+  Event,
+  EVENT_TITLE_MAX_LENGTH,
+  Frequency,
+  Reminder,
+  Schedule
+} from '~/models'
 
 /**
  * Regular expression for HH:mm.
@@ -7,24 +13,24 @@ import { Event, Frequency, Notification, Schedule } from '~/models'
 export const timeRegexp = /^([0-1]\d|2[0-3]):[0-5]\d$/
 
 /**
- * Time schema.
+ * Schedule schema.
  */
-export const timeSchema = yup.object<Schedule>({
-  on: yup.number(),
+export const scheduleSchema = yup.object<Schedule>({
+  month: yup.number(),
+  day: yup.number(),
   time: yup.string().matches(timeRegexp).required(),
-  active: yup.boolean()
+  isActive: yup.boolean().defined()
 })
 
 /**
- * Notification schema.
+ * Reminder schema.
  */
-export const notificationSchema = yup.object<Notification>({
-  id: yup.string(),
+export const reminderSchema = yup.object<Reminder>({
+  notificationId: yup.string(),
   preset: yup.string(),
   frequency: yup.string().required().oneOf(Object.values(Frequency)),
   every: yup.number().required().min(1),
-  at: yup.array().defined().of(timeSchema.required()),
-  active: yup.boolean()
+  schedules: yup.array().of(scheduleSchema.required()).required()
 })
 
 /**
@@ -32,9 +38,9 @@ export const notificationSchema = yup.object<Notification>({
  */
 export const eventSchema = yup.object<Event>({
   id: yup.string(),
-  title: yup.string().required().max(35),
+  title: yup.string().required().max(EVENT_TITLE_MAX_LENGTH),
   start: yup.date(),
-  ago: yup.number(),
-  active: yup.boolean(),
-  notification: notificationSchema.required()
+  isActive: yup.boolean().defined(),
+  hasReminder: yup.boolean().defined(),
+  reminder: reminderSchema.nullable(true)
 })

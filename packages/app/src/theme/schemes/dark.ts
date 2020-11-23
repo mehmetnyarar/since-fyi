@@ -1,9 +1,9 @@
 import { DarkTheme } from '@react-navigation/native'
 import { defaultPalette } from '../palette'
 import { Theme } from '../types'
-import { invert } from '../utility'
+import { invertBasic } from '../utility'
 
-const palette = invert(defaultPalette)
+const palette = invertBasic(defaultPalette)
 
 export const dark: Theme = {
   ...DarkTheme,

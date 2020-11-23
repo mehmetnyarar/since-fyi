@@ -1,18 +1,26 @@
 import { TextInputProps as RNTextInputProps } from 'react-native'
-import { box, styled, TextProps, txt, ViewProps } from '~/theme'
+import {
+  getTextStyles,
+  getViewStyles,
+  styled,
+  TextProps,
+  ViewProps
+} from '~/theme'
+
+type SafeViewProps = Omit<ViewProps, 'style'>
 
 /**
- * <TextInput /> props.
+ * &lt;TextInput /> props.
  */
 export interface TextInputProps
-  extends ViewProps,
-    TextProps,
-    RNTextInputProps {}
+  extends RNTextInputProps,
+    SafeViewProps,
+    TextProps {}
 
 /**
  * TextInput.
  * @param props Props.
- * @returns <TextInput />.
+ * @returns &lt;TextInput />.
  */
 export const TextInput = styled.TextInput<TextInputProps>`
   height: 32px;
@@ -20,6 +28,6 @@ export const TextInput = styled.TextInput<TextInputProps>`
   padding: 8px 16px;
   background: ${props => props.theme.colors.background};
   color: ${props => props.theme.colors.text};
-  ${props => box(props)}
-  ${props => txt(props)}
+  ${props => getViewStyles(props)}
+  ${props => getTextStyles(props)}
 `

@@ -1,12 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTypedController } from '@hookform/strictly-typed'
 import merge from 'lodash/merge'
-import { useCallback, useMemo } from 'react'
+import { nanoid } from 'nanoid/async/index.native'
+import { useCallback, useEffect, useMemo } from 'react'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { DEFAULT_EVENT, Event } from '~/models'
-import { AT_VISIBILITY, ON_VISIBILITY } from '../event-manager'
+import { DEFAULT_EVENT, Event, getReminder } from '~/models'
 import { eventSchema } from './const'
-import { getFrequencyOptions, getPresetOptions, ON_OPTIONS } from './options'
 
 /**
  * Event form options.
@@ -30,34 +29,19 @@ export const useEventForm = (options: EventFormOptions) => {
     defaultValues: merge({}, DEFAULT_EVENT, event)
   })
 
-  const { control, watch, setValue, handleSubmit } = form
+  const { control, watch, handleSubmit, setValue } = form
   const TypedController = useTypedController<Event>({
     control
   })
 
   const values = useMemo<Event>(watch, [watch])
-  const { active, frequency } = values.notification
+  const { start, hasReminder, reminder } = values
 
-  const presetOptions = useMemo(() => getPresetOptions(), [])
-  const handlePresetChange = useCallback(
-    (value: string) => {
-      const parts = value.split('_')
-      setValue('notification.frequency', parts[0])
-      setValue('notification.every', parts[1])
-    },
-    [setValue]
-  )
-
-  const frequencyOptions = useMemo(() => getFrequencyOptions(), [])
-  const isAtVisible = useMemo(
-    () => active && AT_VISIBILITY.includes(frequency),
-    [active, frequency]
-  )
-  const onOptions = useMemo(() => ON_OPTIONS[frequency], [frequency])
-  const isOnVisible = useMemo(
-    () => active && ON_VISIBILITY.includes(frequency),
-    [active, frequency]
-  )
+  useEffect(() => {
+    if (hasReminder && !reminder) {
+      setValue('reminder', getReminder(start))
+    }
+  }, [start, hasReminder, reminder, setValue])
 
   const onInvalid = useCallback<SubmitErrorHandler<Event>>(errors => {
     console.warn('onInvalid', { errors })
@@ -67,22 +51,16 @@ export const useEventForm = (options: EventFormOptions) => {
       const e = merge({}, DEFAULT_EVENT, event, values)
 
       if (e.id) await onUpdate(e)
-      else await onCreate(e)
+      else await onCreate(merge({}, e, { id: await nanoid(6) }))
     },
     [event, onCreate, onUpdate]
   )
   const onSubmit = handleSubmit(onValid, onInvalid)
 
   return {
+    ...form,
     TypedController,
     values,
-    setValue,
-    onSubmit,
-    presetOptions,
-    handlePresetChange,
-    frequencyOptions,
-    isAtVisible,
-    isOnVisible,
-    onOptions
+    onSubmit
   }
 }

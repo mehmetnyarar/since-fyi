@@ -2,16 +2,16 @@ import { Schedule } from '../schedule'
 import { Frequency } from './enum'
 
 /**
- * Since notification.
+ * Since reminder.
  */
-export interface Notification {
+export interface Reminder {
   /**
    * Notification ID.
+   * @see https://docs.expo.io/versions/latest/sdk/notifications/#scheduling-notifications.
    */
-  id?: string
+  notificationId?: string
   /**
-   * Notification preset.
-   * Format: {frequency}_{every}.
+   * Preset.
    */
   preset: string
   /**
@@ -19,8 +19,7 @@ export interface Notification {
    */
   frequency: Frequency
   /**
-   * Repetition value for the notification frequency,
-   * e.g. every **45** _MINUTE_, every **(1)** _DAY_,
+   * Repetition value; e.g. every **45** _MINUTE_, every **(1)** _DAY_,
    * every **2** _WEEK_, every **3** _MONTH_, etc.
    */
   every: number
@@ -28,9 +27,10 @@ export interface Notification {
    * Specifies the times for the notifications to be sent.
    * Can be specified for the frequencies: DAY and above.
    */
-  at: Schedule[]
-  /**
-   * Indicates whether sending notifications are enabled or not.
-   */
-  active: boolean
+  schedules: Schedule[]
 }
+
+/**
+ * Reminder preset.
+ */
+export type ReminderPreset = Pick<Reminder, 'frequency' | 'every'>

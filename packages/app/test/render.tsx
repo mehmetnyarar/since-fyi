@@ -5,10 +5,13 @@ import React from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { EventManagerProvider } from '~/hooks/event-manager'
 import { i18n } from '~/i18n'
-import { InitialScreen, Navigator } from '~/navigation'
+import { InitialParams, InitialScreen, Navigator } from '~/navigation'
 import { light, ThemeProvider } from '~/theme'
 
-const Wrapper: React.FC = ({ children }) => (
+/**
+ * Context providers.
+ */
+const Providers: React.FC = ({ children }) => (
   <ThemeProvider theme={light}>
     <I18nextProvider i18n={i18n}>
       <EventManagerProvider>{children}</EventManagerProvider>
@@ -17,25 +20,25 @@ const Wrapper: React.FC = ({ children }) => (
 )
 
 /**
- * Renderer for screens.
+ * Renders a screen.
  * @param name Screen name.
  * @param params Screen parameters.
  */
-export const renderScreen = (name?: InitialScreen) => {
+export const renderScreen = (name?: InitialScreen, params?: InitialParams) => {
   return {
-    ...rtlRender(<Navigator initialScreen={name} />, {
-      wrapper: Wrapper
+    ...rtlRender(<Navigator initialScreen={name} initialParams={params} />, {
+      wrapper: Providers
     })
   }
 }
 
 /**
- * Renderer non-screen components.
+ * Renders a non-screen component.
  */
 export const render = (ui: React.ReactElement) => {
   return {
     ...rtlRender(ui, {
-      wrapper: Wrapper
+      wrapper: Providers
     })
   }
 }

@@ -39,6 +39,8 @@ module.exports = {
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/const.ts',
+    '!<rootDir>/src/**/enum.ts',
+    '!<rootDir>/src/**/type.ts',
     '!<rootDir>/src/**/context.ts',
     '!<rootDir>/src/**/provider.tsx',
     '!<rootDir>/src/app.tsx',

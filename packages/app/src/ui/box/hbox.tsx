@@ -4,7 +4,7 @@ import { Box, BoxProps } from './box'
 /**
  * Horizontal box.
  * @param props Props.
- * @returns <HBox />.
+ * @returns &lt;HBox />.
  */
 export const HBox: React.FC<BoxProps> = ({ children, ...boxProps }) => {
   return (

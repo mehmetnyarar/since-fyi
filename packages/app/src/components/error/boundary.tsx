@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
 })
 
 /**
- * <ErrorBoundary /> props.
+ * &lt;ErrorBoundary /> props.
  */
 interface Props {
   message?: string
 }
 
 /**
- * <ErrorBoundary /> state.
+ * &lt;ErrorBoundary /> state.
  */
 interface State {
   hasError?: boolean
@@ -28,8 +28,11 @@ interface State {
 
 /**
  * Error boundary.
+ * @param props Props.
+ * @returns &lt;ErrorBoundary />.
  * @see https://reactjs.org/docs/error-boundaries.html.
- * @returns <ErrorBoundary />.
+ * @todo Implement theme.
+ * @todo Implement i18n.
  */
 export class ErrorBoundary extends React.Component<Props, State> {
   constructor (props: Props) {

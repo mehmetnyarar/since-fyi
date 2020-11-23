@@ -7,7 +7,7 @@ import { DateTimeInputProps } from './types'
 /**
  * DateTime input for Android devices.
  * @param props Props.
- * @returns <DateTimeInputAndroid />.
+ * @returns &lt;DateTimeInputAndroid />.
  */
 export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
   const { mode, value, onChange, pickerProps = {}, ...pressableProps } = props
@@ -27,8 +27,11 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
     (_: unknown, value?: Date) => {
       setDateVisible(false)
 
-      if (value) setDate(value)
-      if (value && mode.includes('time')) setTimeVisible(true)
+      if (!value) return
+
+      setDate(value)
+
+      if (mode.includes('time')) setTimeVisible(true)
       else onChange(value)
     },
     [mode, onChange]
@@ -37,7 +40,9 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
     (_: unknown, value?: Date) => {
       setTimeVisible(false)
 
-      if (value) setDate(value)
+      if (!value) return
+
+      setDate(value)
       onChange(value)
     },
     [onChange]
@@ -52,6 +57,7 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
+        borderRadius={4}
         text={formattedValue}
         onPress={toggleVisible}
         accessible
@@ -65,7 +71,6 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
           onChange={handleDateChange}
           accessible
           accessibilityRole='spinbutton'
-          accessibilityLabel='Change the date'
           {...pickerProps}
         />
       )}
@@ -76,7 +81,6 @@ export const DateTimeInputAndroid: React.FC<DateTimeInputProps> = props => {
           onChange={handleTimeChange}
           accessible
           accessibilityRole='spinbutton'
-          accessibilityLabel='Change the time'
           {...pickerProps}
         />
       )}

@@ -1,45 +1,60 @@
+import omit from 'lodash/omit'
 import React, { useCallback, useState } from 'react'
 import {
   Pressable as RNPressable,
   PressableProps as RNPressableProps
 } from 'react-native'
-import { box, ElementState, styled, TextProps, ViewProps } from '~/theme'
+import {
+  ElementState,
+  getViewStyles,
+  styled,
+  TextProps,
+  ViewProps
+} from '~/theme'
 import { Typography } from '../typography'
 
+type SafeViewProps = Omit<ViewProps, 'style' | 'hitSlop'>
+type SafeTextProps = Omit<TextProps, 'style' | 'onPress' | 'onLongPress'>
+
 /**
- * <Pressable /> props.
+ * &lt;Pressable /> props.
  */
-export interface PressableProps extends ViewProps, TextProps, RNPressableProps {
+export interface PressableProps
+  extends RNPressableProps,
+    SafeViewProps,
+    SafeTextProps {
   text?: string
 }
 
 /**
  * Pressable.
  * @param props Props.
- * @returns <Pressable />.
+ * @returns &lt;Pressable />.
  */
 export const Styled = styled(RNPressable)<PressableProps>`
+  height: 48px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  ${props => box(props)}
+  ${props =>
+    getViewStyles(omit(props, ['hitSlop', 'onPress', 'onLongPress', 'style']))}
 `
 
 /**
- * Pressable button.
+ * Pressable.
  * @param props Props.
- * @returns <PressableButton />.
+ * @returns &lt;Pressable />.
  */
 export const Pressable: React.FC<PressableProps> = props => {
   const {
     text,
+    children,
     color,
     fontSize,
     fontStyle,
     fontWeight,
     textAlign,
-    children,
     ...pressableProps
   } = props
 
@@ -50,8 +65,6 @@ export const Pressable: React.FC<PressableProps> = props => {
   return (
     <Styled
       state={state}
-      height={48}
-      borderRadius={4}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       accessible
@@ -59,7 +72,7 @@ export const Pressable: React.FC<PressableProps> = props => {
       {...pressableProps}
     >
       {children}
-      {text && (
+      {Boolean(text) && (
         <Typography
           state={state}
           color={color}

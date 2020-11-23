@@ -1,13 +1,18 @@
 import { useIsDrawerOpen } from '@react-navigation/drawer'
+import { DrawerHeaderProps } from '@react-navigation/drawer/lib/typescript/src/types'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { useTheme } from '~/theme'
 import { GradientBox, HBox, Heading, Icon, Pressable } from '~/ui'
 import { Logo } from './logo'
 
+// Can be used in two places:
+// Layout component or DrawerNavigator.screenOptions.header
+
 /**
- * Determines the height of the header based on platform.
+ * Determines the height of the header based on the platform.
  */
 export const getHeight = (os: typeof Platform.OS) => {
   switch (os) {
@@ -20,22 +25,21 @@ export const getHeight = (os: typeof Platform.OS) => {
   }
 }
 
-// NOTE Props should extend DrawerHeaderProps
-// but it's not exported from the `@react-navigation/drawer` package.
-
 /**
- * <Header /> props.
+ * &lt;Header /> props.
  */
-interface Props {}
+interface Props extends Partial<DrawerHeaderProps> {}
 
 /**
  * Screen header.
- * @returns <Header />.
+ * @param props Props.
+ * @returns &lt;Header />.
  */
 export const Header: React.FC<Props> = () => {
   const { colors } = useTheme()
+  const { t } = useTranslation()
 
-  const { dispatch } = useNavigation()
+  const { dispatch, navigate } = useNavigation()
   const isDrawerOpen = useIsDrawerOpen()
   const toggleDrawer = useCallback(() => {
     dispatch(DrawerActions.toggleDrawer())
@@ -48,37 +52,55 @@ export const Header: React.FC<Props> = () => {
       colors={colors.header.back}
       position='relative'
       height={height}
+      padding={16}
+      paddingTop={48}
       flexDirection='row'
-      justifyContent='center'
-      alignItems='flex-end'
+      justifyContent='space-between'
+      alignItems='center'
       accessible
       accessibilityRole='header'
-      accessibilityLabel='Header'
+      accessibilityLabel={t('header')}
     >
       <Pressable
-        position='absolute'
-        top={height / 2 + 6}
-        right={16}
-        onPress={toggleDrawer}
+        width={32}
+        height={32}
+        borderRadius={8}
+        variant='primary'
+        appearance='transparent'
+        onPress={() => navigate('Home')}
+        accessibilityHint={t('home.hint')}
+        accessibilityLabel={t('home')}
       >
-        <Icon
-          name={isDrawerOpen ? 'menu-open' : 'menu'}
-          size={32}
-          color={colors.header.text}
-        />
+        <Logo size={24} fill={colors.header.text} testID='app.logo' />
       </Pressable>
-      <HBox>
+      <HBox flex={1} justifyContent='center'>
         <Heading
           level={1}
           color={colors.header.text}
+          textAlign='center'
           accessible
           accessibilityRole='text'
-          accessibilityLabel='Since'
+          accessibilityLabel={t('app.name')}
         >
-          Since
+          {t('app.name')}
         </Heading>
-        <Logo size={32} fill={colors.header.text} testID='logo' />
       </HBox>
+      <Pressable
+        width={32}
+        height={32}
+        borderRadius={8}
+        variant='primary'
+        appearance='transparent'
+        onPress={toggleDrawer}
+        accessibilityHint={t('menu.toggle.hint')}
+        accessibilityLabel={t('menu.toggle')}
+      >
+        <Icon
+          name={isDrawerOpen ? 'menu-open' : 'menu'}
+          size={24}
+          color={colors.header.text}
+        />
+      </Pressable>
     </GradientBox>
   )
 }

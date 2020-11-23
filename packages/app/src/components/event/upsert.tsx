@@ -1,72 +1,55 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useCallback, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useEventForm } from '~/hooks/event-form'
-import { EventManagerContext, getSchedule } from '~/hooks/event-manager'
+import { EventManagerContext } from '~/hooks/event-manager'
 import { Event } from '~/models'
-import { useTheme } from '~/theme'
-import {
-  DateTimeInput,
-  Divider,
-  HBox,
-  Label,
-  PickerInput,
-  Pressable,
-  ScrollBox,
-  Switch,
-  TextInput,
-  VBox
-} from '~/ui'
-import { ArrayUtils, getTime, setTime } from '~/utility'
-import { Title } from './title'
+import { DateTimeInput, ScrollBox, Switch, VBox } from '~/ui'
+import { Row } from '../row'
+import { EventReminder } from './reminder'
+import { EventTitle } from './title'
 
 /**
- * <EventUpsert /> props.
+ * &lt;EventUpsert /> props.
  */
 interface Props {
-  onFinish: () => void | Promise<void>
+  event?: Event
+  onSuccess: () => void | Promise<void>
+  onCancel: () => void | Promise<void>
 }
 
 /**
  * Allows user to create a new event or update an existing event.
  * @param props Props.
- * @returns <EventUpsert />.
+ * @returns &lt;EventUpsert />.
  */
-export const EventUpsert: React.FC<Props> = ({ onFinish }) => {
-  const { colors } = useTheme()
+export const EventUpsert: React.FC<Props> = props => {
+  const { event, onSuccess, onCancel } = props
+
+  const { t } = useTranslation()
+
   const { current, create, update, loading } = useContext(EventManagerContext)
-
   const handleCreate = useCallback(
-    async (event: Event) => {
-      await create(event)
-      onFinish()
+    async (value: Event) => {
+      await create(value)
+      onSuccess()
     },
-    [create, onFinish]
+    [create, onSuccess]
   )
-
   const handleUpdate = useCallback(
-    async (event: Event) => {
-      await update(event)
+    async (value: Event) => {
+      await update(value)
     },
     [update]
   )
 
-  const {
-    TypedController,
-    values,
-    onSubmit,
-    presetOptions,
-    handlePresetChange,
-    frequencyOptions,
-    isAtVisible,
-    isOnVisible,
-    onOptions
-  } = useEventForm({
-    event: current,
+  const { TypedController, onSubmit, values } = useEventForm({
+    event: event || current,
     onCreate: handleCreate,
     onUpdate: handleUpdate
   })
 
-  const { active, notification } = values
+  const { start, isActive, hasReminder } = values
+  console.debug('Upsert/render', { values })
 
   return (
     <ScrollBox>
@@ -74,10 +57,10 @@ export const EventUpsert: React.FC<Props> = ({ onFinish }) => {
         name='title'
         render={({ value, onChange }) => {
           return (
-            <Title
-              action='update'
+            <EventTitle
+              action='upsert'
               onAction={onSubmit}
-              onCancel={onFinish}
+              onCancel={onCancel}
               loading={loading}
               value={value}
               onChange={onChange}
@@ -86,202 +69,79 @@ export const EventUpsert: React.FC<Props> = ({ onFinish }) => {
         }}
       />
       <TypedController
-        name='active'
+        name='isActive'
         render={({ value, onChange }) => (
-          <HBox
-            padding={16}
-            backgroundColor={colors.card}
-            justifyContent='space-between'
-          >
-            <Label>Active</Label>
+          <Row label={t('event.active')}>
             <Switch
               value={value}
               onValueChange={onChange}
               accessible
               accessibilityRole='switch'
-              accessibilityLabel='Pause or activate event'
+              accessibilityHint={t('event.active.hint')}
+              accessibilityLabel={t('event.active')}
             />
-          </HBox>
+          </Row>
         )}
       />
-      <Divider />
-      <VBox hidden={!active} testID='event-settings'>
+      <VBox
+        hidden={!isActive}
+        accessible
+        accessibilityHint={t('event.settings.hint')}
+        accessibilityLabel={t('event.settings')}
+      >
         <TypedController
           name='start'
           render={({ value, onChange }) => (
-            <HBox
-              padding={16}
-              backgroundColor={colors.card}
-              justifyContent='space-between'
-            >
-              <Label>Date</Label>
+            <Row label={t('event.start')}>
               <DateTimeInput
                 mode='datetime'
                 value={value}
                 onChange={onChange}
-                accessibilityLabel='Change the start date'
-                dialogProps={{ title: 'Start Date' }}
+                accessibilityHint={t('event.start.hint')}
+                accessibilityLabel={t('event.start')}
+                dialogProps={{
+                  title: t('event.start'),
+                  cancelLabel: t('dialog.cancel'),
+                  confirmLabel: t('dialog.confirm')
+                }}
+                pickerProps={{
+                  accessibilityRole: t('event.start.pick.hint'),
+                  accessibilityLabel: t('event.start.pick')
+                }}
               />
-            </HBox>
+            </Row>
           )}
         />
-        <Divider />
         <TypedController
-          name={['notification', 'active']}
+          name='hasReminder'
           render={({ value, onChange }) => {
             return (
-              <HBox
-                padding={16}
-                backgroundColor={colors.card}
-                justifyContent='space-between'
-              >
-                <Label>Remind me</Label>
+              <Row hidden={!isActive} label={t('reminder.active')}>
                 <Switch
                   value={value}
                   onValueChange={onChange}
-                  accessible
-                  accessibilityRole='switch'
-                  accessibilityLabel='Enable or disable notifications'
+                  accessibilityHint={t('reminder.active.hint')}
+                  accessibilityLabel={t('reminder.active')}
                 />
-              </HBox>
+              </Row>
             )
           }}
         />
-        <Divider />
-        <VBox hidden={!notification.active} testID='notification-settings'>
-          <HBox
-            padding={16}
-            backgroundColor={colors.card}
-            justifyContent='space-between'
-          >
-            <Label>Every</Label>
-            <VBox>
-              <TypedController
-                name={['notification', 'preset']}
-                render={({ value, onChange }) => (
-                  <PickerInput
-                    options={presetOptions}
-                    value={value}
-                    onChange={preset => {
-                      onChange(preset)
-                      handlePresetChange(String(preset))
-                    }}
-                    accessibilityLabel='Preset for notification frequency'
-                  />
-                )}
-              />
-              <HBox marginTop={16} hidden>
-                <TypedController
-                  name={['notification', 'every']}
-                  render={({ value, onChange }) => (
-                    <TextInput
-                      variant='basic'
-                      width={96}
-                      height={48}
-                      textAlign='right'
-                      value={String(value)}
-                      onChangeText={onChange}
-                      placeholder='Nth'
-                      placeholderTextColor={colors.hint}
-                      keyboardType='number-pad'
-                      accessible
-                      accessibilityLabel='Notification every'
-                    />
-                  )}
-                />
-                <TypedController
-                  name={['notification', 'frequency']}
-                  render={({ value, onChange }) => (
-                    <PickerInput
-                      width={96}
-                      height={48}
-                      marginLeft={8}
-                      paddingHorizontal={8}
-                      options={frequencyOptions}
-                      value={value}
-                      onChange={onChange}
-                      accessibilityLabel='Notification frequency'
-                    />
-                  )}
-                />
-              </HBox>
+        <TypedController
+          name='reminder'
+          render={({ value, onChange }) => (
+            <VBox
+              hidden={!(isActive && hasReminder)}
+              accessible
+              accessibilityHint={t('reminder.settings.hint')}
+              accessibilityLabel={t('reminder.settings')}
+            >
+              {value && (
+                <EventReminder date={start} value={value} onChange={onChange} />
+              )}
             </VBox>
-          </HBox>
-          <Divider />
-          <VBox hidden={!isAtVisible} testID='schedule-settings'>
-            <TypedController
-              name={['notification', 'at']}
-              render={({ value: schedules, onChange }) => {
-                return (
-                  <VBox padding={16} backgroundColor={colors.card}>
-                    <HBox justifyContent='space-between'>
-                      <Label>At</Label>
-                      <Pressable
-                        variant='basic'
-                        appearance='transparent'
-                        onPress={() => {
-                          onChange(
-                            schedules.concat(
-                              getSchedule(notification.frequency)
-                            )
-                          )
-                        }}
-                        accessibilityLabel='Add new schedule'
-                      >
-                        <MaterialCommunityIcons
-                          name='plus'
-                          size={24}
-                          color={colors.text}
-                        />
-                      </Pressable>
-                    </HBox>
-                    {schedules.map((schedule, index) => {
-                      return (
-                        <HBox key={index} justifyContent='space-between'>
-                          <PickerInput
-                            hidden={!isOnVisible}
-                            width={96}
-                            options={onOptions}
-                            value={schedule.on}
-                            onChange={value =>
-                              onChange(
-                                ArrayUtils.replace(
-                                  schedules,
-                                  index,
-                                  Object.assign({}, schedule, {
-                                    on: value
-                                  })
-                                )
-                              )}
-                            accessibilityLabel='Schedule on'
-                          />
-                          <DateTimeInput
-                            alignSelf='flex-end'
-                            mode='time'
-                            value={setTime(schedule.time)}
-                            onChange={date => {
-                              onChange(
-                                ArrayUtils.replace(
-                                  schedules,
-                                  index,
-                                  Object.assign({}, schedule, {
-                                    time: getTime(date)
-                                  })
-                                )
-                              )
-                            }}
-                            accessibilityLabel='Schedule at'
-                            dialogProps={{ title: 'Schedule At' }}
-                          />
-                        </HBox>
-                      )
-                    })}
-                  </VBox>
-                )
-              }}
-            />
-          </VBox>
-        </VBox>
+          )}
+        />
       </VBox>
     </ScrollBox>
   )

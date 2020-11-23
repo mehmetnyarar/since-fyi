@@ -1,14 +1,12 @@
-/* eslint-disable react/display-name */
-
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React from 'react'
-import { Header, Menu } from '~/components/screen'
+import { Menu } from '~/components/screen'
 import { AboutScreen } from '~/screens/drawer/about'
 import { PolicyScreen } from '~/screens/drawer/policy'
 import { SettingsScreen } from '~/screens/drawer/settings'
 import { useTheme } from '~/theme'
 import { MainNavigator } from './main'
-import { DrawerNavigationParams, InitialScreen } from './types'
+import { DrawerNavigationParams, NavigatorProps } from './types'
 
 /**
  * Drawer navigation.
@@ -16,17 +14,17 @@ import { DrawerNavigationParams, InitialScreen } from './types'
 const Drawer = createDrawerNavigator<DrawerNavigationParams>()
 
 /**
- * <DrawerNavigator /> props.
+ * &lt;DrawerNavigator /> props.
  */
-interface Props {
-  initialScreen?: InitialScreen
-}
+interface Props extends NavigatorProps {}
 
 /**
  * Drawer navigator.
- * @returns <DrawerNavigator />.
+ * @param props Props.
+ * @returns &lt;DrawerNavigator />.
  */
-export const DrawerNavigator: React.FC<Props> = ({ initialScreen }) => {
+export const DrawerNavigator: React.FC<Props> = props => {
+  const { initialScreen, initialParams } = props
   const { colors } = useTheme()
 
   return (
@@ -39,12 +37,15 @@ export const DrawerNavigator: React.FC<Props> = ({ initialScreen }) => {
       keyboardDismissMode='on-drag'
       overlayColor={colors.backdrop}
       drawerContent={props => <Menu {...props} />}
-      screenOptions={{ header: () => <Header /> }}
     >
       <Drawer.Screen name='Main' component={MainNavigator} />
       <Drawer.Screen name='Settings' component={SettingsScreen} />
       <Drawer.Screen name='About' component={AboutScreen} />
-      <Drawer.Screen name='Policy' component={PolicyScreen} />
+      <Drawer.Screen
+        name='Policy'
+        component={PolicyScreen}
+        initialParams={initialParams}
+      />
     </Drawer.Navigator>
   )
 }

@@ -15,7 +15,7 @@ export type DateTimePickerProps = Omit<
 >
 
 /**
- * DateTimeInput props.
+ * &lt;DateTimeInput /> props.
  */
 export interface DateTimeInputProps extends PressableProps {
   mode: DateMode

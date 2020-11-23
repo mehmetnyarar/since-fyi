@@ -1,16 +1,8 @@
-import React from 'react'
-import { Text } from 'react-native'
-import { render } from 'test/render'
-import { Layout } from '~/components/screen'
+import { renderScreen } from 'test/render'
 
 describe('components/screen/layout', () => {
-  it('should render', () => {
-    const { toJSON } = render(
-      <Layout>
-        <Text>Test</Text>
-      </Layout>
-    )
-
-    expect(toJSON()?.children).toHaveLength(1)
+  it('should render', async () => {
+    const { findByTestId } = renderScreen('Main')
+    expect(await findByTestId('Layout')).toBeTruthy()
   })
 })

@@ -1,17 +1,16 @@
-import { TextProps as RNTextProps } from 'react-native'
-import { styled, TextProps, txt } from '~/theme'
+import { getTextStyles, styled, TextProps } from '~/theme'
 
 /**
- * <Typography /> props.
+ * &lt;Typography /> props.
  */
-export interface TypographyProps extends TextProps, RNTextProps {}
+export interface TypographyProps extends TextProps {}
 
 /**
  * Typography.
  * @param props Props.
- * @returns <Typography />.
+ * @returns &lt;Typography />.
  */
 export const Typography = styled.Text<TypographyProps>`
   font-family: 'Rubik_400Regular';
-  ${props => txt(props)}
+  ${props => getTextStyles(props)}
 `

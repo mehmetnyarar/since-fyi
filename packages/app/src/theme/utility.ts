@@ -1,6 +1,7 @@
 import { ThemedStyledProps } from 'styled-components'
 import { css } from './styled'
 import {
+  BaseProps,
   ColorPalette,
   ColorVariant,
   CssUnit,
@@ -14,9 +15,9 @@ import {
 } from './types'
 
 /**
- * Reverses the order of colors.
+ * Inverts the color order.
  * @param palette Palette.
- * @returns Palette.
+ * @returns ColorPalette.
  */
 export const invertColors = (palette: ColorPalette): ColorPalette => {
   return {
@@ -32,6 +33,11 @@ export const invertColors = (palette: ColorPalette): ColorPalette => {
   }
 }
 
+/**
+ * Inverts a theme.
+ * @param theme Theme.
+ * @returns ThemePalette.
+ */
 export const invertTheme = (theme: ThemePalette): ThemePalette => {
   const keys = Object.keys(theme) as ColorVariant[]
   const inverted = keys.reduce((result, variant) => {
@@ -42,7 +48,12 @@ export const invertTheme = (theme: ThemePalette): ThemePalette => {
   return inverted as ThemePalette
 }
 
-export const invert = (theme: ThemePalette): ThemePalette => {
+/**
+ * Inverts only basic colors.
+ * @param theme Theme.
+ * @returns ThemePalette.
+ */
+export const invertBasic = (theme: ThemePalette): ThemePalette => {
   return {
     ...theme,
     basic: invertColors(theme.basic)
@@ -65,25 +76,34 @@ const CSS = (prop: string, value?: number | string, unit?: CssUnit) => {
   return `${prop}: ${value};`
 }
 
+/**
+ * Checks whether the element has a transparent appearance.
+ * @param appearance Appearance.
+ * @returns True if the condition is met.
+ */
 const isTransparent = (appearance?: ElementAppearance) => {
   return appearance ? appearance === 'transparent' : false
 }
 
+/**
+ * Determines the element styles.
+ * @param type Type of element.
+ * @param props Element props.
+ * @returns ElementStyles.
+ */
 const getElementStyles = (
   type: ElementType,
-  props: ThemedStyledProps<ViewProps, Theme>
+  props: ThemedStyledProps<BaseProps, Theme>
 ): ElementStyles => {
-  const { theme, inverted, state, appearance, variant } = props
+  const { theme, variant } = props
+  if (!theme || !variant) return {}
 
-  if (!variant) {
-    return {}
-  }
-
+  const { inverted, state, appearance } = props
   const basic = theme.palette.basic
   const palette = theme.palette[variant]
 
   switch (type) {
-    case 'box':
+    case 'view':
       return {
         borderColor: !isTransparent(appearance)
           ? state === 'active'
@@ -115,12 +135,12 @@ const getElementStyles = (
 }
 
 /**
- * Applies theme to a UI element.
- * @param variant Variant.
+ * Determines the CSS styles of a view element.
+ * @param props Props.
  * @param [state] Element state.
  * @returns Styles.
  */
-export const box = (
+export const getViewStyles = (
   props: ThemedStyledProps<ViewProps, Theme>,
   unit: CssUnit = 'px'
 ) => {
@@ -181,7 +201,7 @@ export const box = (
     borderColor,
     backgroundColor
   } = props
-  const styles = getElementStyles('box', props)
+  const styles = getElementStyles('view', props)
 
   // margin
   const mt = marginTop || marginVertical || margin
@@ -264,12 +284,12 @@ export const box = (
 }
 
 /**
- * Applies theme to a UI element.
+ * Determines the CSS styles of a text element.
  * @param variant Variant.
  * @param [state] Element state.
  * @returns Styles.
  */
-export const txt = (
+export const getTextStyles = (
   props: ThemedStyledProps<TextProps, Theme>,
   unit: CssUnit = 'px'
 ) => {
@@ -285,7 +305,7 @@ export const txt = (
   const c = color || styles.color || theme.colors.text
 
   const cssStyles = [
-    ...box(props),
+    ...getViewStyles(props),
     CSS('color', String(c)),
     CSS('font-size', fontSize, unit),
     CSS('font-style', fontStyle),

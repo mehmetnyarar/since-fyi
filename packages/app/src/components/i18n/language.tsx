@@ -1,21 +1,18 @@
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LANGUAGES } from '~/i18n'
-import { SelectOption } from '~/types'
-import { Box, PickerInput, Typography } from '~/ui'
+import { PickerInput, SelectOption } from '~/ui'
 
 /**
  * <LanguageSwitcher /> props.
  */
-interface Props {
-  debug?: boolean
-}
+interface Props {}
 
 /**
  * Language switcher.
- * @returns <LanguageSwitcher />.
+ * @returns &lt;LanguageSwitcher />.
  */
-export const LanguageSwitcher: React.FC<Props> = ({ debug }) => {
+export const LanguageSwitcher: React.FC<Props> = () => {
   const { t, i18n } = useTranslation()
 
   const options = useMemo(
@@ -35,24 +32,22 @@ export const LanguageSwitcher: React.FC<Props> = ({ debug }) => {
   )
 
   return (
-    <>
-      <PickerInput
-        text={t(`LANGUAGE.${i18n.language}`)}
-        options={options}
-        value={i18n.language}
-        onChange={handleChange as never}
-        accessibilityLabel={t('language.a11y')}
-        dialogProps={{ title: t('language') }}
-        pickerProps={{
-          accessibilityLabel: t('language.pick'),
-          testID: 'LanguagePicker'
-        }}
-      />
-      {debug && (
-        <Box padding={16} testID='DebugLanguage'>
-          <Typography textAlign='center'>{t('_test')}</Typography>
-        </Box>
-      )}
-    </>
+    <PickerInput
+      options={options}
+      value={i18n.language}
+      onChange={handleChange as never}
+      selectLabel={t('select.item')}
+      accessibilityHint={t('language.hint')}
+      accessibilityLabel={t('language')}
+      dialogProps={{
+        title: t('language'),
+        cancelLabel: t('dialog.cancel'),
+        confirmLabel: t('dialog.confirm')
+      }}
+      pickerProps={{
+        accessibilityHint: t('language.pick.hint'),
+        accessibilityLabel: t('language.pick')
+      }}
+    />
   )
 }

@@ -5,7 +5,7 @@ import { Box } from './box'
 /**
  * Loading.
  * @param props Props.
- * @returns <Loading />.
+ * @returns &lt;Loading />.
  */
 export const Loading = styled.ActivityIndicator``
 

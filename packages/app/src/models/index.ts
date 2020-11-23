@@ -1,3 +1,4 @@
 export * from './event'
-export * from './notification'
+export * from './factory'
+export * from './reminder'
 export * from './schedule'

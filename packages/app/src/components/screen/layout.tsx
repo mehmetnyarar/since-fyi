@@ -1,28 +1,31 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { useTheme } from '~/theme'
 import { BoxProps, Heading, VBox } from '~/ui'
+import { Header } from './header'
 import { Toolbar } from './toolbar'
 
 /**
- * <Layout /> props.
+ * &lt;Layout /> props.
  */
 interface Props extends BoxProps {
   title?: string
+  toolbarContent?: string | ReactNode
 }
 
 /**
  * Screen layout.
  * @param props Props.
- * @returns <ScreenLayout />.
+ * @returns &lt;Layout />.
  */
 export const Layout: React.FC<Props> = props => {
-  const { colors } = useTheme()
   const { title, children, ...boxProps } = props
+  const { colors } = useTheme()
 
   return (
-    <VBox flex={1} position='relative'>
+    <VBox flex={1} position='relative' testID='Layout'>
+      <Header />
       {title && (
-        <Toolbar>
+        <Toolbar justifyContent='center'>
           <Heading level={2} fontSize={16} color={colors.header.text}>
             {title}
           </Heading>

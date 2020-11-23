@@ -1,17 +1,19 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { IconProps } from '@expo/vector-icons/build/createIconSet'
-import { box, styled, ViewProps } from '~/theme'
+import { getViewStyles, styled, ViewProps } from '~/theme'
+
+type SafeViewProps = Omit<ViewProps, 'style'>
 
 /**
- * <Icon /> props.
+ * &lt;Icon /> props.
  */
-interface Props extends IconProps<never>, ViewProps {}
+interface Props extends IconProps<never>, SafeViewProps {}
 
 /**
  * Icon (Material Community).
  * @param props Props.
- * @returns <Icon />.
+ * @returns &lt;Icon />.
  */
 export const MaterialCommunityIcon = styled(MaterialCommunityIcons)<Props>`
-  ${props => box(props)}
+  ${props => getViewStyles(props)}
 `

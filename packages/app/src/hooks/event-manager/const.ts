@@ -1,4 +1,3 @@
-import { Frequency } from '~/models'
 import { EventManager } from './types'
 
 /**
@@ -31,13 +30,3 @@ export const DEFAULT_EVENT_MANAGER: EventManager = {
     throw new Error('EventManager/remove has not been implemented!')
   }
 }
-
-/**
- * Determines the visibility of {Notification.at}.
- */
-export const AT_VISIBILITY = [Frequency.DAY, Frequency.WEEK, Frequency.MONTH]
-
-/**
- * Determines the visibility of {Schedule.on}.
- */
-export const ON_VISIBILITY = [Frequency.WEEK, Frequency.MONTH, Frequency.YEAR]

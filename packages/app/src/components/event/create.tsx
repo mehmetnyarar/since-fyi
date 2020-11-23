@@ -1,40 +1,46 @@
 import React, { useCallback, useContext, useState } from 'react'
-import { EventManagerContext, getEvent } from '~/hooks/event-manager'
-import { Title } from './title'
+import { EventManagerContext } from '~/hooks/event-manager'
+import { getEvent } from '~/models'
+import { EventTitle } from './title'
 
 /**
- * <EventCreate /> props.
+ * &lt;EventCreate /> props.
  */
 interface Props {
-  onCreate: () => void
+  onSuccess: () => void
 }
 
 /**
  * Allows user to create a new event.
  * @param props Props.
- * @returns <EventCreate />.
+ * @returns &lt;EventCreate />.
  */
-export const EventCreate: React.FC<Props> = ({ onCreate }) => {
+export const EventCreate: React.FC<Props> = props => {
+  const { onSuccess } = props
+
   const { select, loading } = useContext(EventManagerContext)
 
   const [title, setTitle] = useState('')
-  const handleChange = useCallback((value: string) => setTitle(value), [])
-  const handleCancel = useCallback(() => setTitle(''), [])
-  const handleAction = useCallback(async () => {
-    const e = getEvent({ title })
 
-    select(e)
-    onCreate()
-  }, [title, select, onCreate])
+  const handleAction = useCallback(async () => {
+    setTitle('')
+
+    const event = getEvent({ title })
+    select(event)
+
+    onSuccess()
+  }, [title, select, onSuccess])
+
+  const handleCancel = useCallback(() => setTitle(''), [])
 
   return (
-    <Title
+    <EventTitle
       action='create'
       onAction={handleAction}
       onCancel={handleCancel}
       loading={loading}
       value={title}
-      onChange={handleChange}
+      onChange={setTitle}
     />
   )
 }

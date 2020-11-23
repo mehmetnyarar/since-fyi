@@ -8,7 +8,7 @@ import { DateTimeInputProps } from './types'
 /**
  * DateTime input for iOS devices.
  * @param props Props.
- * @returns <DateTimeInputIOS />.
+ * @returns &lt;DateTimeInputIOS />.
  */
 export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
   const {
@@ -20,9 +20,9 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
     ...pressableProps
   } = props
 
-  const [date, setDate] = useState(value)
+  const [selected, setSelected] = useState(value)
   const handleChange = useCallback((_: unknown, value?: Date) => {
-    setDate(value)
+    setSelected(value)
   }, [])
 
   const as = useMemo(() => getDateFormat(mode), [mode])
@@ -32,9 +32,13 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
   const toggleVisible = useCallback(() => setVisible(value => !value), [])
 
   const handleConfirm = useCallback(() => {
-    onChange(date)
+    onChange(selected)
     setVisible(false)
-  }, [date, onChange])
+  }, [selected, onChange])
+  const handleCancel = useCallback(() => {
+    setSelected(value)
+    setVisible(false)
+  }, [value])
 
   return (
     <>
@@ -42,6 +46,7 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
+        borderRadius={4}
         text={formattedValue}
         onPress={toggleVisible}
         accessible
@@ -50,18 +55,16 @@ export const DateTimeInputIOS: React.FC<DateTimeInputProps> = props => {
       />
       {visible && (
         <Dialog
-          visible={visible}
           onConfirm={handleConfirm}
-          onCancel={toggleVisible}
+          onCancel={handleCancel}
           {...dialogProps}
         >
           <Picker
             mode={mode as never}
-            value={date || new Date()}
+            value={selected || new Date()}
             onChange={handleChange}
             accessible
             accessibilityRole='spinbutton'
-            accessibilityLabel='Change the date'
             {...pickerProps}
           />
         </Dialog>

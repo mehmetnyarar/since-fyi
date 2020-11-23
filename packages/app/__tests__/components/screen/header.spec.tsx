@@ -1,5 +1,5 @@
 import { renderScreen } from 'test/render'
-import { getHeight } from '~/components/screen'
+import { getHeight } from '~/components/screen/header'
 
 describe('components/screen/header', () => {
   it('should determine the height', () => {
@@ -8,11 +8,12 @@ describe('components/screen/header', () => {
     expect(getHeight('macos')).toBe(64)
   })
 
-  it('should render', () => {
-    const { getByA11yLabel, getByTestId } = renderScreen()
+  it('should render', async () => {
+    const { findByA11yLabel } = renderScreen('Main')
 
-    expect(getByA11yLabel(/header/i)).toBeTruthy()
-    expect(getByA11yLabel(/since/i)).toBeTruthy()
-    expect(getByTestId(/logo/i)).toBeTruthy()
+    expect(await findByA11yLabel('header')).toBeTruthy()
+    expect(await findByA11yLabel('home')).toBeTruthy()
+    expect(await findByA11yLabel('app.name')).toBeTruthy()
+    expect(await findByA11yLabel('menu.toggle')).toBeTruthy()
   })
 })

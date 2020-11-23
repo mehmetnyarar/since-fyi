@@ -4,7 +4,7 @@ import { Typography, TypographyProps } from './typography'
 /**
  * Paragraph.
  * @props Props.
- * @returns <P />.
+ * @returns &lt;P />.
  */
 export const P: React.FC<TypographyProps> = ({ children, ...props }) => {
   return <Typography {...props}>{children}</Typography>

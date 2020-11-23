@@ -1,16 +1,15 @@
-import { View as RNView, ViewProps as RNViewProps } from 'react-native'
-import { box, styled, ViewProps } from '~/theme'
+import { getViewStyles, styled, ViewProps } from '~/theme'
 
 /**
- * <Box /> props.
+ * &lt;Box /> props.
  */
-export interface BoxProps extends ViewProps, RNViewProps {}
+export interface BoxProps extends ViewProps {}
 
 /**
  * Box.
  * @param props Props.
- * @returns <Box />.
+ * @returns &lt;Box />.
  */
-export const Box = styled(RNView)<BoxProps>`
-  ${props => box(props)}
+export const Box = styled.View<BoxProps>`
+  ${props => getViewStyles(props)}
 `

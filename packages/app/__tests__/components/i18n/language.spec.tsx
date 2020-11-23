@@ -1,26 +1,35 @@
 import { fireEvent } from '@testing-library/react-native'
 import React from 'react'
 import { render } from 'test/render'
-import { LanguageSwitcher } from '~/components/i18n'
+import { LanguageSwitcher } from '~/components/i18n/language'
+
+jest.spyOn(console, 'log')
+
+beforeEach(() => {
+  jest.resetAllMocks()
+})
 
 describe('components/i18n/language', () => {
-  it('should render', () => {
-    const { getByA11yLabel, getByTestId } = render(<LanguageSwitcher />)
+  it('should render on ios', async () => {
+    const { getByA11yLabel, findByA11yLabel } = render(<LanguageSwitcher />)
 
-    const trigger = getByA11yLabel(/language.a11y/)
+    // Should show the current language
+    const button = getByA11yLabel('language')
+    expect(button.children[0]).toHaveTextContent('LANGUAGE.en')
 
-    fireEvent.press(trigger)
-    const picker = getByTestId(/LanguagePicker/)
+    // Show dialog
+    fireEvent.press(button)
+
+    // Select a language
+    const picker = await findByA11yLabel('language.pick')
     expect(picker.props.selectedValue).toBe('en')
 
     fireEvent(picker, 'onValueChange', 'tr')
     expect(picker.props.selectedValue).toBe('tr')
-  })
 
-  it('should render (debug)', () => {
-    const { getByTestId } = render(<LanguageSwitcher debug />)
-
-    const box = getByTestId(/DebugLanguage/)
-    expect(box).toHaveTextContent(/_test/)
+    // Confirm
+    const confirm = await findByA11yLabel('dialog.confirm')
+    fireEvent.press(confirm)
+    expect(console.log).toHaveBeenCalledWith('tr')
   })
 })

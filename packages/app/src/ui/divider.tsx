@@ -2,7 +2,7 @@ import { styled } from '~/theme'
 
 /**
  * Divider.
- * @returns <Divider />.
+ * @returns &lt;Divider />.
  */
 export const Divider = styled.View`
   border-bottom-width: 1px;

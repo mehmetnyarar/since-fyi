@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { EventAction } from '~/hooks/event-manager'
 import { EVENT_TITLE_MAX_LENGTH as MAX_LENGTH } from '~/models'
 import { useTheme } from '~/theme'
@@ -7,7 +8,7 @@ import { HBox, Hint, Pressable, TextInput, VBox } from '~/ui'
 import { Toolbar } from '../screen'
 
 /**
- * <Title /> props.
+ * &lt;Title /> props.
  */
 interface Props {
   action: EventAction
@@ -21,31 +22,28 @@ interface Props {
 /**
  * Event title.
  * @param props Props.
- * @returns <Title />.
+ * @returns &lt;Title />.
  */
-export const Title: React.FC<Props> = props => {
-  const { action, onAction, onCancel, loading, value = '', onChange } = props
-
+export const EventTitle: React.FC<Props> = props => {
   const { colors } = useTheme()
+  const { t } = useTranslation()
+
+  const { action, onAction, onCancel, loading, value, onChange } = props
   const charsLeft = useMemo(() => MAX_LENGTH - value.length, [value])
 
   return (
-    <Toolbar
-      colors={colors.toolbar.back}
-      accessible
-      accessibilityRole='header'
-      accessibilityLabel='Event title'
-    >
+    <Toolbar colors={colors.toolbar.back}>
       <TextInput
         flex={1}
         value={value}
         onChangeText={onChange}
         multiline={false}
         maxLength={MAX_LENGTH}
-        placeholder='Write something to remember'
+        placeholder={t('event.title.placeholder')}
         placeholderTextColor={colors.hint}
         accessible
-        accessibilityLabel='Enter an event title'
+        accessibilityHint={t('event.title.hint')}
+        accessibilityLabel={t('event.title')}
       />
       {Boolean(value) && (
         <>
@@ -53,7 +51,7 @@ export const Title: React.FC<Props> = props => {
             <Hint
               accessible
               accessibilityRole='summary'
-              accessibilityLabel='Characters'
+              accessibilityLabel={t('chars')}
             >
               {`${charsLeft}/${MAX_LENGTH}`}
             </Hint>
@@ -68,9 +66,8 @@ export const Title: React.FC<Props> = props => {
               borderRadius={16}
               onPress={onAction}
               disabled={loading}
-              accessibilityLabel={
-                action === 'create' ? 'Add event' : 'Update event'
-              }
+              accessibilityHint={t(`event.${action}.hint`)}
+              accessibilityLabel={t(`event.${action}`)}
             >
               <MaterialCommunityIcons
                 name={action === 'create' ? 'plus' : 'check'}
@@ -87,7 +84,8 @@ export const Title: React.FC<Props> = props => {
               borderRadius={16}
               onPress={onCancel}
               disabled={loading}
-              accessibilityLabel='Cancel'
+              accessibilityHint={t(`event.${action}.cancel.hint`)}
+              accessibilityLabel={t(`event.${action}.cancel`)}
             >
               <MaterialCommunityIcons
                 name='window-close'

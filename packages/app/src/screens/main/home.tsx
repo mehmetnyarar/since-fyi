@@ -1,6 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { EventCreate } from '~/components/event'
 import { Layout } from '~/components/screen'
 import { EventManagerContext } from '~/hooks/event-manager'
@@ -8,7 +9,7 @@ import { MainNavigationParams } from '~/navigation'
 import { Pressable } from '~/ui'
 
 /**
- * <HomeScreen /> props.
+ * &lt;HomeScreen /> props.
  */
 interface Props {
   route: RouteProp<MainNavigationParams, 'Home'>
@@ -18,22 +19,27 @@ interface Props {
 /**
  * Home screen.
  * @param props Props.
- * @returns <HomeScreen />
+ * @returns &lt;HomeScreen />.
  */
 export const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  const { t } = useTranslation()
+
   const { clear, result } = useContext(EventManagerContext)
-  const navigate = useCallback(
+  const handleSuccess = useCallback(
     (id?: string) => {
-      console.debug('navigate', { id })
-      navigation.push('Event', { id })
+      console.debug('HomeScreen/handleSuccess', { id })
+      navigation.navigate('Event', { id })
     },
     [navigation]
   )
 
   return (
     <Layout>
-      <EventCreate onCreate={navigate} />
-      <Pressable text={`Clear All (${result?.length})`} onPress={clear} />
+      <EventCreate onSuccess={handleSuccess} />
+      <Pressable
+        text={t('clear.all', { count: result?.length })}
+        onPress={clear}
+      />
     </Layout>
   )
 }

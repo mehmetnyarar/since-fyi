@@ -1,4 +1,4 @@
-import { Notification } from '../notification'
+import { Reminder } from '../reminder'
 
 /**
  * Since event.
@@ -17,15 +17,18 @@ export interface Event {
    */
   start?: Date
   /**
-   * Elapsed time - a computed value.
+   * Indicates whether the event is active or not.
+   * If true, elapsed time will be computed.
    */
-  ago: number
+  isActive: boolean
   /**
-   * Indicates whether the elapsed time should be computed or not.
+   * Indicates whether the event has a reminder or not.
+   * If true, notifications will be sent to the user
+   * based on reminder settings.
    */
-  active: boolean
+  hasReminder: boolean
   /**
-   * Notification settings.
+   * Reminder settings.
    */
-  notification: Notification
+  reminder?: Reminder | null
 }

@@ -1,14 +1,21 @@
 import { ArrayUtils } from '~/utility/array'
 
-describe('utility/array', () => {
-  it('should replace the item', () => {
-    const array = ['tom waits', 'leonard cohen', 'beyonce', 'marty friedman']
+const array = ['tom waits', 'leonard cohen', 'beyonce', 'marty friedman']
 
-    const result = ArrayUtils.replace(array, 2, 'bob dylan')
-    expect(result).toEqual([
+describe('utility/array', () => {
+  it('should replace an item', () => {
+    expect(ArrayUtils.replace(array, 2, 'bob dylan')).toEqual([
       'tom waits',
       'leonard cohen',
       'bob dylan',
+      'marty friedman'
+    ])
+  })
+
+  it('should remove an item', () => {
+    expect(ArrayUtils.remove(array, 2)).toEqual([
+      'tom waits',
+      'leonard cohen',
       'marty friedman'
     ])
   })

@@ -7,7 +7,7 @@ import { DateTimeInputProps } from './types'
 /**
  * DateTime input.
  * @param props Props.
- * @returns <DateTimeInput />.
+ * @returns &lt;DateTimeInput />.
  */
 export const DateTimeInput: React.FC<DateTimeInputProps> = props => {
   switch (Platform.OS) {
@@ -19,3 +19,5 @@ export const DateTimeInput: React.FC<DateTimeInputProps> = props => {
       return null
   }
 }
+
+export * from './types'

@@ -5,7 +5,7 @@ import { Typography, TypographyProps } from './typography'
 /**
  * Hint.
  * @props Props.
- * @returns <Hint />.
+ * @returns &lt;Hint />.
  */
 export const Hint: React.FC<TypographyProps> = ({ children, ...props }) => {
   const { colors } = useTheme()

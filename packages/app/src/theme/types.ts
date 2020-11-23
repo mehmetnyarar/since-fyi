@@ -1,6 +1,10 @@
-import { Theme as RNTheme } from '@react-navigation/native'
-import { TextStyle, ViewStyle } from 'react-native'
-import { DefaultTheme as SCTheme } from 'styled-components'
+import { Theme as ReactNavigationTheme } from '@react-navigation/native'
+import {
+  TextProps as RNTextProps,
+  TextStyle,
+  ViewProps as RNViewProps,
+  ViewStyle
+} from 'react-native'
 
 /**
  * Color palette.
@@ -38,7 +42,7 @@ export type ColorVariant =
 /**
  * Element type.
  */
-export type ElementType = 'box' | 'text'
+export type ElementType = 'view' | 'text'
 
 /**
  * Element state.
@@ -62,7 +66,7 @@ export interface ElementStyles {
 /**
  * Base theme.
  */
-export interface ThemeBase extends RNTheme, SCTheme {
+export interface ThemeBase extends ReactNavigationTheme {
   colors: {
     primary: string
     background: string
@@ -101,18 +105,26 @@ export interface ThemeProps {
 }
 
 /**
- * Box props.
+ * Base props for any UI element.
  */
-export interface ViewProps extends ThemeProps, ViewStyle {
+export interface BaseProps extends ThemeProps {
   hidden?: boolean
 }
 
 /**
- * Typography props.
+ * View props.
  */
-export interface TextProps extends ThemeProps, TextStyle {
-  hidden?: boolean
-}
+export interface ViewProps extends BaseProps, ViewStyle, RNViewProps {}
+
+/**
+ * Text props.
+ */
+export interface TextProps extends BaseProps, TextStyle, RNTextProps {}
+
+/**
+ * Element props.
+ */
+export type ElementProps = ViewProps & TextProps
 
 /**
  * CSS unit.

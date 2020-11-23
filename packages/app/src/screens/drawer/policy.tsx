@@ -17,11 +17,11 @@ interface Props {
 /**
  * Application policy.
  * @param props Props.
- * @returns <PolicyScreen />.
+ * @returns &lt;PolicyScreen />.
  */
-export const PolicyScreen: React.FC<Props> = ({ route }) => {
+export const PolicyScreen: React.FC<Props> = props => {
+  const { type } = props.route.params
   const { t } = useTranslation()
-  const { type } = route.params
 
   return (
     <Layout
@@ -29,8 +29,7 @@ export const PolicyScreen: React.FC<Props> = ({ route }) => {
       justifyContent='center'
       alignItems='center'
     >
-      <Typography>PolicyScreen</Typography>
-      <Typography>{`Type: ${type}`}</Typography>
+      <Typography>{type}</Typography>
     </Layout>
   )
 }

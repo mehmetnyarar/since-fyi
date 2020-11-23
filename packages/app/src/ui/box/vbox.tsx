@@ -4,7 +4,7 @@ import { Box, BoxProps } from './box'
 /**
  * Vertical box.
  * @param props Props.
- * @returns <VBox />.
+ * @returns &lt;VBox />.
  */
 export const VBox: React.FC<BoxProps> = ({ children, ...boxProps }) => {
   return (

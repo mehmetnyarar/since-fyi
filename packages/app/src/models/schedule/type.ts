@@ -3,13 +3,17 @@
  */
 export interface Schedule {
   /**
-   * Specifies which day that the notification should be sent.
-   * For the frequencies MINUTE, HOUR and DAY, the value has no effect.
-   * For WEEK frequency,  the value must be within the range of [1, 7].
-   * For MONTH frequency, the value must be within the range of [1, 31].
-   * For YEAR frequency, the value must be within the range of [1, 365].
+   * Month. The value must be
+   * - [1, 12] for {Frequency.YEAR}
    */
-  on: number
+  month?: number
+  /**
+   * Day of month. The value must be
+   * - [1, 7] for {Frequency.WEEK}
+   * - [1, 31] for {Frequency.MONTH}
+   * - [1, 31] for {Frequency.YEAR}
+   */
+  day?: number
   /**
    * Specifies the time that the notification should be sent.
    * Format: HH:mm.
@@ -18,5 +22,5 @@ export interface Schedule {
   /**
    * Indicates whether the schedule is enabled or not.
    */
-  active: boolean
+  isActive: boolean
 }

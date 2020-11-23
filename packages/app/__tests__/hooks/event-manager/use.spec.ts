@@ -1,9 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { getEvent } from '~/hooks/event-manager'
 import { useEventManager } from '~/hooks/event-manager/use'
-import { Event } from '~/models'
+import { getEvent } from '~/models'
 
-const events: Event[] = [
+const events = [
   getEvent({ id: '1', title: 'Event 1' }),
   getEvent({ id: '2', title: 'Event 2' })
 ]
@@ -17,70 +16,53 @@ describe('hooks/event-manager/use', () => {
     expect(result.current.error).toBeUndefined()
     expect(result.current.current).toBeUndefined()
 
-    // load
-    act(() => {
-      result.current.load()
-    })
+    // Load events
+    act(() => result.current.load())
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(0)
 
-    // set
-    act(() => {
-      result.current.set(events)
-    })
+    // Set events
+    act(() => result.current.set(events))
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(2)
 
-    // select:item
-    act(() => {
-      result.current.select('2')
-    })
+    // Set the current event
+    act(() => result.current.select('2'))
     expect(result.current.current).toEqual(events[1])
 
-    // select:none
-    act(() => {
-      result.current.select()
-    })
+    // Deselect the current event
+    act(() => result.current.select())
     expect(result.current.current).toBeUndefined()
 
-    // create
-    act(() => {
-      result.current.create(getEvent({ id: '3', title: 'Event 3' }))
-    })
+    // Create a new event
+    let event = getEvent({ id: '3', title: 'Event 3' })
+    act(() => result.current.create(event))
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(3)
 
-    // update
-    act(() => {
-      result.current.update(getEvent({ id: '3', title: 'Event 3 Updated' }))
-    })
+    // Update an event
+    event = getEvent({ id: '3', title: 'Event 3 Updated' })
+    act(() => result.current.update(event))
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(3)
     expect(result.current.result?.[2].title).toBe('Event 3 Updated')
 
-    // update:failure
-    act(() => {
-      result.current.update(getEvent({ id: '5', title: 'Event 5 Updated' }))
-    })
+    // Simulate update failure
+    event = getEvent({ id: '5', title: 'Event 5 Updated' })
+    act(() => result.current.update(event))
     expect(result.current.error).toMatch(/@update/)
 
-    // remove
-    act(() => {
-      result.current.remove('1')
-    })
+    // Remove an event
+    act(() => result.current.remove('1'))
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(2)
 
-    // remove:failure
-    act(() => {
-      result.current.remove('5')
-    })
+    // Simulate update failure
+    act(() => result.current.remove('5'))
     expect(result.current.error).toMatch(/@remove/)
 
-    // clear
-    act(() => {
-      result.current.clear()
-    })
+    // Remove all events
+    act(() => result.current.clear())
     await waitForNextUpdate()
     expect(result.current.result).toHaveLength(0)
   })

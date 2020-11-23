@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react-native'
 import React, { useState } from 'react'
 import { render } from 'test/render'
-import { Title } from '~/components/event/title'
+import { EventTitle } from '~/components/event/title'
 import { EventAction } from '~/hooks/event-manager'
 import { EVENT_TITLE_MAX_LENGTH } from '~/models'
 
@@ -18,7 +18,7 @@ const Component: React.FC<Props> = ({ action }) => {
   const [value, setValue] = useState('')
 
   return (
-    <Title
+    <EventTitle
       action={action}
       onAction={onAction}
       onCancel={onCancel}
@@ -36,56 +36,54 @@ beforeEach(() => {
 // #endregion
 
 describe('components/event/title', () => {
-  it('should render (create)', () => {
-    const { getByText, getByA11yLabel } = render(<Component action='create' />)
+  it('should create', () => {
+    const { getByA11yLabel } = render(<Component action='create' />)
 
-    const input = getByA11yLabel(/Enter an event title/)
-    expect(input).toBeTruthy()
+    const input = getByA11yLabel('event.title')
 
-    const value = 'New event'
-    const charsLeft = EVENT_TITLE_MAX_LENGTH - value.length
+    // Change the title
+    const title = 'Event'
+    fireEvent.changeText(input, title)
+    expect(input.props.value).toBe(title)
+
+    const chars = getByA11yLabel('chars')
+    const charsLeft = EVENT_TITLE_MAX_LENGTH - title.length
     const charsLeftText = `${charsLeft}/${EVENT_TITLE_MAX_LENGTH}`
+    expect(chars).toHaveTextContent(charsLeftText)
 
-    fireEvent.changeText(input, value)
-    expect(input.props.value).toBe(value)
-    expect(getByText(charsLeftText)).toBeTruthy()
-
-    const action = getByA11yLabel(/Add event/)
-    expect(action).toBeTruthy()
-
+    // Create
+    const action = getByA11yLabel('event.create')
     fireEvent.press(action)
     expect(onAction).toHaveBeenCalled()
 
-    const cancel = getByA11yLabel(/Cancel/)
-    expect(cancel).toBeTruthy()
-
+    // Cancel
+    const cancel = getByA11yLabel('event.create.cancel')
     fireEvent.press(cancel)
     expect(onCancel).toHaveBeenCalled()
   })
 
-  it('should render (update)', () => {
-    const { getByText, getByA11yLabel } = render(<Component action='update' />)
+  it('should upsert', () => {
+    const { getByA11yLabel } = render(<Component action='upsert' />)
 
-    const input = getByA11yLabel(/Enter an event title/)
-    expect(input).toBeTruthy()
+    const input = getByA11yLabel('event.title')
 
-    const value = 'Existing event'
-    const charsLeft = EVENT_TITLE_MAX_LENGTH - value.length
+    // Change the title
+    const title = 'Event'
+    fireEvent.changeText(input, title)
+    expect(input.props.value).toBe(title)
+
+    const chars = getByA11yLabel('chars')
+    const charsLeft = EVENT_TITLE_MAX_LENGTH - title.length
     const charsLeftText = `${charsLeft}/${EVENT_TITLE_MAX_LENGTH}`
+    expect(chars).toHaveTextContent(charsLeftText)
 
-    fireEvent.changeText(input, value)
-    expect(input.props.value).toBe(value)
-    expect(getByText(charsLeftText)).toBeTruthy()
-
-    const action = getByA11yLabel(/Update event/)
-    expect(action).toBeTruthy()
-
+    // Upsert
+    const action = getByA11yLabel('event.upsert')
     fireEvent.press(action)
     expect(onAction).toHaveBeenCalled()
 
-    const cancel = getByA11yLabel(/Cancel/)
-    expect(cancel).toBeTruthy()
-
+    // Cancel
+    const cancel = getByA11yLabel('event.upsert.cancel')
     fireEvent.press(cancel)
     expect(onCancel).toHaveBeenCalled()
   })

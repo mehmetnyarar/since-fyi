@@ -1,6 +1,7 @@
 import {
   DrawerContentComponentProps,
-  DrawerContentOptions
+  DrawerContentOptions,
+  useIsDrawerOpen
 } from '@react-navigation/drawer'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,22 +9,33 @@ import { useTheme } from '~/theme'
 import { Icon, Pressable, VBox } from '~/ui'
 
 /**
- * <Menu /> props.
+ * &lt;Menu /> props.
  */
 interface Props extends DrawerContentComponentProps<DrawerContentOptions> {}
 
 /**
  * Drawer menu.
  * @param props Props
- * @returns <Menu />.
+ * @returns &lt;Menu />.
  */
-export const Menu: React.FC<Props> = ({ navigation }) => {
+export const Menu: React.FC<Props> = props => {
+  const { navigate } = props.navigation
+
   const { t } = useTranslation()
   const { colors } = useTheme()
-  const { navigate } = navigation
+
+  const isDrawerOpen = useIsDrawerOpen()
+  if (!isDrawerOpen) return null
 
   return (
-    <VBox flex={1} paddingVertical={64} justifyContent='space-between'>
+    <VBox
+      flex={1}
+      paddingVertical={64}
+      justifyContent='space-between'
+      accessible
+      accessibilityRole='menu'
+      accessibilityLabel={t('menu')}
+    >
       <Pressable
         variant='basic'
         appearance='transparent'
@@ -31,6 +43,8 @@ export const Menu: React.FC<Props> = ({ navigation }) => {
         onPress={() => navigate('Home')}
         justifyContent='flex-start'
         paddingHorizontal={16}
+        accessibilityHint={t('home.hint')}
+        accessibilityLabel={t('home')}
       >
         <Icon
           name='home-outline'
@@ -45,6 +59,8 @@ export const Menu: React.FC<Props> = ({ navigation }) => {
           onPress={() => navigate('About')}
           justifyContent='flex-start'
           paddingHorizontal={16}
+          accessibilityHint={t('about.hint')}
+          accessibilityLabel={t('about')}
         >
           <Icon
             name='information-outline'
@@ -58,6 +74,8 @@ export const Menu: React.FC<Props> = ({ navigation }) => {
           onPress={() => navigate('Policy', { type: 'privacy' })}
           justifyContent='flex-start'
           paddingHorizontal={16}
+          accessibilityHint={t('policy.privacy.hint')}
+          accessibilityLabel={t('policy.privacy')}
         >
           <Icon
             name='shield-alert-outline'
@@ -73,6 +91,8 @@ export const Menu: React.FC<Props> = ({ navigation }) => {
           onPress={() => navigate('Settings')}
           justifyContent='flex-start'
           paddingHorizontal={16}
+          accessibilityHint={t('settings.hint')}
+          accessibilityLabel={t('settings')}
         >
           <Icon
             name='settings-outline'

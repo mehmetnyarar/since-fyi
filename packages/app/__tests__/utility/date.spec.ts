@@ -7,9 +7,9 @@ import {
   setTime
 } from '~/utility/date'
 
-describe('utility/date', () => {
-  let date = new Date(2020, 10, 10, 9, 5, 0, 0)
+let date = new Date(2020, 10, 10, 9, 5, 0, 0)
 
+describe('utility/date', () => {
   it('should return date', () => {
     expect(getDate()).toBeUndefined()
     expect(getDate(date)).toEqual(date)

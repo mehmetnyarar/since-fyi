@@ -11,7 +11,7 @@ const Main = createStackNavigator<MainNavigationParams>()
 
 /**
  * Main navigator.
- * @returns <MainNavigator />.
+ * @returns &lt;MainNavigator />.
  */
 export const MainNavigator: React.FC = () => {
   return (

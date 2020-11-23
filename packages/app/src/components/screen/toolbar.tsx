@@ -1,23 +1,25 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useTheme } from '~/theme'
 import { GradientBox, GradientBoxProps } from '~/ui'
 
 /**
- * <Toolbar /> props.
+ * &lt;Toolbar /> props.
  */
 interface Props extends Partial<GradientBoxProps> {}
 
 /**
  * Toolbar.
  * @param props Props.
- * @returns <Toolbar />.
+ * @returns &lt;Toolbar />.
  */
-export const Toolbar: React.FC<Props> = ({ children, ...gradientProps }) => {
+export const Toolbar: React.FC<Props> = props => {
+  const { children, ...gradientProps } = props
   const { colors } = useTheme()
+  const { t } = useTranslation()
 
   return (
     <GradientBox
-      {...gradientProps}
       colors={colors.toolbar.back}
       height={64}
       padding={16}
@@ -26,7 +28,8 @@ export const Toolbar: React.FC<Props> = ({ children, ...gradientProps }) => {
       alignItems='center'
       accessible
       accessibilityRole='toolbar'
-      accessibilityLabel='Toolbar'
+      accessibilityLabel={t('toolbar')}
+      {...gradientProps}
     >
       {children}
     </GradientBox>

@@ -1,30 +1,19 @@
 import { Picker } from '@react-native-community/picker'
-import { PickerProps } from '@react-native-community/picker/typings/Picker'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTheme } from '~/theme'
-import { SelectOption } from '~/types'
-import { Pressable, PressableProps } from '../button'
-import { Dialog, DialogProps } from '../modal'
+import { Pressable } from '../../button'
+import { Dialog } from '../../modal'
+import { PickerInputProps } from './types'
 
 /**
- * <PickerInput /> options.
- */
-interface Props extends PressableProps {
-  options: SelectOption[]
-  value?: string | number
-  onChange: (value?: string | number) => void
-  dialogProps?: Partial<DialogProps>
-  pickerProps?: Partial<PickerProps>
-}
-
-/**
- * PickerInput.
+ * PickerInput for IOS devices.
  * @param props Props.
- * @returns <PickerInput />.
+ * @returns &lt;PickerInputIOS />.
  */
-export const PickerInput: React.FC<Props> = props => {
+export const PickerInputIOS: React.FC<PickerInputProps> = props => {
   const { colors } = useTheme()
   const {
+    selectLabel = '[Select]',
     options,
     value,
     onChange,
@@ -32,6 +21,10 @@ export const PickerInput: React.FC<Props> = props => {
     pickerProps = {},
     ...pressableProps
   } = props
+
+  const displayValue = useMemo(() => {
+    return options.find(option => option.value === value)?.label
+  }, [options, value])
 
   const [visible, setVisible] = useState(false)
   const toggleVisible = useCallback(() => setVisible(value => !value), [])
@@ -41,10 +34,18 @@ export const PickerInput: React.FC<Props> = props => {
     setSelected(selectedValue)
   }, [])
 
+  // useEffect(() => {
+  //   setSelected(value)
+  // }, [value])
+
   const handleConfirm = useCallback(() => {
-    toggleVisible()
+    setVisible(false)
     onChange(selected)
-  }, [selected, onChange, toggleVisible])
+  }, [selected, onChange])
+  const handleCancel = useCallback(() => {
+    setSelected(value)
+    setVisible(false)
+  }, [value])
 
   return (
     <>
@@ -52,7 +53,8 @@ export const PickerInput: React.FC<Props> = props => {
         variant='basic'
         appearance='transparent'
         paddingHorizontal={16}
-        text={String(value)}
+        borderRadius={4}
+        text={displayValue || selectLabel}
         onPress={toggleVisible}
         accessible
         accessibilityRole='button'
@@ -61,8 +63,8 @@ export const PickerInput: React.FC<Props> = props => {
       {visible && (
         <Dialog
           visible={visible}
+          onCancel={handleCancel}
           onConfirm={handleConfirm}
-          onCancel={toggleVisible}
           {...dialogProps}
         >
           <Picker

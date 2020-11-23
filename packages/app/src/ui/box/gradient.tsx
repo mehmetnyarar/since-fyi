@@ -1,20 +1,23 @@
 import { LinearGradient, LinearGradientProps } from 'expo-linear-gradient'
 import omit from 'lodash/omit'
-import { box, styled, ViewProps as ThemeViewProps } from '~/theme'
+import { ReactNode } from 'react'
+import { getViewStyles, styled } from '~/theme'
+import { BoxProps } from './box'
+
+type SafeBoxProps = Omit<BoxProps, 'start' | 'end'>
 
 /**
- * ViewProps excluding `start` and `end`.
+ * &lt;GradientBox /> props.
  */
-type ViewProps = Omit<ThemeViewProps, 'start' | 'end'>
-
-/**
- * <GradientBox /> props.
- */
-export interface GradientBoxProps extends ViewProps, LinearGradientProps {}
+export interface GradientBoxProps extends SafeBoxProps, LinearGradientProps {
+  children?: ReactNode
+}
 
 /**
  * GradientBox.
+ * @param props Props.
+ * @returns &lt;GradientBox />.
  */
 export const GradientBox = styled(LinearGradient)<GradientBoxProps>`
-  ${props => box(omit(props, ['start', 'end']))}
+  ${props => getViewStyles(omit(props, ['start', 'end']))}
 `

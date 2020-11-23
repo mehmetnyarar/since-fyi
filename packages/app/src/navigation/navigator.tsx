@@ -2,26 +2,19 @@ import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { useTheme } from '~/theme'
 import { DrawerNavigator } from './drawer'
-import { InitialScreen } from './types'
-
-/**
- * <Navigator /> props.
- */
-interface Props {
-  initialScreen?: InitialScreen
-}
+import { NavigatorProps } from './types'
 
 /**
  * Application navigator.
  * @param props Props.
- * @returns <Navigator />.
+ * @returns &lt;Navigator />.
  */
-export const Navigator: React.FC<Props> = ({ initialScreen }) => {
+export const Navigator: React.FC<NavigatorProps> = props => {
   const theme = useTheme()
 
   return (
     <NavigationContainer theme={theme}>
-      <DrawerNavigator initialScreen={initialScreen} />
+      <DrawerNavigator {...props} />
     </NavigationContainer>
   )
 }

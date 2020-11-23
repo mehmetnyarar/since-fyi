@@ -1,29 +1,38 @@
 import { fireEvent } from '@testing-library/react-native'
 import { renderScreen } from 'test/render'
 
-describe('screens/event', () => {
-  it('should render', async () => {
-    const { getByA11yLabel, getAllByA11yLabel } = renderScreen('Main')
+describe('screens/main/event', () => {
+  it('should render and redirect to the MainScreen', async () => {
+    const { findByA11yLabel, findAllByA11yLabel } = renderScreen('Main')
 
-    const input = getByA11yLabel(/Enter an event title/)
-    expect(input).toBeTruthy()
-    fireEvent.changeText(input, 'New event')
+    let titleInput = await findByA11yLabel('event.title')
 
-    const action = getByA11yLabel(/Add event/)
+    // Change title
+    const title = 'New event'
+    fireEvent.changeText(titleInput, title)
 
-    fireEvent.press(action)
+    // Create button should be visible now
+    const createButton = await findByA11yLabel('event.create')
+    expect(titleInput.props.value).toBe(title)
+    expect(createButton).toBeTruthy()
 
-    // FIXME There should not be to cancel buttons!
-    // Figure out where it comes from
+    // Create event
+    fireEvent.press(createButton)
 
-    const cancels = getAllByA11yLabel(/Cancel/)
-    console.warn('cancels', cancels.length)
+    // The app should be redirected to the EventScreen
+    const titleInputs = await findAllByA11yLabel('event.title')
+    const upsertButton = await findByA11yLabel('event.upsert')
+    const cancelButton = await findByA11yLabel('event.upsert.cancel')
+    expect(titleInputs).toHaveLength(2)
+    expect(titleInputs[0].props.value).toBe('')
+    expect(titleInputs[1].props.value).toBe(title)
+    expect(upsertButton).toBeTruthy()
 
-    // const goBack = getByA11yLabel(/Cancel/)
-    // expect(goBack).toBeTruthy()
+    // Cancel
+    fireEvent.press(cancelButton)
 
-    // fireEvent.press(goBack)
-    // input = getByA11yLabel(/Enter an event title/)
-    // expect(input).toBeTruthy()
+    // The app should be redirected to the MainScreen
+    titleInput = await findByA11yLabel('event.title')
+    expect(titleInput).toBeTruthy()
   })
 })
