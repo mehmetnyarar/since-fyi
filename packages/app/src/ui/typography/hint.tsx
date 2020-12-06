@@ -11,7 +11,7 @@ export const Hint: React.FC<TypographyProps> = ({ children, ...props }) => {
   const { colors } = useTheme()
 
   return (
-    <Typography {...props} fontSize={10} color={colors.hint}>
+    <Typography fontSize={10} color={colors.hint} {...props}>
       {children}
     </Typography>
   )

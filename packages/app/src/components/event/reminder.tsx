@@ -57,7 +57,6 @@ export const EventReminder: React.FC<Props> = props => {
   const handlePresetChange = useCallback(
     (value?: string | number) => {
       const newReminder = getReminder(date, { preset: value as string })
-      console.warn('handlePresetChange', { value, newReminder })
       onChange(newReminder)
     },
     [date, onChange]

@@ -15,13 +15,12 @@ const Styled = styled.Switch<SwitchProps>``
  * @returns &lt;Switch />.
  */
 export const Switch: React.FC<Props> = props => {
-  const { palette } = useTheme()
+  const { colors } = useTheme()
 
   return (
     <Styled
       {...props}
-      trackColor={{ false: palette.basic[300], true: palette.primary[300] }}
-      thumbColor={props.value ? palette.primary[500] : palette.basic[500]}
+      trackColor={{ false: colors.background, true: colors.primary }}
       accessible
       accessibilityRole='switch'
     />

@@ -37,6 +37,8 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     <Layout>
       <EventCreate onSuccess={handleSuccess} />
       <Pressable
+        variant='basic'
+        appearance='transparent'
         text={t('clear.all', { count: result?.length })}
         onPress={clear}
       />

@@ -20,7 +20,7 @@ export const Toolbar: React.FC<Props> = props => {
 
   return (
     <GradientBox
-      colors={colors.toolbar.back}
+      colors={colors.toolbar.background}
       height={64}
       padding={16}
       flexDirection='row'

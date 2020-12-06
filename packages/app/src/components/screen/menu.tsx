@@ -8,6 +8,17 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '~/theme'
 import { Icon, Pressable, VBox } from '~/ui'
 
+const routes = [
+  { id: 'about', route: 'About', icon: 'information-outline' },
+  {
+    id: 'policy.privacy',
+    route: 'Policy',
+    params: { type: 'privacy' },
+    icon: 'shield-alert-outline'
+  },
+  { id: 'settings', route: 'Settings', icon: 'settings-outline' }
+]
+
 /**
  * &lt;Menu /> props.
  */
@@ -54,53 +65,21 @@ export const Menu: React.FC<Props> = props => {
         />
       </Pressable>
       <VBox>
-        <Pressable
-          text={t('about')}
-          onPress={() => navigate('About')}
-          justifyContent='flex-start'
-          paddingHorizontal={16}
-          accessibilityHint={t('about.hint')}
-          accessibilityLabel={t('about')}
-        >
-          <Icon
-            name='information-outline'
-            size={16}
-            color={colors.text}
-            marginRight={8}
-          />
-        </Pressable>
-        <Pressable
-          text={t('policy.privacy')}
-          onPress={() => navigate('Policy', { type: 'privacy' })}
-          justifyContent='flex-start'
-          paddingHorizontal={16}
-          accessibilityHint={t('policy.privacy.hint')}
-          accessibilityLabel={t('policy.privacy')}
-        >
-          <Icon
-            name='shield-alert-outline'
-            size={16}
-            color={colors.text}
-            marginRight={8}
-          />
-        </Pressable>
-        <Pressable
-          variant='basic'
-          appearance='transparent'
-          text={t('settings')}
-          onPress={() => navigate('Settings')}
-          justifyContent='flex-start'
-          paddingHorizontal={16}
-          accessibilityHint={t('settings.hint')}
-          accessibilityLabel={t('settings')}
-        >
-          <Icon
-            name='settings-outline'
-            size={16}
-            color={colors.text}
-            marginRight={8}
-          />
-        </Pressable>
+        {routes.map(({ id, route, params, icon }, index) => (
+          <Pressable
+            key={index}
+            variant='basic'
+            appearance='transparent'
+            text={t(id)}
+            onPress={() => navigate(route, params)}
+            justifyContent='flex-start'
+            paddingHorizontal={16}
+            accessibilityHint={t(`${id}.hint`)}
+            accessibilityLabel={t(id)}
+          >
+            <Icon name={icon} size={16} color={colors.text} marginRight={8} />
+          </Pressable>
+        ))}
       </VBox>
     </VBox>
   )

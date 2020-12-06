@@ -49,7 +49,7 @@ export const Header: React.FC<Props> = () => {
 
   return (
     <GradientBox
-      colors={colors.header.back}
+      colors={colors.header.background}
       position='relative'
       height={height}
       padding={16}
@@ -71,7 +71,7 @@ export const Header: React.FC<Props> = () => {
         accessibilityHint={t('home.hint')}
         accessibilityLabel={t('home')}
       >
-        <Logo size={24} fill={colors.header.text} testID='app.logo' />
+        <Logo size={24} fill={colors.header.text} testID='AppLogo' />
       </Pressable>
       <HBox flex={1} justifyContent='center'>
         <Heading

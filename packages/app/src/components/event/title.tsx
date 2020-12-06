@@ -1,10 +1,9 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { EventAction } from '~/hooks/event-manager'
 import { EVENT_TITLE_MAX_LENGTH as MAX_LENGTH } from '~/models'
 import { useTheme } from '~/theme'
-import { HBox, Hint, Pressable, TextInput, VBox } from '~/ui'
+import { HBox, Hint, Icon, Pressable, TextInput, VBox } from '~/ui'
 import { Toolbar } from '../screen'
 
 /**
@@ -32,7 +31,7 @@ export const EventTitle: React.FC<Props> = props => {
   const charsLeft = useMemo(() => MAX_LENGTH - value.length, [value])
 
   return (
-    <Toolbar colors={colors.toolbar.back}>
+    <Toolbar colors={colors.toolbar.background}>
       <TextInput
         flex={1}
         value={value}
@@ -49,6 +48,7 @@ export const EventTitle: React.FC<Props> = props => {
         <>
           <VBox position='absolute' top={0} right={16} alignItems='flex-end'>
             <Hint
+              color={colors.toolbar.text}
               accessible
               accessibilityRole='summary'
               accessibilityLabel={t('chars')}
@@ -69,7 +69,7 @@ export const EventTitle: React.FC<Props> = props => {
               accessibilityHint={t(`event.${action}.hint`)}
               accessibilityLabel={t(`event.${action}`)}
             >
-              <MaterialCommunityIcons
+              <Icon
                 name={action === 'create' ? 'plus' : 'check'}
                 size={24}
                 color={colors.toolbar.text}
@@ -87,11 +87,7 @@ export const EventTitle: React.FC<Props> = props => {
               accessibilityHint={t(`event.${action}.cancel.hint`)}
               accessibilityLabel={t(`event.${action}.cancel`)}
             >
-              <MaterialCommunityIcons
-                name='window-close'
-                size={20}
-                color={colors.toolbar.text}
-              />
+              <Icon name='window-close' size={20} color={colors.toolbar.text} />
             </Pressable>
           </HBox>
         </>

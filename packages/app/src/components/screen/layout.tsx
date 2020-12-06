@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { useTheme } from '~/theme'
 import { BoxProps, Heading, VBox } from '~/ui'
 import { Header } from './header'
@@ -9,7 +9,6 @@ import { Toolbar } from './toolbar'
  */
 interface Props extends BoxProps {
   title?: string
-  toolbarContent?: string | ReactNode
 }
 
 /**
@@ -22,7 +21,12 @@ export const Layout: React.FC<Props> = props => {
   const { colors } = useTheme()
 
   return (
-    <VBox flex={1} position='relative' testID='Layout'>
+    <VBox
+      flex={1}
+      backgroundColor={colors.background}
+      position='relative'
+      testID='Layout'
+    >
       <Header />
       {title && (
         <Toolbar justifyContent='center'>
