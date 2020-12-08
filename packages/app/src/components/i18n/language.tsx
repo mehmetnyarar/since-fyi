@@ -4,7 +4,7 @@ import { LANGUAGES } from '~/i18n'
 import { PickerInput, SelectOption } from '~/ui'
 
 /**
- * <LanguageSwitcher /> props.
+ * &lt;LanguageSwitcher /> props.
  */
 interface Props {}
 
@@ -36,13 +36,13 @@ export const LanguageSwitcher: React.FC<Props> = () => {
       options={options}
       value={i18n.language}
       onChange={handleChange as never}
-      selectLabel={t('select.item')}
+      selectLabel={t('select')}
       accessibilityHint={t('language.hint')}
       accessibilityLabel={t('language')}
       dialogProps={{
         title: t('language'),
-        cancelLabel: t('dialog.cancel'),
-        confirmLabel: t('dialog.confirm')
+        cancelLabel: t('cancel'),
+        confirmLabel: t('confirm')
       }}
       pickerProps={{
         accessibilityHint: t('language.pick.hint'),

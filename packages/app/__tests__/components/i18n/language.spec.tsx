@@ -28,7 +28,7 @@ describe('components/i18n/language', () => {
     expect(picker.props.selectedValue).toBe('tr')
 
     // Confirm
-    const confirm = await findByA11yLabel('dialog.confirm')
+    const confirm = await findByA11yLabel('confirm')
     fireEvent.press(confirm)
     expect(console.log).toHaveBeenCalledWith('tr')
   })

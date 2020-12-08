@@ -21,7 +21,7 @@ describe('screens/main/home', () => {
 
     // The app should be redirected to the EventScreen
     const titleInputs = await findAllByA11yLabel('event.title')
-    const upsertButton = await findByA11yLabel('event.upsert')
+    const upsertButton = await findByA11yLabel('event.create')
     expect(titleInputs).toHaveLength(2)
     expect(titleInputs[0].props.value).toBe('')
     expect(titleInputs[1].props.value).toBe(title)

@@ -18,9 +18,16 @@ export const LanguageDetector: LanguageDetectorAsyncModule = {
   },
   detect: async callback => {
     try {
+      // Get language from the device
       const localization = await getLocalizationAsync()
       const native = localization.locale.split('-')[0]
+
+      // Get language from the storage
       const saved = await AsyncStorage.getItem(STORAGE_KEY)
+
+      // Use language from the storage if exists
+      // If not, use the device language
+      // Fallback to default language
       const lang = saved || native || DEFAULT_LANGUAGE
       console.debug('LanguageDetector/detect', {
         localization,

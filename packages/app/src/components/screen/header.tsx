@@ -92,8 +92,8 @@ export const Header: React.FC<Props> = () => {
         variant='primary'
         appearance='transparent'
         onPress={toggleDrawer}
-        accessibilityHint={t('menu.toggle.hint')}
-        accessibilityLabel={t('menu.toggle')}
+        accessibilityHint={t(`'menu.toggle.${isDrawerOpen}.hint'`)}
+        accessibilityLabel={t(`menu.toggle.${isDrawerOpen}`)}
       >
         <Icon
           name={isDrawerOpen ? 'menu-open' : 'menu'}

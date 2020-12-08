@@ -1,0 +1,44 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.eslint": true
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "i18n-ally.enabledFrameworks": ["i18next"],
+  "i18n-ally.keystyle": "flat",
+  "i18n-ally.localesPaths": [
+    "packages/i18n",
+    "packages/app/__tests__/i18n",
+    "packages/app/src/i18n",
+    "packages/i18n/lib/locales",
+    "packages/i18n/src/locales",
+    "packages/app/__tests__/components/i18n",
+    "packages/app/src/components/i18n",
+    "packages/app/coverage/lcov-report/i18n",
+    "packages/app/coverage/lcov-report/components/i18n"
+  ]
+}

@@ -29,10 +29,10 @@ const setup = () => {
 describe('components/event/upsert', () => {
   it('should render', () => {
     const { getByA11yLabel } = setup()
-    const eventActive = getByA11yLabel('event.active')
+    const eventActive = getByA11yLabel('event.active.true')
     const eventSettings = getByA11yLabel('event.settings')
     const eventStart = getByA11yLabel('event.start')
-    const reminderActive = getByA11yLabel('reminder.active')
+    const reminderActive = getByA11yLabel('reminder.active.false')
     const reminderSettings = getByA11yLabel('reminder.settings')
 
     expect(eventActive.props.value).toBeTruthy()
@@ -44,7 +44,7 @@ describe('components/event/upsert', () => {
 
   it('should deactive the event', () => {
     const { getByA11yLabel } = setup()
-    const eventActive = getByA11yLabel('event.active')
+    const eventActive = getByA11yLabel('event.active.true')
     const eventSettings = getByA11yLabel('event.settings')
 
     fireEvent(eventActive, 'onValueChange', false)
@@ -69,7 +69,7 @@ describe('components/event/upsert', () => {
     fireEvent(picker, 'onChange', null, date)
 
     // Confirm
-    const confirm = await findByA11yLabel('dialog.confirm')
+    const confirm = await findByA11yLabel('confirm')
     fireEvent.press(confirm)
     expect(eventStart.children[0]).toHaveTextContent(newStartDate)
   })
@@ -92,14 +92,14 @@ describe('components/event/upsert', () => {
     fireEvent(picker, 'onChange', null, date)
 
     // Confirm
-    const confirm = await findByA11yLabel('dialog.confirm')
+    const confirm = await findByA11yLabel('confirm')
     fireEvent.press(confirm)
     expect(eventStart.children[0]).toHaveTextContent(newStartDate)
   })
 
   it('should active the reminder', () => {
     const { getByA11yLabel } = setup()
-    const reminderActive = getByA11yLabel('reminder.active')
+    const reminderActive = getByA11yLabel('reminder.active.false')
     const reminderSettings = getByA11yLabel('reminder.settings')
 
     fireEvent(reminderActive, 'onValueChange', true)

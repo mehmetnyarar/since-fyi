@@ -10,15 +10,15 @@ describe('components/screen/menu', () => {
       expect(queryByA11yLabel('menu')).toBeFalsy()
     })
 
-    const menuButton = getByA11yLabel('menu.toggle')
-
     // toggle on
+    let menuButton = getByA11yLabel('menu.toggle.false')
     fireEvent.press(menuButton)
     await waitFor(() => {
       expect(queryByA11yLabel('menu')).toBeTruthy()
     })
 
     // toggle off
+    menuButton = getByA11yLabel('menu.toggle.true')
     fireEvent.press(menuButton)
     await waitFor(() => {
       expect(queryByA11yLabel('menu')).toBeFalsy()

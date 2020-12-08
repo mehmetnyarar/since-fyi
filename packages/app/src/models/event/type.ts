@@ -31,4 +31,6 @@ export interface Event {
    * Reminder settings.
    */
   reminder?: Reminder | null
+  createdAt?: Date
+  updatedAt?: Date
 }

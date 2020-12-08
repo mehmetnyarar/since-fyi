@@ -84,8 +84,7 @@ export const EventTitle: React.FC<Props> = props => {
               borderRadius={16}
               onPress={onCancel}
               disabled={loading}
-              accessibilityHint={t(`event.${action}.cancel.hint`)}
-              accessibilityLabel={t(`event.${action}.cancel`)}
+              accessibilityLabel={t('event.cancel')}
             >
               <Icon name='window-close' size={20} color={colors.toolbar.text} />
             </Pressable>

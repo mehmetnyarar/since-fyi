@@ -30,7 +30,7 @@ import { ArrayUtils } from '~/utility'
 import { EventSchedule } from './schedule'
 
 /**
- * <EventReminder /> props.
+ * &lt;EventReminder /> props.
  */
 interface Props {
   date?: Date
@@ -156,8 +156,8 @@ export const EventReminder: React.FC<Props> = props => {
           accessibilityLabel={t('reminder.preset')}
           dialogProps={{
             title: t('reminder.preset'),
-            cancelLabel: t('dialog.cancel'),
-            confirmLabel: t('dialog.confirm')
+            cancelLabel: t('cancel'),
+            confirmLabel: t('confirm')
           }}
           pickerProps={{
             accessibilityHint: t('reminder.preset.pick.hint'),
@@ -186,8 +186,8 @@ export const EventReminder: React.FC<Props> = props => {
           accessibilityLabel={t('reminder.every')}
           dialogProps={{
             title: t('reminder.every'),
-            cancelLabel: t('dialog.cancel'),
-            confirmLabel: t('dialog.confirm')
+            cancelLabel: t('cancel'),
+            confirmLabel: t('confirm')
           }}
           pickerProps={{
             accessibilityHint: t('reminder.every.pick.hint'),
@@ -210,8 +210,8 @@ export const EventReminder: React.FC<Props> = props => {
           accessibilityLabel={t('reminder.frequency')}
           dialogProps={{
             title: t('reminder.frequency'),
-            cancelLabel: t('dialog.cancel'),
-            confirmLabel: t('dialog.confirm')
+            cancelLabel: t('cancel'),
+            confirmLabel: t('confirm')
           }}
           pickerProps={{
             accessibilityHint: t('reminder.frequency.pick.hint'),
@@ -245,11 +245,7 @@ export const EventReminder: React.FC<Props> = props => {
               />
             </Pressable>
           </HBox>
-          <SwipeableList
-            accessible
-            accessibilityHint={t('schedules.hint')}
-            accessibilityLabel={t('schedules')}
-          >
+          <SwipeableList accessible accessibilityLabel={t('schedules')}>
             {schedules.map<ReactElement<SwipeableProps>>((schedule, index) => (
               <EventSchedule
                 key={index}

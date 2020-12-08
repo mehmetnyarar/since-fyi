@@ -62,6 +62,14 @@ jest.mock('react-i18next', () => {
   }
 })
 
+jest.mock('@sincefyi/i18n', () => {
+  return {
+    en: { common: {} },
+    ru: { common: {} },
+    tr: { common: {} }
+  }
+})
+
 jest.mock('@react-native-community/datetimepicker', () => {
   const React = require('React')
   const RealComponent = jest.requireActual(

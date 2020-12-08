@@ -7,7 +7,7 @@ import { DrawerNavigationParams } from '~/navigation'
 import { Typography } from '~/ui'
 
 /**
- * <PolicyScreen /> props.
+ * &lt;PolicyScreen /> props.
  */
 interface Props {
   route: RouteProp<DrawerNavigationParams, 'Policy'>

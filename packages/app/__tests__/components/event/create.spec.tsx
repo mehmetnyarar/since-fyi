@@ -16,7 +16,7 @@ describe('components/event/create', () => {
     expect(input.props.value).toBe(title)
 
     // Cancel
-    const cancel = getByA11yLabel('event.create.cancel')
+    const cancel = getByA11yLabel('event.cancel')
     fireEvent.press(cancel)
     expect(input.props.value).toBe('')
 

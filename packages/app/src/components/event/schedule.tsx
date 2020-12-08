@@ -79,8 +79,8 @@ export const EventSchedule: React.FC<Props> = props => {
           onValueChange={value => onChange({ ...schedule, isActive: value })}
           accessible
           accessibilityRole='switch'
-          accessibilityHint={t('schedule.active.hint')}
-          accessibilityLabel={t('schedule.active')}
+          accessibilityHint={t(`schedule.active.${schedule.isActive}.hint`)}
+          accessibilityLabel={t(`schedule.active.${schedule.isActive}`)}
         />
         <HBox>
           {Boolean(monthOptions.length) && (
@@ -96,8 +96,8 @@ export const EventSchedule: React.FC<Props> = props => {
               accessibilityLabel={t('schedule.month')}
               dialogProps={{
                 title: t('schedule.month'),
-                cancelLabel: t('dialog.cancel'),
-                confirmLabel: t('dialog.confirm')
+                cancelLabel: t('cancel'),
+                confirmLabel: t('confirm')
               }}
               pickerProps={{
                 accessibilityHint: t('schedule.month.pick.hint'),
@@ -118,8 +118,8 @@ export const EventSchedule: React.FC<Props> = props => {
               accessibilityLabel={t('schedule.day')}
               dialogProps={{
                 title: t('schedule.day'),
-                cancelLabel: t('dialog.cancel'),
-                confirmLabel: t('dialog.confirm')
+                cancelLabel: t('cancel'),
+                confirmLabel: t('confirm')
               }}
               pickerProps={{
                 accessibilityHint: t('schedule.day.pick.hint'),
@@ -135,8 +135,8 @@ export const EventSchedule: React.FC<Props> = props => {
             accessibilityLabel={t('schedule.time')}
             dialogProps={{
               title: t('schedule.time'),
-              cancelLabel: t('dialog.cancel'),
-              confirmLabel: t('dialog.confirm')
+              cancelLabel: t('cancel'),
+              confirmLabel: t('confirm')
             }}
           />
         </HBox>

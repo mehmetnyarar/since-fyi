@@ -14,6 +14,6 @@ describe('components/screen/header', () => {
     expect(await findByA11yLabel('header')).toBeTruthy()
     expect(await findByA11yLabel('home')).toBeTruthy()
     expect(await findByA11yLabel('app.name')).toBeTruthy()
-    expect(await findByA11yLabel('menu.toggle')).toBeTruthy()
+    expect(await findByA11yLabel('menu.toggle.false')).toBeTruthy()
   })
 })

@@ -37,7 +37,7 @@ describe('components/event/schedule', () => {
       <Component frequency={Frequency.DAY} />
     )
 
-    const activeSwitch = getByA11yLabel('schedule.active')
+    const activeSwitch = getByA11yLabel('schedule.active.true')
     const monthOptionsButton = queryByA11yLabel('schedule.month')
     const dayOptionsButton = queryByA11yLabel('schedule.day')
     const timeButton = getByA11yLabel('schedule.time')

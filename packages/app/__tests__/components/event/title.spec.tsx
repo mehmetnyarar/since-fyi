@@ -57,7 +57,7 @@ describe('components/event/title', () => {
     expect(onAction).toHaveBeenCalled()
 
     // Cancel
-    const cancel = getByA11yLabel('event.create.cancel')
+    const cancel = getByA11yLabel('event.cancel')
     fireEvent.press(cancel)
     expect(onCancel).toHaveBeenCalled()
   })
@@ -83,7 +83,7 @@ describe('components/event/title', () => {
     expect(onAction).toHaveBeenCalled()
 
     // Cancel
-    const cancel = getByA11yLabel('event.upsert.cancel')
+    const cancel = getByA11yLabel('event.cancel')
     fireEvent.press(cancel)
     expect(onCancel).toHaveBeenCalled()
   })

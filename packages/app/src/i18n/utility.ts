@@ -1,14 +1,15 @@
+import i18n, { Locales } from '@sincefyi/i18n'
 import { Resource } from 'i18next'
 import { LANGUAGES } from './const'
-import { common } from './resources'
 
 /**
  * Returns i18n translations.
  */
 export const getTranslations = () => {
+  const locales = i18n as Locales
   const value = LANGUAGES.reduce((translations, language) => {
     translations[language] = {
-      common: common[language]
+      common: locales[language].common
     }
 
     return translations

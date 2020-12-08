@@ -6,7 +6,7 @@ import { Layout } from '~/components/screen'
 import { MainNavigationParams } from '~/navigation'
 
 /**
- * <EventScreen /> props.
+ * &lt;EventScreen /> props.
  */
 interface Props {
   route: RouteProp<MainNavigationParams, 'Event'>

@@ -7,10 +7,10 @@ import { useEventManager } from './use'
  * @param props Props.
  */
 export const EventManagerProvider: React.FC = ({ children }) => {
-  const value = useEventManager()
+  const manager = useEventManager()
 
   return (
-    <EventManagerContext.Provider value={value}>
+    <EventManagerContext.Provider value={manager}>
       {children}
     </EventManagerContext.Provider>
   )

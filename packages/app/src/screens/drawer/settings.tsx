@@ -8,7 +8,7 @@ import { Layout } from '~/components/screen'
 import { DrawerNavigationParams } from '~/navigation'
 
 /**
- * <SettingsScreen /> props.
+ * &lt;SettingsScreen /> props.
  */
 interface Props {
   route: RouteProp<DrawerNavigationParams, 'Settings'>

@@ -44,7 +44,7 @@ export const getDate = (value?: DateType, defaultValue?: Date) => {
 
 /**
  * Determines the display format based on input mode.
- * @param [mode] Date mode.
+ * @param [mode="dmyhm"] Date mode.
  * @returns DateFormat.
  */
 export const getDateFormat = (mode?: DateMode): DateFormat => {
@@ -93,7 +93,7 @@ export const setTime = (value: string, date?: Date) => {
 /**
  * Returns time (HH:mm) for the given date.
  * @param value Date.
- * @param [defaultValue] Default value to return.
+ * @param [defaultValue="00:00"] Default value to return.
  * @returns Time.
  */
 export const getTime = (value?: Date, defaultValue = '00:00') => {

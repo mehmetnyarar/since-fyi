@@ -31,7 +31,7 @@ export interface PressableProps
  * @param props Props.
  * @returns &lt;Pressable />.
  */
-export const Styled = styled(RNPressable)<PressableProps>`
+const Styled = styled(RNPressable)<PressableProps>`
   height: 48px;
   display: flex;
   flex-direction: row;

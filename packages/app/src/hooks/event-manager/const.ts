@@ -1,5 +1,9 @@
 import { EventManager } from './types'
 
+const notImplemented = (fn: string) => () => {
+  throw new Error(`EventManager/${fn} is not implemented.`)
+}
+
 /**
  * Default values for the EventManager.
  */
@@ -7,26 +11,12 @@ export const DEFAULT_EVENT_MANAGER: EventManager = {
   loading: undefined,
   result: undefined,
   error: undefined,
-  set: () => {
-    throw new Error('EventManager/set has not been implemented!')
-  },
-  load: () => {
-    throw new Error('EventManager/load has not been implemented!')
-  },
-  clear: () => {
-    throw new Error('EventManager/clear has not been implemented!')
-  },
-  select: () => {
-    throw new Error('EventManager/select has not been implemented!')
-  },
+  set: notImplemented('set'),
+  load: notImplemented('load'),
+  clear: notImplemented('clear'),
+  select: notImplemented('select'),
   current: undefined,
-  create: () => {
-    throw new Error('EventManager/create has not been implemented!')
-  },
-  update: () => {
-    throw new Error('EventManager/update has not been implemented!')
-  },
-  remove: () => {
-    throw new Error('EventManager/remove has not been implemented!')
-  }
+  create: notImplemented('create'),
+  update: notImplemented('update'),
+  remove: notImplemented('remove')
 }

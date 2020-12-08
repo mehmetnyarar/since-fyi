@@ -42,13 +42,14 @@ export const EventUpsert: React.FC<Props> = props => {
     [update]
   )
 
-  const { TypedController, onSubmit, values } = useEventForm({
+  const { TypedController, action, values, onSubmit } = useEventForm({
     event: event || current,
     onCreate: handleCreate,
     onUpdate: handleUpdate
   })
 
   const { start, isActive, hasReminder } = values
+
   console.debug('Upsert/render', { values })
 
   return (
@@ -58,7 +59,7 @@ export const EventUpsert: React.FC<Props> = props => {
         render={({ value, onChange }) => {
           return (
             <EventTitle
-              action='upsert'
+              action={action}
               onAction={onSubmit}
               onCancel={onCancel}
               loading={loading}
@@ -77,8 +78,8 @@ export const EventUpsert: React.FC<Props> = props => {
               onValueChange={onChange}
               accessible
               accessibilityRole='switch'
-              accessibilityHint={t('event.active.hint')}
-              accessibilityLabel={t('event.active')}
+              accessibilityHint={t(`event.active.${value}.hint`)}
+              accessibilityLabel={t(`event.active.${value}`)}
             />
           </Row>
         )}
@@ -86,7 +87,6 @@ export const EventUpsert: React.FC<Props> = props => {
       <VBox
         hidden={!isActive}
         accessible
-        accessibilityHint={t('event.settings.hint')}
         accessibilityLabel={t('event.settings')}
       >
         <TypedController
@@ -101,8 +101,8 @@ export const EventUpsert: React.FC<Props> = props => {
                 accessibilityLabel={t('event.start')}
                 dialogProps={{
                   title: t('event.start'),
-                  cancelLabel: t('dialog.cancel'),
-                  confirmLabel: t('dialog.confirm')
+                  cancelLabel: t('cancel'),
+                  confirmLabel: t('confirm')
                 }}
                 pickerProps={{
                   accessibilityRole: t('event.start.pick.hint'),
@@ -120,8 +120,8 @@ export const EventUpsert: React.FC<Props> = props => {
                 <Switch
                   value={value}
                   onValueChange={onChange}
-                  accessibilityHint={t('reminder.active.hint')}
-                  accessibilityLabel={t('reminder.active')}
+                  accessibilityHint={t(`reminder.active.${value}.hint`)}
+                  accessibilityLabel={t(`reminder.active.${value}`)}
                 />
               </Row>
             )
@@ -133,7 +133,6 @@ export const EventUpsert: React.FC<Props> = props => {
             <VBox
               hidden={!(isActive && hasReminder)}
               accessible
-              accessibilityHint={t('reminder.settings.hint')}
               accessibilityLabel={t('reminder.settings')}
             >
               {value && (

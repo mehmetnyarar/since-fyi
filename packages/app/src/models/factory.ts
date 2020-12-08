@@ -163,14 +163,17 @@ export const getEvent = (initial: Partial<Event> = {}): Event => {
     start = new Date(),
     isActive = true,
     hasReminder = false,
-    reminder = null
+    reminder = null,
+    createdAt
   } = initial
   const event: Event = merge({}, DEFAULT_EVENT, {
     ...initial,
     start,
     isActive,
     hasReminder,
-    reminder
+    reminder,
+    createdAt: createdAt || new Date(),
+    updatedAt: createdAt && new Date()
   })
 
   return {

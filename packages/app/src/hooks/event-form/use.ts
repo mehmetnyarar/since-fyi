@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid/async/index.native'
 import { useCallback, useEffect, useMemo } from 'react'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import { DEFAULT_EVENT, Event, getReminder } from '~/models'
+import { EventAction } from '../event-manager'
 import { eventSchema } from './const'
 
 /**
@@ -35,7 +36,11 @@ export const useEventForm = (options: EventFormOptions) => {
   })
 
   const values = useMemo<Event>(watch, [watch])
-  const { start, hasReminder, reminder } = values
+  const { start, hasReminder, reminder, updatedAt } = values
+
+  const action = useMemo<EventAction>(() => {
+    return updatedAt ? 'update' : 'create'
+  }, [updatedAt])
 
   useEffect(() => {
     if (hasReminder && !reminder) {
@@ -60,6 +65,7 @@ export const useEventForm = (options: EventFormOptions) => {
   return {
     ...form,
     TypedController,
+    action,
     values,
     onSubmit
   }

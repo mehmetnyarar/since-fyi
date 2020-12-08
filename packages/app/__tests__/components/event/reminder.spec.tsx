@@ -51,7 +51,7 @@ describe('components/event/reminder', () => {
     expect(picker.props.selectedValue).toBe('WEEK.2')
 
     // Confirm
-    const confirm = await findByA11yLabel('dialog.confirm')
+    const confirm = await findByA11yLabel('confirm')
     fireEvent.press(confirm)
 
     preset = await findByA11yLabel('reminder.preset')
