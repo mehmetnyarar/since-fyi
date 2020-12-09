@@ -1,2 +1,5 @@
 # Directories
+__generated__
+.expo
+.jest
 coverage
