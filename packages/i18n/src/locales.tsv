@@ -1,0 +1,172 @@
+usage	namespace	key	en	ru	tr
+1	common	FREQUENCY.DAY	day	день	gün
+1	common	FREQUENCY.DAY#plural	days	дней	gün
+1	common	FREQUENCY.HOUR	hour	час	saat
+1	common	FREQUENCY.HOUR#plural	hours	часов	saat
+1	common	FREQUENCY.MINUTE	minute	минуту	dakika
+1	common	FREQUENCY.MINUTE#plural	minutes	минут	dakika
+1	common	FREQUENCY.MONTH	month	месяц	ay
+1	common	FREQUENCY.MONTH#plural	months	месяцев	ay
+1	common	FREQUENCY.WEEK	week	неделю	hafta
+1	common	FREQUENCY.WEEK#plural	weeks	недель	hafta
+1	common	FREQUENCY.YEAR	year	год	yıl
+1	common	FREQUENCY.YEAR#plural	years	лет	yıl
+1	common	LANGUAGE.en	English	английский	English
+1	common	LANGUAGE.ru	Русский	Русский	Русский
+1	common	LANGUAGE.tr	Türkçe	Türkçe	Türkçe
+1	common	PRESET.CUSTOM	Custom	Личные настройки	Özel
+1	common	PRESET.DAY.1	Day	День	Gün
+1	common	PRESET.DAY.2	2 days	2 дня	2 günde
+1	common	PRESET.DAY.3	3 days	3 дня	3 günde
+1	common	PRESET.HOUR.1	1 hour	1 час	1 saat
+1	common	PRESET.HOUR.12	12 hours	12 часов	12 saatte
+1	common	PRESET.HOUR.2	2 hours	два часа	2 saatte
+1	common	PRESET.HOUR.3	3 hours	3 часа	3 saatte
+1	common	PRESET.HOUR.4	4 hours	4 часа	4 saatte
+1	common	PRESET.HOUR.6	6 hours	6 часов	6 saatte
+1	common	PRESET.HOUR.8	8 hours	8 часов	8 saatte
+1	common	PRESET.MINUTE.15	15 minutes	15 минут	15 dakikada
+1	common	PRESET.MINUTE.30	30 minutes	30 минут	30 dakikada
+1	common	PRESET.MINUTE.45	45 minutes	45 минут	45 dakikada
+1	common	PRESET.MONTH.1	Month	Месяц	Ay
+1	common	PRESET.MONTH.2	2 months	2 месяца	2 ayda
+1	common	PRESET.MONTH.3	3 months	3 месяца	3 ayda
+1	common	PRESET.MONTH.4	4 months	4 месяца	4 ayda
+1	common	PRESET.MONTH.6	6 months	6 месяцев	6 ayda
+1	common	PRESET.WEEK.1	Week	Неделю	Hafta
+1	common	PRESET.WEEK.2	2 weeks	2 недели	2 haftada
+1	common	PRESET.YEAR.1	Year	Год	Yıl
+1	common	SCHEDULE.MONTH.1	1st	1-ого	1'i
+1	common	SCHEDULE.MONTH.10	10th	10-ого	10'u
+1	common	SCHEDULE.MONTH.11	11th	11-ого	11'i
+1	common	SCHEDULE.MONTH.12	12th	12-ого	12'si
+1	common	SCHEDULE.MONTH.13	13th	13-ого	13'ü
+1	common	SCHEDULE.MONTH.14	14th	14-ого	14'ü
+1	common	SCHEDULE.MONTH.15	15th	15-ого	15'i
+1	common	SCHEDULE.MONTH.16	16th	16-ого	16'sı
+1	common	SCHEDULE.MONTH.17	17th	17-ого	17'si
+1	common	SCHEDULE.MONTH.18	18th	18-ого	18'i
+1	common	SCHEDULE.MONTH.19	19th	19-ого	19'u
+1	common	SCHEDULE.MONTH.2	2nd	2-ого	2'si
+1	common	SCHEDULE.MONTH.20	20th	20-ого	20'si
+1	common	SCHEDULE.MONTH.21	21st	21-ого	21'i
+1	common	SCHEDULE.MONTH.22	22nd	22-ого	22'si
+1	common	SCHEDULE.MONTH.23	23rd	23-его	23'ü
+1	common	SCHEDULE.MONTH.24	24th	24-ого	24'ü
+1	common	SCHEDULE.MONTH.25	25th	25-ого	25'i
+1	common	SCHEDULE.MONTH.26	26th	26-ого	26'sı
+1	common	SCHEDULE.MONTH.27	27th	27-ого	27'si
+1	common	SCHEDULE.MONTH.28	28th	28-ого	28'i
+1	common	SCHEDULE.MONTH.29	29th	29-ого	29'u
+1	common	SCHEDULE.MONTH.3	3rd	3-его	3'ü
+1	common	SCHEDULE.MONTH.30	30th	30-ого	30'u
+1	common	SCHEDULE.MONTH.31	31st	31-ого	31'i
+1	common	SCHEDULE.MONTH.4	4th	4-ого	4'ü
+1	common	SCHEDULE.MONTH.5	5th	5-ого	5'i
+1	common	SCHEDULE.MONTH.6	6th	6-ого	6'sı
+1	common	SCHEDULE.MONTH.7	7th	7-ого	7'si
+1	common	SCHEDULE.MONTH.8	8th	8-ого	8'i
+1	common	SCHEDULE.MONTH.9	9th	9-ого	9'u
+1	common	SCHEDULE.WEEK.1	Monday	Понедельник	Pazartesi
+1	common	SCHEDULE.WEEK.2	Tuesday	Вторник	Salı
+1	common	SCHEDULE.WEEK.3	Wednesday	Среда	Çarşamba
+1	common	SCHEDULE.WEEK.4	Thursday	Четверг	Perşembe
+1	common	SCHEDULE.WEEK.5	Friday	Пятница	Cuma
+1	common	SCHEDULE.WEEK.6	Saturday	Суббота	Cumartesi
+1	common	SCHEDULE.WEEK.7	Sunday	Воскресенье	Pazar
+1	common	SCHEDULE.YEAR.1	January	Январь	Ocak
+1	common	SCHEDULE.YEAR.10	October	Октябрь	Ekim
+1	common	SCHEDULE.YEAR.11	November	Ноябрь	Kasım
+1	common	SCHEDULE.YEAR.12	December	Декабрь	Aralık
+1	common	SCHEDULE.YEAR.2	February	Февраль	Şubat
+1	common	SCHEDULE.YEAR.3	March	Март	Mart
+1	common	SCHEDULE.YEAR.4	April	Апрель	Nisan
+1	common	SCHEDULE.YEAR.5	May	Май	Mayıs
+1	common	SCHEDULE.YEAR.6	June	Июнь	Haziran
+1	common	SCHEDULE.YEAR.7	July	Июль	Temmuz
+1	common	SCHEDULE.YEAR.8	August	Август	Ağustos
+1	common	SCHEDULE.YEAR.9	September	Сентябрь	Eylül
+1	common	about	About	Инфо	Hakkında
+1	common	about.hint	Learn more about the application	Подробнее о приложении	Uygulama hakkında daha fazlasını öğrenin
+1	common	app.description	Learn how much time passed since you did a thing.	Узнайте, сколько прошло времени после совершенного вами действия	Bir olayın üzerinden nekadar zaman geçtiğini öğrenin.
+1	common	app.name	Since	Since	Since
+1	common	app.version	Version: {{version}}	Версия: {{версия}}	Versiyon: {{version}}
+1	common	chars	Characters	Символы	Karakterler
+1	common	clear.all	Delete All ({{count}})	Удалить все ({{счетчик}})	Tümünü Sil ({{count}})
+1	common	delete	Remove	Удалить	Sil
+1	common	delete.hint	Remove this item	Удалить данный элемент	Bu öğeyi sil
+1	common	cancel	Cancel	Отмена	Vazgeç
+1	common	confirm	Confirm	Подтверждение	Onayla
+1	common	event.active	Active	Активное	Aktif
+1	common	event.active.true	Pause	Пауза	Askıya Al
+1	common	event.active.true.hint	Pause the event tracking temporarily	Приостановить отслеживание события временно	Olayı geçici olarak askıya al
+1	common	event.active.false	Activate	Активировать	Etkinleştir
+1	common	event.active.false.hint	Activate the event tracking	Включить отслеживание события	Olayı etkinleştir
+1	common	event.cancel	Cancel	Отмена	Vazgeç
+1	common	event.create	Create Event	Создать событие	Olay Oluştur
+1	common	event.create.hint	Create a new event	Создать новое событие	Yeni bir olay oluşturun
+1	common	event.settings	Event Settings	Настройки события	Olay Ayarları
+1	common	event.start	Start Date	Дата начала	Başlangıç Tarihi
+1	common	event.start.hint	Change the start date	Изменить дату начала	Başlangıç ​​tarihini değiştirin
+1	common	event.start.pick	Start Date	Дата начала	Başlangıç Tarihi
+1	common	event.start.pick.hint	Change the start date	Изменить дату начала	Başlangıç ​​tarihini değiştirin
+1	common	event.title	Title	Название	Başlık
+1	common	event.title.hint	Enter an event title	Введите название события	Olay başlığını belirleyin
+1	common	event.title.placeholder	Write something to remember...	Напишите что вы хотите запомнить 	Hatırlamak istediğiniz birşey yazın...
+1	common	event.update	Update Event	Обновление события	Olay Güncelle
+1	common	event.update.hint	Update the current event	Обновление текущего события	Olayı güncelleyin
+1	common	header	Header	Заголовок	Üstbilgi
+1	common	home	My Events	Мои события	Olaylarım
+1	common	home.hint	Go to my events	Перейти к моим событиям	Olaylarıma git
+1	common	language	Language	Язык	Arayüz Dili
+1	common	language.hint	Change the language	Изменение языка	Arayüz dilini değiştirin
+1	common	language.pick	Language	Язык	Arayüz Dili
+1	common	language.pick.hint	Change the language	Изменение языка	Arayüz dilini değiştirin
+1	common	menu	Menu	Меню	Menü
+1	common	menu.toggle.true	Close Menu	Закрыть меню	Menü Kapat
+1	common	menu.toggle.true.hint	Close the menu	Закрыть меню	Menüyü kapat
+1	common	menu.toggle.false	Open Menu	Открыть меню	Menü Aç
+1	common	menu.toggle.false.hint	Open the menu	Открыть меню	Menüyü aç
+1	common	policy.privacy	Privacy Policy	Политика конфиденциальности	Gizlilik Politikası
+1	common	policy.privacy.hint	Read our privacy policy	Прочитайте нашу политику конфиденциальности	Gizlilik Politikamızı okuyun
+1	common	reminder.active	Remind me	Напомнить мне	Hatırlat
+1	common	reminder.active.true	Disable	Отключить	Devredışı Bırak
+1	common	reminder.active.true.hint	Disable notifications	Отключить уведомления	Bildirimleri devredışı bırakın
+1	common	reminder.active.false	Enable	Включить	Etkinleştir
+1	common	reminder.active.false.hint	Enable notifications	Включить уведомления	Bildirimleri etkinleştir
+1	common	reminder.every	Repitition	Периодичность	Tekrarlama
+1	common	reminder.every.hint	Select the frequency repitition	Выбрать частоту периодичности	Tekrarlama değerini belirtin
+1	common	reminder.every.pick	Repitition	Периодичность	Tekrarlama
+1	common	reminder.every.pick.hint	Select the frequency repitition	Выбрать частоту периодичности	Tekrarlama değerini belirtin
+1	common	reminder.frequency	Frequency	Частота	Tekrarlama Sıklığı
+1	common	reminder.frequency.hint	Select reminder frequency	Выбор частоты напоминания	Tekrarlama sıklığını belirtin
+1	common	reminder.frequency.pick	Frequency	Частота	Tekrarlama Sıklığı
+1	common	reminder.frequency.pick.hint	Select reminder frequency	Выбор частоты напоминания	Tekrarlama sıklığını belirtin
+1	common	reminder.preset	Every	Каждый	Her
+1	common	reminder.preset.hint	Select a preset	Выбрать предустановку	Bir önayar seçin
+1	common	reminder.preset.pick	Every	Каждый	Her
+1	common	reminder.preset.pick.hint	Select a preset	Выбрать предустановку	Bir önayar seçin
+1	common	reminder.settings	Notification Settings	Настройки уведомлений	Bildirim Ayarları
+1	common	schedule.active	Schedule	График	Rutin
+1	common	schedule.active.true.hint	Disable this schedule	Отключить данный график	Rutini devredışı bırak
+1	common	schedule.active.false	Enable	Включить	Etkinleştir
+1	common	schedule.active.false.hint	Enable this schedule	Включить данный график	Rutini etkinleştir
+1	common	schedule.create	Add Schedule	Добавить расписание	Yeni Rutin Ekle
+1	common	schedule.create.hint	Add a new schedule	Добавить новый график	Yeni bir rutin ekleyin
+1	common	schedule.day	Day	День	Gün
+1	common	schedule.day.hint	Pick a day	Выбрать день	Bir gün seçin
+1	common	schedule.day.pick	Day	День	Gün
+1	common	schedule.day.pick.hint	Pick a day	Выбрать день	Bir gün seçin
+1	common	schedule.month	Month	Месяц	Ay
+1	common	schedule.month.hint	Select a month	Выбрать месяц	Bir ay seçin
+1	common	schedule.month.pick	Month	Месяц	Ay
+1	common	schedule.month.pick.hint	Select a month	Выбрать месяц	Bir ay seçin
+1	common	schedule.time	Time	Время	Zaman
+1	common	schedule.time.hint	Specify the time	Указать время	Zamanı belirtin
+1	common	schedule.time.pick	Time	Время	Zaman
+1	common	schedule.time.pick.hint	Specify the time	Указать время	Zamanı belirtin
+1	common	schedules	Schedules	Расписание	Rutinler
+1	common	select	Select	Выбрать	Seç
+1	common	settings	Settings	Настройки	Ayarlar
+1	common	settings.hint	Update the application settings	Обновление настроек приложения	Uygulama ayarlarını özelleştirin
+1	common	toolbar	Toolbar	Панель инструментов	Araç Çubuğu

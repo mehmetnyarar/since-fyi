@@ -1,6 +1,5 @@
 # Directories
 node_modules
-coverage
 
 # Package Manager
 yarn.*
@@ -10,6 +9,11 @@ yarn-*
 .env
 .env.*
 !.env.config
+
+# Testing
+__snapshots__
+coverage
+*.snap
 
 # Misc
 .DS_Store

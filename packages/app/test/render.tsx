@@ -1,43 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { render as rtlRender } from '@testing-library/react-native'
 import React from 'react'
+import { I18nextProvider } from 'react-i18next'
+import { EventManagerProvider } from '~/hooks/event-manager'
+import { i18n } from '~/i18n'
+import { InitialParams, InitialScreen, Navigator } from '~/navigation'
+import { light, ThemeProvider } from '~/theme'
 
-interface RenderOptions {}
+/**
+ * Context providers.
+ */
+const Providers: React.FC = ({ children }) => (
+  <ThemeProvider theme={light}>
+    <I18nextProvider i18n={i18n}>
+      <EventManagerProvider>{children}</EventManagerProvider>
+    </I18nextProvider>
+  </ThemeProvider>
+)
 
-// Original RTL render
-// In the future, we might need a wrapper for context creators
-export const render = rtlRender
-
-// #region Screen
-
-interface NavigatorProps<P = unknown> {
-  screen: React.FC<P>
-}
-
-const Navigator: React.FC<NavigatorProps> = ({ screen }) => {
-  const Stack = createStackNavigator()
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Screen' component={screen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-}
-
-export const renderScreen = (
-  ui: React.FC<any>,
-  options: RenderOptions = {}
-) => {
+/**
+ * Renders a screen.
+ * @param name Screen name.
+ * @param params Screen parameters.
+ */
+export const renderScreen = (name?: InitialScreen, params?: InitialParams) => {
   return {
-    ...rtlRender(<Navigator screen={ui} />, {
-      ...options
+    ...rtlRender(<Navigator initialScreen={name} initialParams={params} />, {
+      wrapper: Providers
     })
   }
 }
 
-// #endregion
+/**
+ * Renders a non-screen component.
+ */
+export const render = (ui: React.ReactElement) => {
+  return {
+    ...rtlRender(ui, {
+      wrapper: Providers
+    })
+  }
+}

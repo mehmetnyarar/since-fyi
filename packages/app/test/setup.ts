@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock'
 import '@testing-library/jest-native/extend-expect'
 import 'react-native-gesture-handler/jestSetup'
 
@@ -10,34 +14,94 @@ jest.mock('@expo-google-fonts/rubik', () => {
   }
 })
 
-jest.mock('expo-splash-screen', () => {
-  return {
-    preventAutoHideAsync: jest.fn(),
-    hideAsync: jest.fn()
-  }
-})
-
 jest.mock('react-native-reanimated', () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Reanimated = require('react-native-reanimated/mock')
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   Reanimated.default.call = () => {}
 
   return Reanimated
 })
 
+// Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
 jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper')
 
-jest.mock('@react-navigation/native', () => {
-  const actual = jest.requireActual('@react-navigation/native')
+// Mock AsyncStorage
+jest.mock('@react-native-community/async-storage', () => mockAsyncStorage)
+
+// Mock nanoid
+jest.mock('nanoid/async/index.native', () => ({
+  nanoid: () => '123456'
+}))
+
+// Mock debug messages
+jest.spyOn(console, 'debug').mockImplementation(() => jest.fn())
+
+// Mock i18n
+jest.mock('expo-localization', () => {
+  return {
+    getLocalizationAsync: async () => {
+      return {
+        locale: 'en-US'
+      }
+    }
+  }
+})
+jest.mock('react-i18next', () => {
+  const actual = jest.requireActual('react-i18next')
+
   return {
     ...actual,
-    useNavigation: () => ({
-      canGoBack: jest.fn(),
-      dispatch: jest.fn(),
-      goBack: jest.fn(),
-      navigate: jest.fn()
+    useTranslation: () => ({
+      t: (t: string) => t,
+      i18n: {
+        language: 'en',
+        changeLanguage: async (language: string) => {
+          console.log(language)
+        }
+      }
     })
+  }
+})
+
+jest.mock('@sincefyi/i18n', () => {
+  return {
+    en: { common: {} },
+    ru: { common: {} },
+    tr: { common: {} }
+  }
+})
+
+jest.mock('@react-native-community/datetimepicker', () => {
+  const React = require('React')
+  const RealComponent = jest.requireActual(
+    '@react-native-community/datetimepicker'
+  )
+
+  class Picker extends React.Component {
+    render () {
+      return React.createElement('Picker', this.props, this.props.children)
+    }
+  }
+
+  Picker.propTypes = RealComponent.propTypes
+  return Picker
+})
+
+jest.mock('@react-native-community/picker', () => {
+  const React = require('React')
+  const RealComponent = jest.requireActual('@react-native-community/picker')
+
+  class Picker extends React.Component {
+    static Item = (props: { children: never }) => {
+      return React.createElement('Item', props, props.children)
+    }
+
+    render () {
+      return React.createElement('Picker', this.props, this.props.children)
+    }
+  }
+
+  Picker.propTypes = RealComponent.propTypes
+  return {
+    Picker
   }
 })

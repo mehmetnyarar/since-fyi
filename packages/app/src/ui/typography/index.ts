@@ -1,0 +1,5 @@
+export * from './heading'
+export * from './hint'
+export * from './label'
+export * from './p'
+export * from './typography'

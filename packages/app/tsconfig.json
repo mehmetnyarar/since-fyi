@@ -16,6 +16,7 @@
       "~/*": ["src/*"],
       "test/*": ["test/*"]
     },
+    "typeRoots": ["@types", "node_modules/@types", "../../node_modules/@types"],
     "allowSyntheticDefaultImports": true,
     /* Advanced Options */
     "skipLibCheck": true,
