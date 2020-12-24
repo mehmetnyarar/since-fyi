@@ -105,6 +105,8 @@
   "event.cancel": "Cancel",
   "event.create": "Create Event",
   "event.create.hint": "Create a new event",
+  "event.na.active": "Paused",
+  "event.na.start": "Start date is not specified!",
   "event.settings": "Event Settings",
   "event.start": "Start Date",
   "event.start.hint": "Change the start date",
@@ -169,5 +171,14 @@
   "select": "Select",
   "settings": "Settings",
   "settings.hint": "Update the application settings",
+  "timespan.ago": "ago",
+  "timespan.days": "d",
+  "timespan.hours": "h",
+  "timespan.in": "in",
+  "timespan.minutes": "min",
+  "timespan.months": "mo",
+  "timespan.seconds": "s",
+  "timespan.weeks": "w",
+  "timespan.years": "y",
   "toolbar": "Toolbar"
 }

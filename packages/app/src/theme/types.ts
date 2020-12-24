@@ -47,17 +47,33 @@ export type ElementType = 'view' | 'text'
 /**
  * Element state.
  */
-export type ElementState = 'default' | 'active'
+export type ElementState = 'default' | 'active' | 'disabled'
 
 /**
  * Element appearance.
  */
-export type ElementAppearance = 'filled' | 'outlined' | 'transparent'
+export type ElementAppearance =
+  | 'filled'
+  | 'outlined'
+  | 'underlined'
+  | 'transparent'
+
+export interface Border {
+  width?: number
+  color?: number
+}
+export interface BorderStyles {
+  top?: Border
+  right?: Border
+  bottom?: Border
+  left?: Border
+}
 
 /**
  * Element styles.
  */
 export interface ElementStyles {
+  border?: BorderStyles
   borderColor?: string
   backgroundColor?: string
   color?: string
@@ -151,6 +167,7 @@ export interface ThemeProps {
   variant?: ColorVariant
   appearance?: ElementAppearance
   inverted?: boolean
+  disabled?: boolean
 }
 
 /**

@@ -1,6 +1,6 @@
-import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
+import { GradientBox } from '~/ui'
 import { Logo } from './logo'
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
  */
 export const Header: React.FC = () => {
   return (
-    <LinearGradient
+    <GradientBox
       colors={['#58C4E7', '#26A1D8']}
       style={styles.container}
       accessible
@@ -39,6 +39,6 @@ export const Header: React.FC = () => {
         Since
       </Text>
       <Logo size={32} style={styles.logo} />
-    </LinearGradient>
+    </GradientBox>
   )
 }

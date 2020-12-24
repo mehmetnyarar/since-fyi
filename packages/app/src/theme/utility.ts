@@ -5,7 +5,6 @@ import {
   ColorPalette,
   ColorVariant,
   CssUnit,
-  ElementAppearance,
   ElementStyles,
   ElementType,
   TextProps,
@@ -77,15 +76,6 @@ const CSS = (prop: string, value?: number | string, unit?: CssUnit) => {
 }
 
 /**
- * Checks whether the element has a transparent appearance.
- * @param appearance Appearance.
- * @returns True if the condition is met.
- */
-const isTransparent = (appearance?: ElementAppearance) => {
-  return appearance ? appearance === 'transparent' : false
-}
-
-/**
  * Determines the element styles.
  * @param type Type of element.
  * @param props Element props.
@@ -95,21 +85,26 @@ const getElementStyles = (
   type: ElementType,
   props: ThemedStyledProps<BaseProps, Theme>
 ): ElementStyles => {
-  const { theme, variant } = props
-  if (!theme || !variant) return {}
-
-  const { inverted, state, appearance } = props
+  const { theme, state } = props
   const basic = theme.palette.basic
+  if (state === 'disabled') {
+    return {
+      borderColor: type === 'view' ? basic[500] : undefined,
+      backgroundColor: type === 'view' ? basic[600] : undefined,
+      color: type === 'view' ? basic[200] : basic[400]
+    }
+  }
+
+  const { variant } = props
+  if (!variant) return {}
+
+  const { inverted, appearance } = props
   const palette = theme.palette[variant]
 
   switch (type) {
     case 'view':
       return {
-        borderColor: !isTransparent(appearance)
-          ? state === 'active'
-              ? palette[400]
-              : palette[500]
-          : undefined,
+        borderColor: state === 'active' ? palette[400] : palette[500],
         backgroundColor:
           state === 'active'
             ? palette[400]
@@ -222,13 +217,17 @@ export const getViewStyles = (
   const brtl = borderTopLeftRadius || borderRadius
 
   // border
-  const transparent = isTransparent(appearance)
-  const bw = borderWidth || Number(!transparent)
-  const bc = borderColor || styles.borderColor
-  const bt = bc ? bw || borderTopWidth : undefined
-  const br = bc ? bw || borderRightWidth : undefined
-  const bb = bc ? bw || borderBottomWidth : undefined
-  const bl = bc ? bw || borderLeftWidth : undefined
+  const t = appearance === 'transparent'
+  const u = appearance === 'underlined'
+  const bc = t ? 'transparent' : borderColor || styles.borderColor
+  const btw = t || u ? undefined : borderTopWidth || borderWidth
+  const btc = btw ? String(bc) : undefined
+  const brw = t || u ? undefined : borderRightWidth || borderWidth
+  const brc = brw ? String(bc) : undefined
+  const bbw = t ? undefined : borderBottomWidth || borderWidth
+  const bbc = bbw ? String(bc) : undefined
+  const blw = t || u ? undefined : borderLeftWidth || borderWidth
+  const blc = blw ? String(bc) : undefined
 
   // background
   const bg = backgroundColor || styles.backgroundColor
@@ -267,16 +266,34 @@ export const getViewStyles = (
     CSS('border-bottom-right-radius', brbr, unit),
     CSS('border-bottom-left-radius', brbl, unit),
     CSS('border-top-left-radius', brtl, unit),
-    CSS('border-top-width', bt, unit),
-    bt ? `border-top-color: ${String(bc)};` : undefined,
-    CSS('border-right-width', br, unit),
-    br ? `border-right-color: ${String(bc)};` : undefined,
-    CSS('border-bottom-width', bb, unit),
-    bb ? `border-bottom-color: ${String(bc)};` : undefined,
-    CSS('border-left-width', bl, unit),
-    bl ? `border-left-color: ${String(bc)};` : undefined,
-    CSS('background-color', bg ? String(bg) : undefined)
+    CSS('border-top-width', btw, unit),
+    CSS('border-top-color', btc),
+    CSS('border-right-width', brw, unit),
+    CSS('border-right-color', brc),
+    CSS('border-bottom-width', bbw, unit),
+    CSS('border-bottom-color', bbc),
+    CSS('border-left-width', blw, unit),
+    CSS('border-left-color', blc),
+    CSS('background-color', bg && String(bg))
   ].filter(value => Boolean(value))
+
+  if (props.nativeID === 'EventCard') {
+    console.debug('getViewStyles', {
+      props,
+      styles,
+      t,
+      u,
+      btw,
+      btc,
+      brw,
+      brc,
+      bbw,
+      bbc,
+      blw,
+      blc,
+      cssStyles
+    })
+  }
 
   return css`
     ${cssStyles}
@@ -312,6 +329,14 @@ export const getTextStyles = (
     CSS('font-weight', fontWeight),
     CSS('text-align', textAlign)
   ].filter(value => Boolean(value))
+
+  if (props.nativeID === 'EventHeading') {
+    console.debug('EventHeading', {
+      styles,
+      color,
+      c
+    })
+  }
 
   return css`
     ${cssStyles}

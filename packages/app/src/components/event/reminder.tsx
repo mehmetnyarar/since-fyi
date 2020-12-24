@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import React, { ReactElement, useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   getDayOptions,
@@ -23,8 +23,7 @@ import {
   Label,
   PickerInput,
   Pressable,
-  SwipeableList,
-  SwipeableProps
+  SwipeableList
 } from '~/ui'
 import { ArrayUtils } from '~/utility'
 import { EventSchedule } from './schedule'
@@ -246,7 +245,7 @@ export const EventReminder: React.FC<Props> = props => {
             </Pressable>
           </HBox>
           <SwipeableList accessible accessibilityLabel={t('schedules')}>
-            {schedules.map<ReactElement<SwipeableProps>>((schedule, index) => (
+            {schedules.map((schedule, index) => (
               <EventSchedule
                 key={index}
                 monthOptions={monthOptions}

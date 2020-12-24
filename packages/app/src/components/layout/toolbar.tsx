@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
 import React, { useCallback, useMemo, useState } from 'react'
 import { Pressable, StyleSheet, TextInput } from 'react-native'
+import { GradientBox } from '~/ui'
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +54,7 @@ export const Toolbar: React.FC = () => {
   }, [actionPressed])
 
   return (
-    <LinearGradient
+    <GradientBox
       colors={['#26A1D8', '#1B7EB9']}
       style={styles.container}
       accessible
@@ -83,6 +83,6 @@ export const Toolbar: React.FC = () => {
           <Feather name='plus' size={16} color='#FFF' />
         </Pressable>
       )}
-    </LinearGradient>
+    </GradientBox>
   )
 }

@@ -1,13 +1,13 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { EventManagerContext } from '~/hooks/event-manager'
-import { getEvent } from '~/models'
+import { Event } from '~/models'
 import { EventTitle } from './title'
 
 /**
  * &lt;EventCreate /> props.
  */
 interface Props {
-  onSuccess: () => void
+  onSuccess: (event: Partial<Event>) => void
 }
 
 /**
@@ -18,18 +18,14 @@ interface Props {
 export const EventCreate: React.FC<Props> = props => {
   const { onSuccess } = props
 
-  const { select, loading } = useContext(EventManagerContext)
+  const { loading } = useContext(EventManagerContext)
 
   const [title, setTitle] = useState('')
 
   const handleAction = useCallback(async () => {
     setTitle('')
-
-    const event = getEvent({ title })
-    select(event)
-
-    onSuccess()
-  }, [title, select, onSuccess])
+    onSuccess({ title })
+  }, [title, onSuccess])
 
   const handleCancel = useCallback(() => setTitle(''), [])
 

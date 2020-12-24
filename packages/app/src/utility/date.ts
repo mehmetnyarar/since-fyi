@@ -33,6 +33,8 @@ export enum DateFormat {
  * @returns Date.
  */
 export const getDate = (value?: DateType, defaultValue?: Date) => {
+  if (!value) return defaultValue
+
   return isDate(value)
     ? (value as Date)
     : typeof value === 'string'

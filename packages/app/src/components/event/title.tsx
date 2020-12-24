@@ -69,11 +69,7 @@ export const EventTitle: React.FC<Props> = props => {
               accessibilityHint={t(`event.${action}.hint`)}
               accessibilityLabel={t(`event.${action}`)}
             >
-              <Icon
-                name={action === 'create' ? 'plus' : 'check'}
-                size={24}
-                color={colors.toolbar.text}
-              />
+              <Icon name='check' size={24} color={colors.toolbar.text} />
             </Pressable>
             <Pressable
               variant='primary'
