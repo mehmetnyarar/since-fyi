@@ -38,8 +38,9 @@ export const EventUpsert: React.FC<Props> = props => {
   const handleUpdate = useCallback(
     async (value: Event) => {
       await update(value)
+      onSuccess()
     },
-    [update]
+    [update, onSuccess]
   )
 
   const { TypedController, action, values, onSubmit } = useEventForm({

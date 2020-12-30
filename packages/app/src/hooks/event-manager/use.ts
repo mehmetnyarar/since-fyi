@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import { useCallback, useEffect, useState } from 'react'
 import { Event } from '~/models'
-import { ArrayUtils } from '~/utility'
+import { ArrayUtils, getDate } from '~/utility'
 import { EventManager } from './types'
 
 /**
@@ -30,7 +30,19 @@ export const useEventManager = (): EventManager => {
       setLoading(true)
 
       const data = await AsyncStorage.getItem('events')
-      setResult(data ? JSON.parse(data) : [])
+      const parsed = data ? (JSON.parse(data) as Event[]) : []
+      const _result = parsed.map<Event>(item => ({
+        ...item,
+        start: getDate(item.start),
+        createdAt: getDate(item.createdAt),
+        updatedAt: getDate(item.updatedAt)
+      }))
+      console.debug('load', {
+        data,
+        parsed,
+        _result
+      })
+      setResult(_result)
     } catch (exception) {
       console.error('EventManager/load', { exception })
       setError('Failed to load events!')

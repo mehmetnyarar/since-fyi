@@ -105,6 +105,8 @@
   "event.cancel": "Vazgeç",
   "event.create": "Olay Oluştur",
   "event.create.hint": "Yeni bir olay oluşturun",
+  "event.na.active": "Duraklatıldı",
+  "event.na.start": "Başlangıç tarihi belirtilmemiş!",
   "event.settings": "Olay Ayarları",
   "event.start": "Başlangıç Tarihi",
   "event.start.hint": "Başlangıç ​​tarihini değiştirin",
@@ -169,5 +171,14 @@
   "select": "Seç",
   "settings": "Ayarlar",
   "settings.hint": "Uygulama ayarlarını özelleştirin",
+  "timespan.ago": "önce",
+  "timespan.days": "g",
+  "timespan.hours": "sa",
+  "timespan.in": "sonra",
+  "timespan.minutes": "dk",
+  "timespan.months": "ay",
+  "timespan.seconds": "sn",
+  "timespan.weeks": "h",
+  "timespan.years": "y",
   "toolbar": "Araç Çubuğu"
 }

@@ -21,7 +21,8 @@ export type DrawerNavigationParams = {
 export type MainNavigationParams = {
   Home: undefined
   Event: {
-    id?: string
+    id?: string // parameter for existing event
+    title?: string // parameter for new events
   }
 }
 

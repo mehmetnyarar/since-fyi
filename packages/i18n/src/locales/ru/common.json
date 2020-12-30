@@ -105,6 +105,8 @@
   "event.cancel": "Отмена",
   "event.create": "Создать событие",
   "event.create.hint": "Создать новое событие",
+  "event.na.active": "Приостановлено",
+  "event.na.start": "Дата начала не указана!",
   "event.settings": "Настройки события",
   "event.start": "Дата начала",
   "event.start.hint": "Изменить дату начала",
@@ -169,5 +171,14 @@
   "select": "Выбрать",
   "settings": "Настройки",
   "settings.hint": "Обновление настроек приложения",
+  "timespan.ago": "назад",
+  "timespan.days": "д",
+  "timespan.hours": "ч",
+  "timespan.in": "спустя",
+  "timespan.minutes": "мин",
+  "timespan.months": "мес",
+  "timespan.seconds": "сек",
+  "timespan.weeks": "нед",
+  "timespan.years": "г",
   "toolbar": "Панель инструментов"
 }

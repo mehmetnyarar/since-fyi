@@ -90,9 +90,9 @@ usage	namespace	key	en	ru	tr
 1	common	about.hint	Learn more about the application	Подробнее о приложении	Uygulama hakkında daha fazlasını öğrenin
 1	common	app.description	Learn how much time passed since you did a thing.	Узнайте, сколько прошло времени после совершенного вами действия	Bir olayın üzerinden nekadar zaman geçtiğini öğrenin.
 1	common	app.name	Since	Since	Since
-1	common	app.version	Version: {{version}}	Версия: {{версия}}	Versiyon: {{version}}
+1	common	app.version	Version: {{version}}	Версия: {{version}}	Versiyon: {{version}}
 1	common	chars	Characters	Символы	Karakterler
-1	common	clear.all	Delete All ({{count}})	Удалить все ({{счетчик}})	Tümünü Sil ({{count}})
+1	common	clear.all	Delete All ({{count}})	Удалить все ({{count}})	Tümünü Sil ({{count}})
 1	common	delete	Remove	Удалить	Sil
 1	common	delete.hint	Remove this item	Удалить данный элемент	Bu öğeyi sil
 1	common	cancel	Cancel	Отмена	Vazgeç
@@ -105,6 +105,8 @@ usage	namespace	key	en	ru	tr
 1	common	event.cancel	Cancel	Отмена	Vazgeç
 1	common	event.create	Create Event	Создать событие	Olay Oluştur
 1	common	event.create.hint	Create a new event	Создать новое событие	Yeni bir olay oluşturun
+1	common	event.na.active	Paused	Приостановлено	Duraklatıldı
+1	common	event.na.start	Start date is not specified!	Дата начала не указана!	Başlangıç tarihi belirtilmemiş!
 1	common	event.settings	Event Settings	Настройки события	Olay Ayarları
 1	common	event.start	Start Date	Дата начала	Başlangıç Tarihi
 1	common	event.start.hint	Change the start date	Изменить дату начала	Başlangıç ​​tarihini değiştirin
@@ -169,4 +171,13 @@ usage	namespace	key	en	ru	tr
 1	common	select	Select	Выбрать	Seç
 1	common	settings	Settings	Настройки	Ayarlar
 1	common	settings.hint	Update the application settings	Обновление настроек приложения	Uygulama ayarlarını özelleştirin
+1	common	timespan.ago	ago	назад	önce
+1	common	timespan.days	d	д	g
+1	common	timespan.hours	h	ч	sa
+1	common	timespan.in	in	спустя	sonra
+1	common	timespan.minutes	min	мин	dk
+1	common	timespan.months	mo	мес	ay
+1	common	timespan.seconds	s	сек	sn
+1	common	timespan.weeks	w	нед	h
+1	common	timespan.years	y	г	y
 1	common	toolbar	Toolbar	Панель инструментов	Araç Çubuğu

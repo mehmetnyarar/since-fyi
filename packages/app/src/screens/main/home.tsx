@@ -2,9 +2,10 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { EventCreate } from '~/components/event'
+import { EventCreate, EventList } from '~/components/event'
 import { Layout } from '~/components/screen'
 import { EventManagerContext } from '~/hooks/event-manager'
+import { Event } from '~/models'
 import { MainNavigationParams } from '~/navigation'
 import { Pressable } from '~/ui'
 
@@ -26,9 +27,9 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const { clear, result } = useContext(EventManagerContext)
   const handleSuccess = useCallback(
-    (id?: string) => {
-      console.debug('HomeScreen/handleSuccess', { id })
-      navigation.navigate('Event', { id })
+    (event: Partial<Event>) => {
+      console.debug('HomeScreen/handleSuccess', { event })
+      navigation.navigate('Event', event)
     },
     [navigation]
   )
@@ -36,6 +37,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Layout>
       <EventCreate onSuccess={handleSuccess} />
+      <EventList />
       <Pressable
         variant='basic'
         appearance='transparent'

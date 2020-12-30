@@ -11,6 +11,7 @@ export interface TypographyProps extends TextProps {}
  * @returns &lt;Typography />.
  */
 export const Typography = styled.Text<TypographyProps>`
+  color: inherit;
   font-family: 'Rubik_400Regular';
   ${props => getTextStyles(props)}
 `

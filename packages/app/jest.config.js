@@ -3,15 +3,15 @@ const { defaults: tsjPreset } = require('ts-jest/presets')
 module.exports = {
   projects: [
     {
-       displayName: 'app:lint',
-       runner: 'jest-runner-eslint',
-       testMatch: ['<rootDir>/**/*.{js,jsx,ts,tsx}'],
-       testPathIgnorePatterns: [
-         '<rootDir>/__generated__',
-         '<rootDir>/.expo',
-         '<rootDir>/coverage',
-         '<rootDir>/App.tsx'
-       ]
+      displayName: 'app:lint',
+      runner: 'jest-runner-eslint',
+      testMatch: ['<rootDir>/**/*.{js,jsx,ts,tsx}'],
+      testPathIgnorePatterns: [
+        '<rootDir>/__generated__',
+        '<rootDir>/.expo',
+        '<rootDir>/coverage',
+        '<rootDir>/App.tsx'
+      ]
     },
     {
       ...tsjPreset,
@@ -33,7 +33,7 @@ module.exports = {
         }
       },
       cacheDirectory: '.jest/cache'
-    }    
+    }
   ],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,tsx}',
@@ -51,10 +51,10 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      statements: 75,
-      branches: 75,
-      functions: 75,
-      lines: 75
+      statements: 70,
+      branches: 70,
+      functions: 70,
+      lines: 70
     }
   }
 }

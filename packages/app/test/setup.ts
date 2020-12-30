@@ -63,10 +63,15 @@ jest.mock('react-i18next', () => {
 })
 
 jest.mock('@sincefyi/i18n', () => {
-  return {
+  const locales = {
     en: { common: {} },
     ru: { common: {} },
     tr: { common: {} }
+  }
+
+  return {
+    locales,
+    ...locales
   }
 })
 
